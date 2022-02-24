@@ -6,9 +6,21 @@
     <string name="details_fragment_label">Details Fragment</string>
     <string name="split_fragment_label">Split Fragment</string>
 
-    <string name="details_fragment_media">Media</string>
-    <string name="details_fragment_description">Description</string>
-    <string name="details_fragment_description_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <!--Details-->
+    <string name="details_media">Media</string>
+    <string name="details_description">Description</string>
+    <string name="details_description_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <!--Specs-->
+    <string name="details_surface">Surface : %1$d sq m</string>
+    <string name="details_rooms">Rooms: %1$s</string>
+    <string name="details_bathrooms">Bathrooms: %1$s</string>
+    <string name="details_bedrooms">Bedrooms: %1$s</string>
+    <string name="details_location">Location : %1$s</string>
+
+
+
+
 
 
 
@@ -16,6 +28,7 @@
     <string name="previous">Previous</string>
 
     <string name="hello_list_fragment">Hello list fragment</string>
+    <string name="hello_main_fragment">Hello main fragment</string>
     <string name="hello_details_fragment">Hello details fragment. Arg: %1$s</string>
     <string name="hello_split_fragment">Hello split fragment</string>
 

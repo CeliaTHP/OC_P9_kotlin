@@ -1,6 +1,7 @@
 package com.example.oc_p9_kotlin
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,12 +10,20 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
+import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var estateList = FakeEstateApi.getFakeEstateList()
+
+    companion object {
+        private const val TAG: String = "MainActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +32,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        initRecyclerView()
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+/*        val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+
+ */
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+        Log.d(TAG, "onCreate")
+
+    }
+
+    private fun initRecyclerView() {
+
+        Log.d(TAG, estateList.toString())
+
+        binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.listRecyclerView.adapter = EstateAdapter(
+            estateList
+        ) {
+            Log.d(TAG, it.type.toString())
+        }
+
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -50,9 +80,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+/*
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+ */
 }

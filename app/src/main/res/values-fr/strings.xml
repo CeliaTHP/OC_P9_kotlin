@@ -7,16 +7,23 @@
     <string name="details_fragment_label">Fragment Détails</string>
     <string name="split_fragment_label">Fragment Split</string>
 
-    <string name="details_fragment_media">Médias</string>
-    <string name="details_fragment_description">Description</string>
-    <string name="details_fragment_description_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
-
-
+    <!--Details-->
+    <string name="details_media">Médias</string>
+    <string name="details_description">Description</string>
+    <string name="details_description_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <!--Specs-->
+    <string name="details_surface">Surface : %1$d sq m</string>
+    <string name="details_rooms">Pièces: %1$s</string>
+    <string name="details_bathrooms">Salles de bains : %1$s</string>
+    <string name="details_bedrooms">Chambres : %1$s</string>
+    <string name="details_location">Location : %1$s</string>
 
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
 
+
     <string name="hello_list_fragment">Bonjour list fragment</string>
+    <string name="hello_main_fragment">Bonjour main fragment</string>
     <string name="hello_details_fragment">Bonjour details fragment. Arg: %1$s</string>
     <string name="hello_split_fragment">Bonjour split fragment</string>
 
