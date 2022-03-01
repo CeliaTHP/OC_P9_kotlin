@@ -2,18 +2,18 @@ package com.example.oc_p9_kotlin
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
+import com.example.oc_p9_kotlin.models.Estate
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,18 +51,49 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
 
         Log.d(TAG, estateList.toString())
-
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList
         ) {
-            Log.d(TAG, it.type.toString())
+            //if fragmentDetail present, tablet
+            //else mobile
+            onEstateClick(it)
         }
 
-
-
     }
+
+    fun onEstateClick(estate: Estate) {
+
+        Log.d(TAG, estate.type.toString())
+        openDetails(estate)
+    }
+
+    fun openDetails(estate: Estate) {
+        // A method on the Fragment that owns the SlidingPaneLayout,
+// called by the adapter when an item is selected.
+
+        supportFragmentManager.commit {
+            //setReorderingAllowed(true)
+            val fragment = DetailsFragment()
+            fragment.arguments = bundleOf("estate" to estate)
+
+            replace(
+                R.id.detail_container,
+                fragment
+
+            )
+            // If we're already open and the detail pane is visible,
+            // crossfade between the fragments.
+            if (binding.slidingPaneLayout.isOpen) {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            }
+        }
+        binding.slidingPaneLayout.open()
+    }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:padding="20dp"
+    android:background="@color/white"
     tools:context=".DetailsFragment">
 
     <TextView
@@ -15,7 +16,8 @@
         android:textColor="@color/main_text"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/details_pics"
+        app:layout_constraintEnd_toEndOf="@id/details_pics"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -52,6 +54,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_media_description" />
 
+
+    <!--
     <Button
         android:id="@+id/details_button"
         android:layout_width="wrap_content"
@@ -60,9 +64,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_textview" />
+        app:layout_constraintTop_toBottomOf="@id/details_specs_layout"
+        app:layout_constraintVertical_bias="0.495" />
+    -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_specs_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -150,18 +157,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <TextView
-        android:id="@+id/details_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_details_fragment"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/details_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_media_description_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

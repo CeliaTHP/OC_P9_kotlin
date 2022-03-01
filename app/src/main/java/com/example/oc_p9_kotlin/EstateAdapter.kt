@@ -59,9 +59,6 @@ class EstateAdapter(
 
 }
 
-interface OnEstateClickListener {
-    fun onEstateClick(estate: Estate)
-}
 
 
 

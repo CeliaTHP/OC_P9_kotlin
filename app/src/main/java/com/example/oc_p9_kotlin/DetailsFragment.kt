@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
+import com.example.oc_p9_kotlin.models.Estate
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -37,12 +38,22 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG, "onViewCreated")
-
-
-        binding.detailsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_DetailsFragment_to_ListFragment)
+        val estate = arguments?.getParcelable<Estate>("estate")
+        if (estate == null) {
+            Log.d(TAG, "no estate")
         }
+        //cancel detail
+        else {
+            Log.d(TAG, "onViewCreated + arguments : " + estate.type)
+        }
+
+
+        /* binding.detailsButton.setOnClickListener {
+
+             //findNavController().navigate(R.id.action_DetailsFragment_to_ListFragment)
+         }
+
+         */
     }
 
     override fun onDestroyView() {

@@ -1,8 +1,11 @@
 package com.example.oc_p9_kotlin.models
 
 import android.location.Location
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 data class Estate(
     val id: String,
     var type: EstateType,
@@ -23,7 +26,7 @@ data class Estate(
     var isFurnished: Boolean,
     var assignedAgentId: String?
 
-) {
+) : Parcelable {
 
 }
 enum class EstateType {
