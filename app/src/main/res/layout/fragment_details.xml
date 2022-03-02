@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_height="wrap_content">
+        android:padding="10dp">
 
 
         <TextView
@@ -39,11 +39,11 @@
             android:id="@+id/details_media_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:text="@string/details_media"
             android:textColor="@color/main_text"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="6dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_type" />
 
@@ -54,8 +54,8 @@
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_house"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/details_media_title"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_media_title"
             app:tint="@color/main_text" />
 
@@ -101,8 +101,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_description_text">
+            app:layout_constraintBottom_toTopOf="@id/details_description"
+            app:layout_constraintEnd_toStartOf="@id/details_city"
+            app:layout_constraintStart_toEndOf="@id/details_description"
+            app:layout_constraintTop_toBottomOf="@id/details_media_title">
 
             <ImageView
                 android:id="@+id/details_surface_pic"
@@ -110,7 +112,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_surface"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/main_text" />
 
             <TextView
                 android:id="@+id/details_surface"
@@ -130,7 +133,8 @@
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_house"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/details_surface_pic" />
+                app:layout_constraintTop_toBottomOf="@id/details_surface_pic"
+                app:tint="@color/main_text" />
 
             <TextView
                 android:id="@+id/details_rooms"
@@ -150,7 +154,8 @@
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_bath"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/details_surface_rooms_pic" />
+                app:layout_constraintTop_toBottomOf="@id/details_surface_rooms_pic"
+                app:tint="@color/main_text" />
 
             <TextView
                 android:id="@+id/details_bathrooms"
@@ -168,9 +173,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+
                 android:src="@drawable/ic_bed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/details_bathrooms_pic" />
+                app:layout_constraintTop_toBottomOf="@id/details_bathrooms_pic"
+                app:tint="@color/main_text" />
 
             <TextView
                 android:id="@+id/details_bedrooms"

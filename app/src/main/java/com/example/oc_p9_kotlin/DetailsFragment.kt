@@ -63,10 +63,9 @@ class DetailsFragment : Fragment() {
         binding.detailsDescriptionText.text = estate.description
         binding.detailsCity.text = estate.city
         binding.detailsSurface.text = getString(R.string.details_surface,estate.surfaceInSquareMeters)
-        binding.detailsRooms.text = estate.rooms.toString()
-        binding.detailsBathrooms.text = estate.bathrooms.toString()
-        binding.detailsBedrooms.text = estate.bedrooms.toString()
-
+        binding.detailsRooms.text = getString(R.string.details_rooms, estate.rooms.toString())
+        binding.detailsBathrooms.text = getString(R.string.details_bathrooms, estate.bathrooms.toString())
+        binding.detailsBedrooms.text = getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
 
     }

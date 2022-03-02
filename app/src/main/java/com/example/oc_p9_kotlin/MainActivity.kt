@@ -6,6 +6,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.get
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var estateList = FakeEstateApi.getFakeEstateList()
-
+    private var chosenEstate = null
     companion object {
         private const val TAG: String = "MainActivity"
     }
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         initRecyclerView()
+        initDefaultEstate()
 
 
 /*        val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -49,8 +52,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initRecyclerView() {
+    private fun initDefaultEstate() {
+        if(!estateList.isNullOrEmpty()) {
+            val estate = estateList[0]
+            openDetails(estate)
+        }
 
+    }
+
+    private fun initRecyclerView() {
         Log.d(TAG, estateList.toString())
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -65,14 +75,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onEstateClick(estate: Estate) {
-
         Log.d(TAG, estate.type.toString())
         Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
 
         if(!binding.slidingPaneLayout.isOpen) {
             openDetails(estate)
         } else {
-            //updateDetails(estate)
+            openDetails(estate)
         }
     }
 
@@ -97,6 +106,42 @@ class MainActivity : AppCompatActivity() {
         binding.slidingPaneLayout.open()
     }
 
+
+
+    override fun onBackPressed() {
+
+        Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
+        Log.d(TAG, "isEnabled : " + binding.slidingPaneLayout.isEnabled)
+        Log.d(TAG, "isDetailVisible : " + binding.detailContainer.isVisible)
+        Log.d(TAG, "isListVisible : " + binding.listRecyclerView.isVisible)
+
+
+/*
+        if(binding.slidingPaneLayout.isOpen) {
+            Log.d(TAG, "slidingPaneLayout isOpen")
+            binding.slidingPaneLayout.closePane()
+
+        } else {
+            finish()
+            Log.d(TAG, "finish")
+        }
+
+
+ */
+/*
+        if(binding.slidingPaneLayout.isOpen && !binding.listRecyclerView.isVisible) {
+            Log.d(TAG, "open, list not visible")
+            binding.slidingPaneLayout.closePane()
+
+        } else {
+            finish()
+            Log.d(TAG, "finish")
+
+        }
+
+
+ */
+    }
 
 
 
