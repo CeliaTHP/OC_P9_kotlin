@@ -44,6 +44,7 @@ class DetailsFragment : Fragment() {
         }
         //cancel detail
         else {
+            updateUI(estate)
             Log.d(TAG, "onViewCreated + arguments : " + estate.type)
         }
 
@@ -56,6 +57,19 @@ class DetailsFragment : Fragment() {
          */
     }
 
+    private fun updateUI(estate: Estate){
+
+        binding.detailsType.text = estate.type.toString()
+        binding.detailsDescriptionText.text = estate.description
+        binding.detailsCity.text = estate.city
+        binding.detailsSurface.text = getString(R.string.details_surface,estate.surfaceInSquareMeters)
+        binding.detailsRooms.text = estate.rooms.toString()
+        binding.detailsBathrooms.text = estate.bathrooms.toString()
+        binding.detailsBedrooms.text = estate.bedrooms.toString()
+
+
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -67,13 +67,18 @@ class MainActivity : AppCompatActivity() {
     fun onEstateClick(estate: Estate) {
 
         Log.d(TAG, estate.type.toString())
-        openDetails(estate)
+        Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
+
+        if(!binding.slidingPaneLayout.isOpen) {
+            openDetails(estate)
+        } else {
+            //updateDetails(estate)
+        }
     }
 
     fun openDetails(estate: Estate) {
         // A method on the Fragment that owns the SlidingPaneLayout,
-// called by the adapter when an item is selected.
-
+        // called by the adapter when an item is selected.
         supportFragmentManager.commit {
             //setReorderingAllowed(true)
             val fragment = DetailsFragment()
@@ -82,7 +87,6 @@ class MainActivity : AppCompatActivity() {
             replace(
                 R.id.detail_container,
                 fragment
-
             )
             // If we're already open and the detail pane is visible,
             // crossfade between the fragments.

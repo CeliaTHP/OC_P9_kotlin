@@ -50,7 +50,6 @@ class EstateAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, "" + estateList.size)
         return estateList.size
     }
 

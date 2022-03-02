@@ -9,9 +9,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
 
+
+        <TextView
+            android:id="@+id/details_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details_type"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/details_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_estate_city"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/details_media_title"
@@ -21,9 +43,9 @@
             android:textColor="@color/main_text"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/details_pics"
-            app:layout_constraintStart_toStartOf="@id/details_pics"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_type" />
 
 
         <ImageView
@@ -33,11 +55,12 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_house"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/details_media_title"
             app:layout_constraintTop_toBottomOf="@id/details_media_title"
             app:tint="@color/main_text" />
 
         <TextView
-            android:id="@+id/details_media_description"
+            android:id="@+id/details_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -49,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@id/details_pics" />
 
         <TextView
-            android:id="@+id/details_media_description_text"
+            android:id="@+id/details_description_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -57,7 +80,7 @@
             android:textColor="@color/main_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_media_description" />
+            app:layout_constraintTop_toBottomOf="@id/details_description" />
 
 
         <!--
@@ -79,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_media_description_text">
+            app:layout_constraintTop_toBottomOf="@id/details_description_text">
 
             <ImageView
                 android:id="@+id/details_surface_pic"

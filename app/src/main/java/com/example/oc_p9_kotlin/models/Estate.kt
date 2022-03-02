@@ -30,6 +30,7 @@ data class Estate(
 
 }
 enum class EstateType {
+
     HOUSE,
     APPARTMENT,
     BUILDING,
@@ -39,5 +40,4 @@ enum class EstateType {
     MANSION,
     SITE,
     OTHER
-
 }

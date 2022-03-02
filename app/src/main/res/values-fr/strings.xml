@@ -8,6 +8,7 @@
     <string name="split_fragment_label">Fragment Split</string>
 
     <!--Details-->
+    <string name="details_type">Type</string>
     <string name="details_media">Médias</string>
     <string name="details_description">Description</string>
     <!--Specs-->
