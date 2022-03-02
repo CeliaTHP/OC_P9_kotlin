@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OC_P9_kotlin</string>
+    <string name="app_name">Real Estate Manager</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="list_fragment_label">List Fragment</string>
@@ -19,6 +19,7 @@
     <string name="details_rooms">Rooms: %1$s</string>
     <string name="details_bathrooms">Bathrooms: %1$s</string>
     <string name="details_bedrooms">Bedrooms: %1$s</string>
+    <string name="details_map">Map</string>
 
 
 

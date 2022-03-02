@@ -1,12 +1,16 @@
 package com.example.oc_p9_kotlin
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -22,8 +26,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var estateList = FakeEstateApi.getFakeEstateList()
-    private var chosenEstate = null
+    private var selectedEstate: Estate? = null
+
     companion object {
+        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
         private const val TAG: String = "MainActivity"
     }
 
@@ -35,8 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         initRecyclerView()
-        initDefaultEstate()
-
+        requestMapPermissions()
 
 /*        val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -52,18 +57,44 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initDefaultEstate() {
-        if(!estateList.isNullOrEmpty()) {
-            val estate = estateList[0]
-            openDetails(estate)
-        }
 
+
+    private fun requestMapPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                REQUEST_PERMISSIONS_REQUEST_CODE
+            )
+        }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val permissionsToRequest: ArrayList<String?> = ArrayList()
+        for (i in grantResults.indices) {
+            permissionsToRequest.add(permissions[i])
+        }
+        if (permissionsToRequest.size > 0) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toArray(arrayOfNulls(0)),
+                REQUEST_PERMISSIONS_REQUEST_CODE
+            )
+        }
+    }
+
+
 
     private fun initRecyclerView() {
         Log.d(TAG, estateList.toString())
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
-
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList
         ) {
@@ -75,23 +106,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onEstateClick(estate: Estate) {
+        selectedEstate = estate
         Log.d(TAG, estate.type.toString())
         Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
+        openDetails()
 
-        if(!binding.slidingPaneLayout.isOpen) {
-            openDetails(estate)
-        } else {
-            openDetails(estate)
-        }
     }
 
-    fun openDetails(estate: Estate) {
+    fun openDetails() {
         // A method on the Fragment that owns the SlidingPaneLayout,
         // called by the adapter when an item is selected.
         supportFragmentManager.commit {
             //setReorderingAllowed(true)
             val fragment = DetailsFragment()
-            fragment.arguments = bundleOf("estate" to estate)
+            fragment.arguments = bundleOf("estate" to selectedEstate)
 
             replace(
                 R.id.detail_container,
@@ -107,7 +135,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onBackPressed() {
 
         Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
@@ -115,6 +142,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "isDetailVisible : " + binding.detailContainer.isVisible)
         Log.d(TAG, "isListVisible : " + binding.listRecyclerView.isVisible)
 
+        finish()
 
 /*
         if(binding.slidingPaneLayout.isOpen) {
@@ -142,7 +170,6 @@ class MainActivity : AppCompatActivity() {
 
  */
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
