@@ -13,6 +13,7 @@ import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Marker
 
 
 /**
@@ -35,12 +36,13 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+        //TODO : uncomment to display map
+        Configuration.getInstance()
+            .load(context, PreferenceManager.getDefaultSharedPreferences(context));
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         return binding.root
-
 
 
     }
@@ -48,13 +50,14 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initMap()
+        //TODO : uncomment to display map
         val estate = arguments?.getParcelable<Estate>("estate")
         if (estate == null) {
             Log.d(TAG, "no estate")
         }
         //cancel detail
         else {
+            initMap(estate)
             updateUI(estate)
             Log.d(TAG, "onViewCreated + arguments : " + estate.type)
         }
@@ -69,19 +72,23 @@ class DetailsFragment : Fragment() {
     }
 
 
+    private fun initMap(estate: Estate) {
 
-    private fun initMap() {
-    binding.map.setTileSource(TileSourceFactory.MAPNIK)
-        val mapController: IMapController = binding.map.controller
-        mapController.setZoom(9.5)
-        val startPoint = GeoPoint(48.8583, 2.2944)
-        mapController.setCenter(startPoint)
+        binding.map.setTileSource(TileSourceFactory.MAPNIK)
+        binding.map.controller.setZoom(16.0)
+        //val startPoint = GeoPoint(20.5992, 72.9342)
+        val startPoint = GeoPoint(estate.location.latitude, estate.location.longitude)
+
+        val startMarker = Marker(binding.map)
+        startMarker.setInfoWindow(null)
+        startMarker.position = startPoint
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+
+        binding.map.overlays.add(startMarker)
+        binding.map.controller.setCenter(startPoint)
+
 
     }
-
-
-
-
 
 
     override fun onResume() {
@@ -95,19 +102,22 @@ class DetailsFragment : Fragment() {
     }
 
 
-
-    private fun updateUI(estate: Estate){
+    private fun updateUI(estate: Estate) {
 
         binding.detailsType.text = estate.type.toString()
         binding.detailsDescriptionText.text = estate.description
         binding.detailsCity.text = estate.city
-        binding.detailsSurface.text = getString(R.string.details_surface,estate.surfaceInSquareMeters)
+        binding.detailsSurface.text =
+            getString(R.string.details_surface, estate.surfaceInSquareMeters)
         binding.detailsRooms.text = getString(R.string.details_rooms, estate.rooms.toString())
-        binding.detailsBathrooms.text = getString(R.string.details_bathrooms, estate.bathrooms.toString())
-        binding.detailsBedrooms.text = getString(R.string.details_bedrooms, estate.bedrooms.toString())
+        binding.detailsBathrooms.text =
+            getString(R.string.details_bathrooms, estate.bathrooms.toString())
+        binding.detailsBedrooms.text =
+            getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

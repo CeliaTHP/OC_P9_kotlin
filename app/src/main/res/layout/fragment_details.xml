@@ -17,8 +17,8 @@
         <TextView
             android:id="@+id/details_type"
             android:layout_width="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="@string/details_type"
             android:textColor="@color/main_text"
             android:textSize="20sp"
@@ -41,21 +41,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-
             android:text="@string/details_media"
             android:textColor="@color/main_text"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_type" />
 
 
         <ImageView
             android:id="@+id/details_pics"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_house"
-            app:layout_constraintStart_toStartOf="@id/details_media_title"
+            app:layout_constraintBottom_toTopOf="@id/details_description"
+            app:layout_constraintEnd_toStartOf="@id/details_media_title"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_media_title"
             app:tint="@color/main_text" />
 
@@ -68,8 +70,9 @@
             android:textColor="@color/main_text"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_pics" />
+            app:layout_constraintTop_toBottomOf="@id/details_specs_layout" />
 
         <TextView
             android:id="@+id/details_description_text"
@@ -201,13 +204,14 @@
             android:textColor="@color/main_text"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_description_text" />
 
         <org.osmdroid.views.MapView
             android:id="@+id/map"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_margin="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

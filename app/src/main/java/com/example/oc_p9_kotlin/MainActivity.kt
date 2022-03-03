@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         initRecyclerView()
+
+        //TODO : uncomment to display map
         requestMapPermissions()
 
 /*        val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -56,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate")
 
     }
-
 
 
     private fun requestMapPermissions() {
@@ -89,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
-
 
 
     private fun initRecyclerView() {
@@ -134,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         binding.slidingPaneLayout.open()
     }
 
-
+/*
     override fun onBackPressed() {
 
         Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
         finish()
 
-/*
+
         if(binding.slidingPaneLayout.isOpen) {
             Log.d(TAG, "slidingPaneLayout isOpen")
             binding.slidingPaneLayout.closePane()
@@ -155,7 +156,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
- */
+*/
+
+
 /*
         if(binding.slidingPaneLayout.isOpen && !binding.listRecyclerView.isVisible) {
             Log.d(TAG, "open, list not visible")
@@ -168,8 +171,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
- */
+
     }
+    */
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
