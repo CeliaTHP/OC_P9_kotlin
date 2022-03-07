@@ -1,6 +1,7 @@
 package com.example.oc_p9_kotlin
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +21,8 @@ import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.InternetCallback
+import com.example.oc_p9_kotlin.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +44,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+
+        //Verifies internet connection
+        initInternetChecker()
+
         initRecyclerView()
+
 
         //TODO : uncomment to display map
         requestMapPermissions()
@@ -60,6 +68,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun initInternetChecker() {
+        Utils().isInternetAvailable(this,object: InternetCallback {
+            override fun onInternetEnabled() {
+                Log.d(TAG, "onInternetEnabled")
+            }
+
+            override fun onInternetConfigChanged() {
+                Log.d(TAG, "onInternetConfigChanged")
+            }
+
+            override fun onInternetDisabled() {
+                Log.d(TAG, "onInternetDisabled")
+            }
+
+        })
+    }
 
     private fun requestMapPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -94,7 +118,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initRecyclerView() {
-        Log.d(TAG, estateList.toString())
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList
