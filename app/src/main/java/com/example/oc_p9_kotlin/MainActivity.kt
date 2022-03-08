@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
         Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
-        Log.d(TAG, "isSliedable: " + binding.slidingPaneLayout.isSlideable)
+        Log.d(TAG, "isSlideable: " + binding.slidingPaneLayout.isSlideable)
 
         //if close & slideable ou open & pas sliedable close
 

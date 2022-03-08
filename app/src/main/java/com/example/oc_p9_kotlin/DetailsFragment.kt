@@ -57,6 +57,7 @@ class DetailsFragment : Fragment() {
         }
         //cancel detail
         else {
+            //TODO : uncomment to display map
             initMap(estate)
             updateUI(estate)
             Log.d(TAG, "onViewCreated + arguments : " + estate.type)
