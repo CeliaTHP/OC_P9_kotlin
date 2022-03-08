@@ -1,17 +1,21 @@
 package com.example.oc_p9_kotlin.utils
 
 import android.content.Context
-import android.net.*
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.util.Log
-import com.example.oc_p9_kotlin.models.InternetCallback
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class Utils {
     companion object {
-        const val TAG: String = "Utils"
+        const val TAG: String = "Utils_"
     }
 
     /**
@@ -64,10 +68,48 @@ class Utils {
 
 
     //Verify if internet is enabled on the device
-     fun isInternetAvailable(context: Context, internetCallback: InternetCallback){
+/*
+
+    fun isInternetAvailable(context: Context?): Boolean {
+        if (context == null) return false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val capabilities =
+                    connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        return true
+                    }
+                }
+            } else {
+                try {
+                    val activeNetworkInfo = connectivityManager.activeNetworkInfo
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
+                        Log.i("update_statut", "Network is available : true")
+                        return true
+                    }
+                } catch (e: Exception) {
+                    Log.i("update_statut", "" + e.message)
+                }
+            }
+        }
+        Log.i("update_statut", "Network is available : FALSE ")
+        return false
+    }
 
+
+ */
+
+
+    fun isInternetAvailable(context: Context) {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val networkRequest = NetworkRequest.Builder()
             .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -75,13 +117,17 @@ class Utils {
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
             .build()
 
+        //TODO : FIND WHY IT DOESN'T TRIGGER ANYTHING WHEN 4G & WIFI OFF
+
         connectivityManager.requestNetwork(
             networkRequest,
             object : ConnectivityManager.NetworkCallback() {
                 // network is available for use
                 override fun onAvailable(network: Network) {
+                    //WIFI ONLY
                     super.onAvailable(network)
-                    internetCallback.onInternetEnabled()
+                    Log.d(TAG, "onAvailable")
+
                 }
 
                 // Network capabilities have changed for the network
@@ -89,11 +135,10 @@ class Utils {
                     network: Network,
                     networkCapabilities: NetworkCapabilities
                 ) {
-
                     super.onCapabilitiesChanged(network, networkCapabilities)
-                    internetCallback.onInternetConfigChanged()
                     val unmetered =
                         networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+                    Log.d(TAG, "onCapabilitesChanged $unmetered")
 
 
                 }
@@ -101,11 +146,19 @@ class Utils {
                 // lost network connection
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    internetCallback.onInternetDisabled()
+                    Log.d(TAG, "onLost")
 
                 }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    Log.d(TAG, "onUnavailable "+ connectivityManager.isDefaultNetworkActive.toString())
+
+                }
+
             })
     }
+
 
 
 }

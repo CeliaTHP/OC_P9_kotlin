@@ -15,6 +15,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
@@ -27,15 +28,17 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-    private var estateList = FakeEstateApi.getFakeEstateList()
-    private var selectedEstate: Estate? = null
-
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
         private const val TAG: String = "MainActivity"
     }
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityMainBinding
+    private var estateList = FakeEstateApi.getFakeEstateList()
+    private var selectedEstate: Estate? = null
+    private lateinit var mainViewModel: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        initViewModels()
         //Verifies internet connection
         initInternetChecker()
-
         initRecyclerView()
-
-
         //TODO : uncomment to display map
         requestMapPermissions()
 
@@ -58,31 +59,21 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-
  */
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener {
+            mainViewModel
+            initInternetChecker()
         }
         Log.d(TAG, "onCreate")
 
     }
+    private fun initViewModels(){
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
 
     private fun initInternetChecker() {
-        Utils().isInternetAvailable(this,object: InternetCallback {
-            override fun onInternetEnabled() {
-                Log.d(TAG, "onInternetEnabled")
-            }
-
-            override fun onInternetConfigChanged() {
-                Log.d(TAG, "onInternetConfigChanged")
-            }
-
-            override fun onInternetDisabled() {
-                Log.d(TAG, "onInternetDisabled")
-            }
-
-        })
+        Utils().isInternetAvailable(this)
     }
 
     private fun requestMapPermissions() {
@@ -124,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             //if fragmentDetail present, tablet
             //else mobile
+
             onEstateClick(it)
         }
 
@@ -134,7 +126,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, estate.type.toString())
         Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
         openDetails()
-
     }
 
     fun openDetails() {
@@ -158,45 +149,25 @@ class MainActivity : AppCompatActivity() {
         binding.slidingPaneLayout.open()
     }
 
-/*
+
     override fun onBackPressed() {
 
         Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
-        Log.d(TAG, "isEnabled : " + binding.slidingPaneLayout.isEnabled)
-        Log.d(TAG, "isDetailVisible : " + binding.detailContainer.isVisible)
-        Log.d(TAG, "isListVisible : " + binding.listRecyclerView.isVisible)
+        Log.d(TAG, "isSliedable: " + binding.slidingPaneLayout.isSlideable)
 
-        finish()
+        //if close & slideable ou open & pas sliedable close
 
-
-        if(binding.slidingPaneLayout.isOpen) {
-            Log.d(TAG, "slidingPaneLayout isOpen")
-            binding.slidingPaneLayout.closePane()
-
-        } else {
-            finish()
-            Log.d(TAG, "finish")
+        with(binding.slidingPaneLayout){
+            if (!isOpen && isSlideable || !isSlideable) {
+              finish()
+            } else {
+                closePane()
+                Log.d(TAG, "shouldClose")
+            }
         }
-
-
-*/
-
-
-/*
-        if(binding.slidingPaneLayout.isOpen && !binding.listRecyclerView.isVisible) {
-            Log.d(TAG, "open, list not visible")
-            binding.slidingPaneLayout.closePane()
-
-        } else {
-            finish()
-            Log.d(TAG, "finish")
-
-        }
-
-
 
     }
-    */
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

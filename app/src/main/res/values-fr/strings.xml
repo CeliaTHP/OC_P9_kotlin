@@ -16,6 +16,7 @@
     <string name="details_rooms">Pièces: %1$s</string>
     <string name="details_bathrooms">Salles de bains : %1$s</string>
     <string name="details_bedrooms">Chambres : %1$s</string>
+    <string name="details_specs">Informations</string>
     <string name="details_map">Carte</string>
 
 

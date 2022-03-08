@@ -35,7 +35,7 @@ class DetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         //TODO : uncomment to display map
         Configuration.getInstance()
             .load(context, PreferenceManager.getDefaultSharedPreferences(context));
@@ -50,9 +50,9 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO : uncomment to display map
         val estate = arguments?.getParcelable<Estate>("estate")
         if (estate == null) {
+            //TODO : HANDLE MAP IF PERMISSION NOT GIVEN
             Log.d(TAG, "no estate")
         }
         //cancel detail
