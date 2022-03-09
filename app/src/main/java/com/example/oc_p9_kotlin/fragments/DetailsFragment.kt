@@ -1,4 +1,4 @@
-package com.example.oc_p9_kotlin
+package com.example.oc_p9_kotlin.fragments
 
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
+import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -98,7 +99,7 @@ class DetailsFragment : Fragment() {
 
     private fun updateUI(estate: Estate) {
 
-        binding.detailsType.text = estate.type.toString()
+        binding.detailsType.text = estate.type.toString().lowercase().replaceFirstChar { it.uppercase()  }
         binding.detailsDescriptionText.text = estate.description
         binding.detailsCity.text = estate.city
         binding.detailsSurface.text =
@@ -117,12 +118,14 @@ class DetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        if(EventBus.getDefault().isRegistered(this))
         EventBus.getDefault().unregister(this);
 
     }
 
     override fun onStop() {
         super.onStop()
+        if(EventBus.getDefault().isRegistered(this))
         EventBus.getDefault().unregister(this);
 
     }

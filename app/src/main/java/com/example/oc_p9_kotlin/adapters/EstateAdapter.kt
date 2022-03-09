@@ -1,15 +1,10 @@
-package com.example.oc_p9_kotlin
+package com.example.oc_p9_kotlin.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
-import java.util.*
-import kotlin.math.round
 
 class EstateAdapter(
     val estateList: List<Estate>,

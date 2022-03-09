@@ -13,7 +13,7 @@
     <string name="details_description">Description</string>
     <!--Specs-->
     <string name="details_surface">Surface : %1$d m²</string>
-    <string name="details_rooms">Pièces: %1$s</string>
+    <string name="details_rooms">Pièces : %1$s</string>
     <string name="details_bathrooms">Salles de bains : %1$s</string>
     <string name="details_bedrooms">Chambres : %1$s</string>
     <string name="details_specs">Informations</string>

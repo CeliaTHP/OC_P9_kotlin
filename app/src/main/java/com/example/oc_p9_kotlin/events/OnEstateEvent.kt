@@ -1,4 +1,4 @@
-package com.example.oc_p9_kotlin
+package com.example.oc_p9_kotlin.events
 
 import com.example.oc_p9_kotlin.models.Estate
 

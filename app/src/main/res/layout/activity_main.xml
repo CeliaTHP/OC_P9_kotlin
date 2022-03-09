@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_layout"
@@ -50,7 +50,7 @@
              the entire window is wide enough to fit both the left and right pane.-->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/detail_container"
-            android:name="com.example.oc_p9_kotlin.DetailsFragment"
+            android:name="com.example.oc_p9_kotlin.fragments.DetailsFragment"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

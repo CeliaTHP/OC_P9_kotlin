@@ -1,4 +1,4 @@
-package com.example.oc_p9_kotlin
+package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
 import android.os.Build
@@ -13,10 +13,15 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.oc_p9_kotlin.*
+import com.example.oc_p9_kotlin.adapters.EstateAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
+import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
+import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.Utils
+import com.example.oc_p9_kotlin.view_models.MainViewModel
 import org.greenrobot.eventbus.EventBus
 
 class MainActivity : AppCompatActivity() {
