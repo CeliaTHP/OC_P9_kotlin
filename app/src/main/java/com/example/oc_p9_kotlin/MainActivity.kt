@@ -1,8 +1,6 @@
 package com.example.oc_p9_kotlin
 
 import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,21 +8,16 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
-import com.example.oc_p9_kotlin.models.InternetCallback
 import com.example.oc_p9_kotlin.utils.Utils
-import com.google.android.material.snackbar.Snackbar
+import org.greenrobot.eventbus.EventBus
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private var selectedEstate: Estate? = null
     private lateinit var mainViewModel: MainViewModel
 
+    private var onEstateEvent = OnEstateEvent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +42,20 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        //default estate
+        selectedEstate = estateList[0]
+
+
         initViewModels()
         //Verifies internet connection
         initInternetChecker()
         initRecyclerView()
         //TODO : uncomment to display map
         requestMapPermissions()
+
+
+        onEstateEvent.setSelectedEstate(estateList[0])
+        EventBus.getDefault().postSticky(onEstateEvent)
 
 /*        val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -62,12 +64,13 @@ class MainActivity : AppCompatActivity() {
  */
         binding.fab.setOnClickListener {
             mainViewModel
-            initInternetChecker()
+            //initInternetChecker()
         }
         Log.d(TAG, "onCreate")
 
     }
-    private fun initViewModels(){
+
+    private fun initViewModels() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
@@ -122,23 +125,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onEstateClick(estate: Estate) {
-        selectedEstate = estate
         Log.d(TAG, estate.type.toString())
         Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
-        openDetails()
+
+        onEstateEvent.setSelectedEstate(estate)
+        EventBus.getDefault().postSticky(onEstateEvent)
+
+        updateDetails()
     }
 
-    fun openDetails() {
+
+    fun updateDetails() {
+
         // A method on the Fragment that owns the SlidingPaneLayout,
         // called by the adapter when an item is selected.
         supportFragmentManager.commit {
-            //setReorderingAllowed(true)
-            val fragment = DetailsFragment()
-            fragment.arguments = bundleOf("estate" to selectedEstate)
-
+            
             replace(
                 R.id.detail_container,
-                fragment
+                DetailsFragment()
             )
             // If we're already open and the detail pane is visible,
             // crossfade between the fragments.
@@ -157,9 +162,9 @@ class MainActivity : AppCompatActivity() {
 
         //if close & slideable ou open & pas sliedable close
 
-        with(binding.slidingPaneLayout){
+        with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
-              finish()
+                finish()
             } else {
                 closePane()
                 Log.d(TAG, "shouldClose")
@@ -167,7 +172,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

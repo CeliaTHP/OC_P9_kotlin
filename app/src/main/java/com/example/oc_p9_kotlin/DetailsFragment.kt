@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.models.Estate
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -40,44 +42,35 @@ class DetailsFragment : Fragment() {
         Configuration.getInstance()
             .load(context, PreferenceManager.getDefaultSharedPreferences(context));
 
+
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         return binding.root
 
 
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val estate = arguments?.getParcelable<Estate>("estate")
-        if (estate == null) {
-            //TODO : HANDLE MAP IF PERMISSION NOT GIVEN
-            Log.d(TAG, "no estate")
-        }
-        //cancel detail
-        else {
-            //TODO : uncomment to display map
-            initMap(estate)
-            updateUI(estate)
-            Log.d(TAG, "onViewCreated + arguments : " + estate.type)
-        }
+        EventBus.getDefault().register(this)
 
-
-        /* binding.detailsButton.setOnClickListener {
-
-             //findNavController().navigate(R.id.action_DetailsFragment_to_ListFragment)
-         }
-
-         */
     }
 
+
+    @Subscribe(sticky = true)
+    public fun onEstateEvent(onEstateEvent: OnEstateEvent) {
+        val estate =  onEstateEvent.getSelectedEstate()
+        Log.d(TAG,estate.toString())
+        updateUI(estate)
+    }
 
     private fun initMap(estate: Estate) {
 
         binding.map.setTileSource(TileSourceFactory.MAPNIK)
         binding.map.controller.setZoom(16.0)
-        //val startPoint = GeoPoint(20.5992, 72.9342)
         val startPoint = GeoPoint(estate.location.latitude, estate.location.longitude)
 
         val startMarker = Marker(binding.map)
@@ -116,6 +109,21 @@ class DetailsFragment : Fragment() {
         binding.detailsBedrooms.text =
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
+        //TODO : uncomment to display map
+        initMap(estate)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this);
 
     }
 
