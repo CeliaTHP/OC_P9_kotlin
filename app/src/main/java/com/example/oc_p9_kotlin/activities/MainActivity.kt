@@ -3,7 +3,9 @@ package com.example.oc_p9_kotlin.activities
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,7 @@ import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import org.greenrobot.eventbus.EventBus
@@ -51,9 +54,10 @@ class MainActivity : AppCompatActivity() {
         selectedEstate = estateList[0]
 
 
+
+
         initViewModels()
         //Verifies internet connection
-        initInternetChecker()
         initRecyclerView()
         //TODO : uncomment to display map
         requestMapPermissions()
@@ -69,7 +73,7 @@ class MainActivity : AppCompatActivity() {
  */
         binding.fab.setOnClickListener {
             mainViewModel
-            //initInternetChecker()
+
         }
         Log.d(TAG, "onCreate")
 
@@ -79,10 +83,18 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
+    override fun onStop() {
+        super.onStop()
 
-    private fun initInternetChecker() {
-        Utils().isInternetAvailable(this)
+        InternetUtils.unregisterNetworkCallback(this)
     }
+
+    override fun onStart() {
+        super.onStart()
+        InternetUtils.registerNetworkCallback(this)
+
+    }
+
 
     private fun requestMapPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -160,24 +172,54 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d(TAG, "onKeyUp")
+        handleBackButton()
+        return super.onKeyUp(keyCode, event)
+
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        Log.d(TAG, "dispatchKeyEvent")
+        return super.dispatchKeyEvent(event)
+
+
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d(TAG, "onKeyDown")
+        //handleBackButton()
+        return super.onKeyDown(keyCode, event)
+
+
+    }
+
     override fun onBackPressed() {
+
+        //super.onBackPressed()
+        Log.d(TAG, "onBackPressed")
 
         Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
         Log.d(TAG, "isSlideable: " + binding.slidingPaneLayout.isSlideable)
 
         //if close & slideable ou open & pas sliedable close
+        handleBackButton()
+
+
+    }
+
+    fun handleBackButton() {
 
         with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
                 finish()
+
             } else {
                 closePane()
                 Log.d(TAG, "shouldClose")
             }
         }
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

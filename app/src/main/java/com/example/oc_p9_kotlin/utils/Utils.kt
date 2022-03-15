@@ -10,13 +10,14 @@ import android.os.Build
 import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 
 class Utils {
     companion object {
         const val TAG: String = "Utils_"
     }
+
 
     /**
      * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
@@ -107,58 +108,24 @@ class Utils {
  */
 
 
-    fun isInternetAvailable(context: Context) {
+    /*
+    fun isInternetAvailable(context: Context):Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        val networkRequest = NetworkRequest.Builder()
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .build()
+        val nw = connectivityManager.activeNetwork ?: return false
 
-        //TODO : FIND WHY IT DOESN'T TRIGGER ANYTHING WHEN 4G & WIFI OFF
-
-        connectivityManager.requestNetwork(
-            networkRequest,
-            object : ConnectivityManager.NetworkCallback() {
-                // network is available for use
-                override fun onAvailable(network: Network) {
-                    //WIFI ONLY
-                    super.onAvailable(network)
-                    Log.d(TAG, "onAvailable")
-
-                }
-
-                // Network capabilities have changed for the network
-                override fun onCapabilitiesChanged(
-                    network: Network,
-                    networkCapabilities: NetworkCapabilities
-                ) {
-                    super.onCapabilitiesChanged(network, networkCapabilities)
-                    val unmetered =
-                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
-                    Log.d(TAG, "onCapabilitesChanged $unmetered")
-
-
-                }
-
-                // lost network connection
-                override fun onLost(network: Network) {
-                    super.onLost(network)
-                    Log.d(TAG, "onLost")
-
-                }
-
-                override fun onUnavailable() {
-                    super.onUnavailable()
-                    Log.d(TAG, "onUnavailable "+ connectivityManager.isDefaultNetworkActive.toString())
-
-                }
-
-            })
+        val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+        return when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+            else -> false
+        }
     }
 
+     */
 
 
 }
