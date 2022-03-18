@@ -28,7 +28,7 @@ interface EstateDao {
     fun insertAllEstates(estateList: List<Estate>)
 
     @Update
-    fun updateEstate(estate: Estate): String
+    fun updateEstate(estate: Estate)
 
     @Delete
     fun delete(estate: Estate)

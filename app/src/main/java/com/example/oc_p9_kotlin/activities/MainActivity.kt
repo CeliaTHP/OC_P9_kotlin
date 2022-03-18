@@ -27,6 +27,10 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
+import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
 class MainActivity : AppCompatActivity() {
@@ -74,6 +78,11 @@ class MainActivity : AppCompatActivity() {
 
  */
         binding.fab.setOnClickListener {
+
+            CoroutineScope(Dispatchers.IO).launch {
+                EstateDatabase.getDatabase(this@MainActivity).estateDao().insertAllEstates(estateList)
+
+            }
 
         }
         Log.d(TAG, "onCreate")
