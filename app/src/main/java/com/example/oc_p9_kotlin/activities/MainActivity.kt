@@ -17,6 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
+import com.example.oc_p9_kotlin.daos.EstateDao
+import com.example.oc_p9_kotlin.databases.EstateDatabase
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
@@ -72,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 
  */
         binding.fab.setOnClickListener {
-            mainViewModel
 
         }
         Log.d(TAG, "onCreate")
@@ -157,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         // A method on the Fragment that owns the SlidingPaneLayout,
         // called by the adapter when an item is selected.
         supportFragmentManager.commit {
-            
+
             replace(
                 R.id.detail_container,
                 DetailsFragment()

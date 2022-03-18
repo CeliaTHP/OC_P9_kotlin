@@ -2,15 +2,22 @@ package com.example.oc_p9_kotlin.models
 
 import android.location.Location
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
+@Entity
 data class Estate(
+    @PrimaryKey
     val id: String,
     var type: EstateType,
     var city: String,
+    @ColumnInfo(name = "price_in_dollars")
     var priceInDollars: Double,
+    @ColumnInfo(name = "surface_in_square_meters")
     var surfaceInSquareMeters: Int,
     var rooms: Int,
     var bathrooms: Int,
@@ -19,18 +26,23 @@ data class Estate(
     //var nearbyPlaces : List<NearbyPlaces>
     var location: Location,
     var description: String,
-    //var medias: List<Media>
+    var medias: List<Media>,
+    @ColumnInfo(name = "entry_date")
     var entryDate: Date,
+    @ColumnInfo(name = "sale_date")
     var saleDate: Date?,
+    @ColumnInfo(name = "is_available")
     var isAvailable: Boolean,
+    @ColumnInfo(name = "is_furnished")
     var isFurnished: Boolean,
+    @ColumnInfo(name = "assigned_agent_id")
     var assignedAgentId: String?
 
 ) : Parcelable {
 
 }
-enum class EstateType {
 
+enum class EstateType {
     HOUSE,
     APPARTMENT,
     BUILDING,
