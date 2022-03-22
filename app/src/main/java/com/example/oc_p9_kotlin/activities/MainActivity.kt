@@ -3,11 +3,11 @@ package com.example.oc_p9_kotlin.activities
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
@@ -17,7 +17,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
-import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.databases.EstateDatabase
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
@@ -25,15 +24,17 @@ import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.InternetUtils
-import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
-import kotlin.coroutines.coroutineContext
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
@@ -60,11 +61,10 @@ class MainActivity : AppCompatActivity() {
         selectedEstate = estateList[0]
 
 
-
-
         initViewModels()
-        //Verifies internet connection
-        initRecyclerView()
+
+        initObservables()
+        //initRecyclerView(estateList)
         //TODO : uncomment to display map
         requestMapPermissions()
 
@@ -78,19 +78,35 @@ class MainActivity : AppCompatActivity() {
 
  */
         binding.fab.setOnClickListener {
-
-            CoroutineScope(Dispatchers.IO).launch {
-                EstateDatabase.getDatabase(this@MainActivity).estateDao().insertAllEstates(estateList)
-
-            }
-
         }
+
+
         Log.d(TAG, "onCreate")
 
     }
 
+
+    private fun initObservables() {
+
+        mainViewModel.getAll()
+            .subscribe(
+                {
+                    initRecyclerView(it)
+                    for (estate in it) {
+                        Log.d(TAG, estate.location.latitude.toString() + " - " + estate.location.longitude.toString())
+                    }
+
+                }, {
+
+                }).addTo(bag)
+
+
+    }
+
     private fun initViewModels() {
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        mainViewModel = ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
+
     }
 
     override fun onStop() {
@@ -138,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(estateList:List<Estate>) {
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList

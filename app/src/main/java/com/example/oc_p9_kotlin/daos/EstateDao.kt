@@ -7,12 +7,14 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.oc_p9_kotlin.models.Estate
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface EstateDao {
 
     @Query("SELECT * FROM estate")
-    fun getAll(): List<Estate>
+    fun getAll(): Observable<List<Estate>>
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
     fun getById(estateId: String): Estate

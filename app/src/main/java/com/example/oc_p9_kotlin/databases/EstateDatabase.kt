@@ -42,7 +42,10 @@ abstract class EstateDatabase : RoomDatabase() {
                         context.applicationContext,
                         EstateDatabase::class.java,
                         DATABASE_NAME
-                    ).build()
+                    )
+
+
+                        .build()
                 INSTANCE = instance
                 return instance
             }
@@ -68,19 +71,29 @@ abstract class EstateDatabase : RoomDatabase() {
 
     internal class LocationConverter {
         @TypeConverter
-        fun toLocation(locationString: String?): Location? {
-            return try {
-                Gson().fromJson(locationString, Location::class.java)
-            } catch (e: Exception) {
+        fun locationToString(location: Location?) =
+            location?.let { "${it.latitude};${it.longitude}" }
+
+        @TypeConverter
+        fun stringToLocation(location: String?) = location?.let {
+            val pieces = location.split(';')
+
+            if (pieces.size == 2) {
+                try {
+                    Location(null as String?).apply {
+                        latitude = pieces[0].toDouble()
+                        longitude = pieces[1].toDouble()
+                    }
+                } catch (e: Exception) {
+                    null
+                }
+            } else {
                 null
             }
         }
-
-        @TypeConverter
-        fun toLocationString(location: Location?): String? {
-            return Gson().toJson(location)
-        }
     }
+
+
 
 
 
