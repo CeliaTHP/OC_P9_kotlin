@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
@@ -78,6 +79,7 @@ class DetailsFragment : Fragment() {
         startMarker.setInfoWindow(null)
         startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        startMarker.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_location_red,null)
 
         binding.map.overlays.add(startMarker)
         binding.map.controller.setCenter(startPoint)

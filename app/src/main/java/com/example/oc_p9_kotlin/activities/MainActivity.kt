@@ -43,7 +43,10 @@ class MainActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
     private var estateList = FakeEstateApi.getFakeEstateList()
+    private var databaseEstateList: List<Estate>? = null
+
     private var selectedEstate: Estate? = null
     private lateinit var mainViewModel: MainViewModel
 
@@ -78,6 +81,7 @@ class MainActivity : BaseActivity() {
 
  */
         binding.fab.setOnClickListener {
+
         }
 
 
@@ -91,9 +95,21 @@ class MainActivity : BaseActivity() {
         mainViewModel.getAll()
             .subscribe(
                 {
-                    initRecyclerView(it)
-                    for (estate in it) {
-                        Log.d(TAG, estate.location.latitude.toString() + " - " + estate.location.longitude.toString())
+                    if (it.isNullOrEmpty()) {
+                        Log.d(TAG, "generateData")
+                        mainViewModel.generateData()
+
+                    } else {
+                        Log.d(TAG, "data already found")
+
+
+                        initRecyclerView(it)
+                        for (estate in it) {
+                            Log.d(
+                                TAG,
+                                estate.location.latitude.toString() + " - " + estate.location.longitude.toString()
+                            )
+                        }
                     }
 
                 }, {
@@ -105,7 +121,8 @@ class MainActivity : BaseActivity() {
 
     private fun initViewModels() {
 
-        mainViewModel = ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
+        mainViewModel =
+            ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
 
     }
 
@@ -154,7 +171,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    private fun initRecyclerView(estateList:List<Estate>) {
+    private fun initRecyclerView(estateList: List<Estate>) {
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList

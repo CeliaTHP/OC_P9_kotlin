@@ -1,15 +1,21 @@
 package com.example.oc_p9_kotlin.databases
 
+import android.content.ContentValues
 import android.content.Context
 import android.location.Location
+import android.telecom.Call
 import android.util.Log
 import androidx.room.Database
+import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.oc_p9_kotlin.daos.EstateDao
+import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.EstateType
 import com.google.gson.Gson
 import java.util.Date
 
@@ -26,6 +32,7 @@ abstract class EstateDatabase : RoomDatabase() {
     companion object {
 
         private const val TAG = "EstateDatabase"
+
         @Volatile
         private var INSTANCE: EstateDatabase? = null
 
@@ -43,15 +50,51 @@ abstract class EstateDatabase : RoomDatabase() {
                         EstateDatabase::class.java,
                         DATABASE_NAME
                     )
-
-
+                        //.addCallback(prepopulateDatabase())
                         .build()
                 INSTANCE = instance
                 return instance
             }
         }
 
+        private fun prepopulateDatabase(): Callback {
+            return object : Callback() {
+
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+
+                    val contentValues = ContentValues().apply {
+                        put("id", 0)
+                        put("type", EstateType.APPARTMENT.name)
+                        put("city", "PreParis")
+                        put("price_in_dollars", 360000.0)
+                        put("surface_in_square_meters", 50)
+                        put("rooms", 4)
+                        put("bathrooms", 1)
+                        put("bedrooms", 2)
+                        put("address", "00 green road 75001, PreParis")
+                        put("latitude", 48.87868213644286)
+                        put("longitude", 2.3641768593711796)
+                        put(
+                            "description",
+                            "Super description from prepopulated database...Super description from prepopulated database...Super description from prepopulated database..." +
+                                    "Super description from prepopulated database...Super description from prepopulated database...Super description from prepopulated database"
+                        )
+                        put("entry_date", Date().time)
+                        put("isAvailable", true)
+                        put("isFurnished", false)
+
+                    }
+
+                    db.insert(DATABASE_NAME, OnConflictStrategy.ABORT, contentValues)
+
+
+                }
+            }
+        }
+
     }
+
 
     internal class DateConverter {
         @TypeConverter
