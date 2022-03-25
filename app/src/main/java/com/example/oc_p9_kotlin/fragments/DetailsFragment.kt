@@ -50,22 +50,21 @@ class DetailsFragment : Fragment() {
         return binding.root
 
 
-
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        EventBus.getDefault().register(this)
+        // EventBus.getDefault().register(this)
 
     }
 
 
     @Subscribe(sticky = true)
-    public fun onEstateEvent(onEstateEvent: OnEstateEvent) {
-        val estate =  onEstateEvent.getSelectedEstate()
-        Log.d(TAG,estate.toString())
+    fun onEstateEvent(onEstateEvent: OnEstateEvent) {
+        val estate = onEstateEvent.getSelectedEstate()
+        Log.d(TAG, estate.toString())
         updateUI(estate)
     }
 
@@ -79,7 +78,7 @@ class DetailsFragment : Fragment() {
         startMarker.setInfoWindow(null)
         startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        startMarker.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_location_red,null)
+        startMarker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
 
         binding.map.overlays.add(startMarker)
         binding.map.controller.setCenter(startPoint)
@@ -101,7 +100,8 @@ class DetailsFragment : Fragment() {
 
     private fun updateUI(estate: Estate) {
 
-        binding.detailsType.text = estate.type.toString().lowercase().replaceFirstChar { it.uppercase()  }
+        binding.detailsType.text =
+            estate.type.toString().lowercase().replaceFirstChar { it.uppercase() }
         binding.detailsDescriptionText.text = estate.description
         binding.detailsCity.text = estate.city
         binding.detailsSurface.text =
@@ -120,15 +120,15 @@ class DetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if(EventBus.getDefault().isRegistered(this))
-        EventBus.getDefault().unregister(this);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
     }
 
     override fun onStop() {
         super.onStop()
-        if(EventBus.getDefault().isRegistered(this))
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
 
     }
 
