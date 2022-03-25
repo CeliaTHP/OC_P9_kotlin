@@ -10,6 +10,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -44,10 +45,8 @@ class MainActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private var estateList = FakeEstateApi.getFakeEstateList()
-    private var databaseEstateList: List<Estate>? = null
+    private var estateList = emptyList<Estate>()
 
-    private var selectedEstate: Estate? = null
     private lateinit var mainViewModel: MainViewModel
 
     private var onEstateEvent = OnEstateEvent()
@@ -58,10 +57,11 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbar.overflowIcon =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
         setSupportActionBar(binding.toolbar)
 
         //default estate
-        selectedEstate = estateList[0]
 
 
         initViewModels()
@@ -71,9 +71,6 @@ class MainActivity : BaseActivity() {
         //TODO : uncomment to display map
         requestMapPermissions()
 
-
-        onEstateEvent.setSelectedEstate(estateList[0])
-        EventBus.getDefault().postSticky(onEstateEvent)
 
 /*        val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -96,18 +93,25 @@ class MainActivity : BaseActivity() {
             .subscribe(
                 {
                     if (it.isNullOrEmpty()) {
+                        //Generating data on our database
                         Log.d(TAG, "generateData")
                         mainViewModel.generateData()
 
                     } else {
-                        Log.d(TAG, "data already found")
+                        //Updating our list with retrieved data
+                        estateList = it
+                        Log.d(TAG, "data already found : list = " + estateList.size)
+                        initRecyclerView(estateList)
 
+                        //Setting our first item as default selected estate
+                        Log.d(TAG, "set default estate " + estateList[0])
+                        onEstateEvent.setSelectedEstate(estateList[0])
+                        EventBus.getDefault().postSticky(onEstateEvent)
 
-                        initRecyclerView(it)
-                        for (estate in it) {
+                        for (estate in estateList) {
                             Log.d(
-                                TAG,
-                                estate.location.latitude.toString() + " - " + estate.location.longitude.toString()
+                                TAG, "location = " +
+                                        estate.location.latitude.toString() + " - " + estate.location.longitude.toString()
                             )
                         }
                     }
@@ -176,8 +180,6 @@ class MainActivity : BaseActivity() {
         binding.listRecyclerView.adapter = EstateAdapter(
             estateList
         ) {
-            //if fragmentDetail present, tablet
-            //else mobile
 
             onEstateClick(it)
         }
