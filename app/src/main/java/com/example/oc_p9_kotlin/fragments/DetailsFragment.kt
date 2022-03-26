@@ -1,5 +1,6 @@
 package com.example.oc_p9_kotlin.fragments
 
+import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -17,8 +18,10 @@ import com.example.oc_p9_kotlin.utils.InternetUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.config.Configuration
+import org.osmdroid.events.MapListener
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
 
@@ -66,6 +69,7 @@ class DetailsFragment : Fragment() {
     private fun initListeners() {
         binding.detailsRefreshButton.setOnClickListener {
             estate?.let {
+                Log.d(TAG, "refresh button click listener")
                 updateUI(it)
             }
         }
@@ -75,15 +79,30 @@ class DetailsFragment : Fragment() {
     @Subscribe(sticky = true)
     fun onEstateEvent(onEstateEvent: OnEstateEvent) {
         estate = onEstateEvent.getSelectedEstate()
-        Log.d(TAG, estate.toString())
 
         estate?.let {
+            Log.d(TAG, "onEstateEvent : " + estate.toString())
             updateUI(it)
+
         }
+
     }
+
 
     private fun initMap(estate: Estate) {
 
+        if (InternetUtils.isNetworkAvailable(activity)) {
+            Log.d(TAG, "internet is Available")
+            binding.detailsMapView.visibility = View.VISIBLE
+            binding.detailsConnectionErrorText.visibility = View.GONE
+            binding.detailsRefreshButton.visibility = View.GONE
+        } else {
+            binding.detailsMapView.visibility = View.GONE
+            binding.detailsRefreshButton.visibility = View.VISIBLE
+            binding.detailsConnectionErrorText.visibility = View.VISIBLE
+            Log.d(TAG, "internet is not Available")
+
+        }
 
         binding.detailsMapView.setTileSource(TileSourceFactory.MAPNIK)
         binding.detailsMapView.controller.setZoom(16.0)
@@ -106,15 +125,21 @@ class DetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.detailsMapView.onResume()
+
     }
 
     override fun onPause() {
         super.onPause()
         binding.detailsMapView.onPause()
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+            Log.d(TAG, "onPause unregister EventBus")
+        }
     }
 
 
     private fun updateUI(estate: Estate) {
+        Log.d(TAG, "updateUI $estate")
 
         binding.detailsType.text =
             estate.type.toString().lowercase().replaceFirstChar { it.uppercase() }
@@ -128,34 +153,33 @@ class DetailsFragment : Fragment() {
         binding.detailsBedrooms.text =
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
-        if (InternetUtils.isNetworkAvailable(activity)) {
-            Log.d(TAG, "internet is Available")
-            binding.detailsMapView.visibility = View.VISIBLE
-            binding.detailsConnectionErrorText.visibility = View.GONE
-            binding.detailsRefreshButton.visibility = View.GONE
-            initMap(estate)
-        } else {
-            binding.detailsMapView.visibility = View.GONE
-            binding.detailsRefreshButton.visibility = View.VISIBLE
-            binding.detailsConnectionErrorText.visibility = View.VISIBLE
-            Log.d(TAG, "internet is not Available")
+        initMap(estate)
 
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        if (!EventBus.getDefault().isRegistered(this)) {
+            Log.d(TAG, "register EventBus")
+            EventBus.getDefault().register(this)
         }
 
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
     }
 
     override fun onStop() {
         super.onStop()
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+            Log.d(TAG, "unregister EventBus")
+        }
+
 
     }
 
@@ -164,3 +188,5 @@ class DetailsFragment : Fragment() {
         _binding = null
     }
 }
+
+

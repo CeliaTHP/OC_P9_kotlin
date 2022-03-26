@@ -47,7 +47,6 @@ object InternetUtils {
 
             if (networkIdList.isEmpty()) {
                 Log.d(TAG, "EMPTY ID LIST ")
-                // L
             }
         }
 
@@ -62,9 +61,11 @@ object InternetUtils {
 
     fun isNetworkAvailable(context: Context?): Boolean {
         if (context == null) return false
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
             if (capabilities != null) {
                 when {
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
@@ -88,7 +89,6 @@ object InternetUtils {
     }
 
     fun unregisterNetworkCallback(context: Context) {
-
         val connectivityManager =
             context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.unregisterNetworkCallback(networkCallback)
@@ -122,6 +122,7 @@ object InternetUtils {
             networkRequest,
             networkCallback
         )
+
 
     }
 

@@ -147,7 +147,6 @@ class MainActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         InternetUtils.registerNetworkCallback(this)
-
     }
 
 
@@ -203,6 +202,7 @@ class MainActivity : BaseActivity() {
 
         updateDetails()
     }
+
 
 
     fun updateDetails() {
