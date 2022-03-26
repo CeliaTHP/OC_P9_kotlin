@@ -5,6 +5,7 @@
     <string name="list_fragment_label">List Fragment</string>
     <string name="details_fragment_label">Details Fragment</string>
     <string name="split_fragment_label">Split Fragment</string>
+    <string name="connection_error">connection error : cannot load map. Try again</string>
 
 
     <!--Details-->
@@ -21,7 +22,6 @@
     <string name="details_bedrooms">Bedrooms : %1$s</string>
     <string name="details_specs">Informations</string>
     <string name="details_map">Map</string>
-
 
 
     <string name="next">Next</string>

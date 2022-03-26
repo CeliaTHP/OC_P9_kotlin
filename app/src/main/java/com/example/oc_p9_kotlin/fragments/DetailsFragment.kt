@@ -1,5 +1,6 @@
 package com.example.oc_p9_kotlin.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -12,6 +13,7 @@ import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.utils.InternetUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.config.Configuration
@@ -70,18 +72,20 @@ class DetailsFragment : Fragment() {
 
     private fun initMap(estate: Estate) {
 
-        binding.map.setTileSource(TileSourceFactory.MAPNIK)
-        binding.map.controller.setZoom(16.0)
+
+        binding.detailsMapView.setTileSource(TileSourceFactory.MAPNIK)
+        binding.detailsMapView.controller.setZoom(16.0)
         val startPoint = GeoPoint(estate.location.latitude, estate.location.longitude)
 
-        val startMarker = Marker(binding.map)
+        val startMarker = Marker(binding.detailsMapView)
         startMarker.setInfoWindow(null)
         startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         startMarker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
 
-        binding.map.overlays.add(startMarker)
-        binding.map.controller.setCenter(startPoint)
+        //add nearby places marker
+        binding.detailsMapView.overlays.add(startMarker)
+        binding.detailsMapView.controller.setCenter(startPoint)
 
 
     }
@@ -89,12 +93,12 @@ class DetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.map.onResume()
+        binding.detailsMapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.map.onPause()
+        binding.detailsMapView.onPause()
     }
 
 
@@ -113,7 +117,19 @@ class DetailsFragment : Fragment() {
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
         //TODO : uncomment to display map
-        initMap(estate)
+
+        if (InternetUtils.isNetworkAvailable(activity)) {
+            Log.d(TAG, "internet is Available")
+            binding.detailsMapView.visibility = View.VISIBLE
+            binding.detailsConnectionErrorText.visibility = View.GONE
+
+            initMap(estate)
+        } else {
+            binding.detailsMapView.visibility = View.GONE
+            binding.detailsConnectionErrorText.visibility = View.VISIBLE
+            Log.d(TAG, "internet is not Available")
+
+        }
 
 
     }

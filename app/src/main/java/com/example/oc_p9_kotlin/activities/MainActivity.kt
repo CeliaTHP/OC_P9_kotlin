@@ -59,6 +59,7 @@ class MainActivity : BaseActivity() {
 
         binding.toolbar.overflowIcon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
+        //binding.toolbar.setTitleTextAppearance(this,R.style.CustomTextViewStyle)
         setSupportActionBar(binding.toolbar)
 
         //default estate
@@ -78,6 +79,7 @@ class MainActivity : BaseActivity() {
 
  */
         binding.fab.setOnClickListener {
+
 
         }
 
@@ -132,7 +134,6 @@ class MainActivity : BaseActivity() {
 
     override fun onStop() {
         super.onStop()
-
         InternetUtils.unregisterNetworkCallback(this)
     }
 
