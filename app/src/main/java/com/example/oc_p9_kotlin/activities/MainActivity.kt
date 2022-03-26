@@ -78,13 +78,20 @@ class MainActivity : BaseActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
  */
-        binding.fab.setOnClickListener {
+        initListeners()
 
-
-        }
 
 
         Log.d(TAG, "onCreate")
+
+    }
+
+    private fun initListeners() {
+
+        binding.fab.setOnClickListener {
+
+        }
+
 
     }
 

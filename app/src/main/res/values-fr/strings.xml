@@ -6,7 +6,7 @@
     <string name="list_fragment_label">Fragment Liste</string>
     <string name="details_fragment_label">Fragment Détails</string>
     <string name="split_fragment_label">Fragment Split</string>
-    <string name="connection_error">erreur de connexion : impossible de charger la carte. Veuillez réessayer</string>
+    <string name="connection_error">erreur de connexion : impossible de charger la carte.\nveuillez réessayer</string>
 
 
     <!--Details-->

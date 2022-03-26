@@ -33,6 +33,7 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
+    private var estate: Estate? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -58,16 +59,27 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // EventBus.getDefault().register(this)
+        initListeners()
 
+    }
+
+    private fun initListeners() {
+        binding.detailsRefreshButton.setOnClickListener {
+            estate?.let {
+                updateUI(it)
+            }
+        }
     }
 
 
     @Subscribe(sticky = true)
     fun onEstateEvent(onEstateEvent: OnEstateEvent) {
-        val estate = onEstateEvent.getSelectedEstate()
+        estate = onEstateEvent.getSelectedEstate()
         Log.d(TAG, estate.toString())
-        updateUI(estate)
+
+        estate?.let {
+            updateUI(it)
+        }
     }
 
     private fun initMap(estate: Estate) {
@@ -116,16 +128,15 @@ class DetailsFragment : Fragment() {
         binding.detailsBedrooms.text =
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
 
-        //TODO : uncomment to display map
-
         if (InternetUtils.isNetworkAvailable(activity)) {
             Log.d(TAG, "internet is Available")
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
-
+            binding.detailsRefreshButton.visibility = View.GONE
             initMap(estate)
         } else {
             binding.detailsMapView.visibility = View.GONE
+            binding.detailsRefreshButton.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.VISIBLE
             Log.d(TAG, "internet is not Available")
 
