@@ -26,6 +26,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/details_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_type"
+            tools:text="350 000 $" />
+
+        <TextView
             android:id="@+id/details_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +59,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_type" />
+            app:layout_constraintTop_toBottomOf="@id/details_price" />
 
 
         <ImageView
@@ -217,14 +230,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_specs_layout" />
 
+        <TextView
+            android:id="@+id/details_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/main_text"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_map"
+            tools:text="@string/details_address" />
+
         <org.osmdroid.views.MapView
             android:id="@+id/details_map_view"
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/details_map" />
+            app:layout_constraintTop_toBottomOf="@id/details_address" />
 
 
         <ImageView
@@ -246,6 +272,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingBottom="10dp"
             android:text="@string/connection_error"
             android:textColor="@color/grey"
             android:textSize="14sp"

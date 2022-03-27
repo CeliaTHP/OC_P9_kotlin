@@ -16,7 +16,7 @@ data class Estate(
     var type: EstateType,
     var city: String,
     @ColumnInfo(name = "price_in_dollars")
-    var priceInDollars: Double,
+    var priceInEuros: Int,
     @ColumnInfo(name = "surface_in_square_meters")
     var surfaceInSquareMeters: Int,
     var rooms: Int,

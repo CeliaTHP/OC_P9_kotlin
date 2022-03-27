@@ -15,6 +15,9 @@ import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.InternetUtils
+import com.example.oc_p9_kotlin.utils.Utils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.config.Configuration
@@ -143,8 +146,11 @@ class DetailsFragment : Fragment() {
 
         binding.detailsType.text =
             estate.type.toString().lowercase().replaceFirstChar { it.uppercase() }
-        binding.detailsDescriptionText.text = estate.description
+
+        binding.detailsPrice.text = Utils().getPrice(estate)
         binding.detailsCity.text = estate.city
+
+        binding.detailsDescriptionText.text = estate.description
         binding.detailsSurface.text =
             getString(R.string.details_surface, estate.surfaceInSquareMeters)
         binding.detailsRooms.text = getString(R.string.details_rooms, estate.rooms.toString())
@@ -152,6 +158,8 @@ class DetailsFragment : Fragment() {
             getString(R.string.details_bathrooms, estate.bathrooms.toString())
         binding.detailsBedrooms.text =
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
+        binding.detailsAddress.text = estate.address
+
 
         initMap(estate)
 

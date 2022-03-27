@@ -1,14 +1,15 @@
 package com.example.oc_p9_kotlin.adapters
 
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.utils.Utils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 
 class EstateAdapter(
@@ -44,7 +45,9 @@ class EstateAdapter(
         holder.itemEstateLayoutBinding.itemEstateType.text =
             estate.type.name.lowercase().replaceFirstChar { it.uppercase() }
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
-        holder.itemEstateLayoutBinding.itemEstatePrice.text = estate.priceInDollars.toString()
+
+        holder.itemEstateLayoutBinding.itemEstatePrice.text =
+            Utils().getPrice(estate)
 
         if (!estate.isAvailable)
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE

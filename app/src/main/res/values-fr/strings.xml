@@ -20,6 +20,8 @@
     <string name="details_bedrooms">Chambres : %1$s</string>
     <string name="details_specs">Informations</string>
     <string name="details_map">Carte</string>
+    <string name="details_address">Address</string>
+
 
 
     <string name="next">Suivant</string>
@@ -33,7 +35,6 @@
 
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">Ville</string>
-    <string name="item_estate_price">0€</string>
     <string name="item_estate_sold">Vendu</string>
 
 

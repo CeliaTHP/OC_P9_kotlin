@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_purple"
                 android:textSize="20sp"
-                tools:text="@string/item_estate_price" />
+                tools:text="350 000 $" />
 
 
         </LinearLayout>
@@ -69,7 +69,7 @@
             android:text="@string/item_estate_sold"
             android:textAllCaps="true"
             android:textColor="@color/red"
-            android:textSize="32sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/item_estate_pic"

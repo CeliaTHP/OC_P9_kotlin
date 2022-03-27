@@ -1,16 +1,15 @@
 package com.example.oc_p9_kotlin.utils
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.util.Log
+import com.example.oc_p9_kotlin.models.Estate
 import java.text.DateFormat
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 class Utils {
@@ -27,12 +26,12 @@ class Utils {
      */
     fun convertDollarToEuro(dollars: Int): Int {
         //was 0.812
-        return Math.round(dollars * 0.88).toInt()
+        return Math.round(dollars * 0.91343).toInt()
     }
 
     fun convertEuroToDollars(euros: Int): Int {
         //was 0.812
-        return Math.round(euros / 0.88).toInt()
+        return Math.round(euros / 0.91343).toInt()
     }
 
     /**
@@ -68,7 +67,30 @@ class Utils {
     }
 
 
-    //Verify if internet is enabled on the device
+    fun getPrice(estate: Estate): String {
+
+        val language = Locale.getDefault().language
+
+        var price: Int = estate.priceInEuros
+        val formatter: NumberFormat = DecimalFormat("#,###")
+
+        var currency = "€"
+
+        if (language != Locale.FRENCH.language) {
+            currency = "$"
+            price = convertEuroToDollars(price)
+            Log.d(TAG, "was " + estate.priceInEuros+ " is in Dollars : " + price )
+        }
+
+        val formattedNumber: String = formatter.format(price)
+
+
+        return "$formattedNumber $currency"
+
+    }
+
+
+//Verify if internet is enabled on the device
 /*
 
     fun isInternetAvailable(context: Context?): Boolean {
@@ -108,24 +130,24 @@ class Utils {
  */
 
 
-    /*
-    fun isInternetAvailable(context: Context):Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+/*
+fun isInternetAvailable(context: Context):Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        val nw = connectivityManager.activeNetwork ?: return false
+    val nw = connectivityManager.activeNetwork ?: return false
 
-        val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
-        return when {
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
-            else -> false
-        }
+    val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+    return when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+        else -> false
     }
+}
 
-     */
+ */
 
 
 }
