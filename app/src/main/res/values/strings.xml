@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
     <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="list_fragment_label">List Fragment</string>
     <string name="details_fragment_label">Details Fragment</string>
     <string name="split_fragment_label">Split Fragment</string>
     <string name="connection_error">connection error : cannot load map.\nPlease try again</string>
-
 
     <!--Details-->
     <string name="details_type">Type</string>
@@ -24,19 +24,25 @@
     <string name="details_map">Map</string>
     <string name="details_address">Address</string>
 
-
-
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_list_fragment">Hello list fragment</string>
-    <string name="hello_main_fragment">Hello main fragment</string>
-    <string name="hello_details_fragment">Hello details fragment. Arg: %1$s</string>
-    <string name="hello_split_fragment">Hello split fragment</string>
-
+    <!--Item Estate-->
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">City</string>
     <string name="item_estate_sold">Sold</string>
+
+    <!--Add Estate-->
+    <string name="add_estate_title">Add an estate</string>
+
+        <string-array name="estate_type_array">
+            <item>House</item>
+            <item>Apartment</item>
+            <item>Building</item>
+            <item>Loft</item>
+            <item>Castle</item>
+            <item>Boat</item>
+            <item>Mansion</item>
+            <item>Site</item>
+            <item>Other</item>
+        </string-array>
 
 
 </resources>

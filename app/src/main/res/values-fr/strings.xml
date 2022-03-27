@@ -2,17 +2,18 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
     <string name="action_settings">Paramètres</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="list_fragment_label">Fragment Liste</string>
     <string name="details_fragment_label">Fragment Détails</string>
     <string name="split_fragment_label">Fragment Split</string>
     <string name="connection_error">erreur de connexion : impossible de charger la carte.\nveuillez réessayer</string>
 
-
     <!--Details-->
     <string name="details_type">Type</string>
     <string name="details_media">Médias</string>
     <string name="details_description">Description</string>
+
     <!--Specs-->
     <string name="details_surface">Surface : %1$d m²</string>
     <string name="details_rooms">Pièces : %1$s</string>
@@ -22,20 +23,29 @@
     <string name="details_map">Carte</string>
     <string name="details_address">Address</string>
 
-
-
-    <string name="next">Suivant</string>
-    <string name="previous">Précédent</string>
-
-
-    <string name="hello_list_fragment">Bonjour list fragment</string>
-    <string name="hello_main_fragment">Bonjour main fragment</string>
-    <string name="hello_details_fragment">Bonjour details fragment. Arg: %1$s</string>
-    <string name="hello_split_fragment">Bonjour split fragment</string>
-
+    <!--Item Estate-->
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">Ville</string>
     <string name="item_estate_sold">Vendu</string>
+
+    <!--Add Estate-->
+    <string name="add_estate_title">Ajouter un bien</string>
+
+
+    <string-array name="estate_type_array">
+        <item>Maison</item>
+        <item>Appartement</item>
+        <item>Bâtiment</item>
+        <item>Loft</item>
+        <item>Chateau</item>
+        <item>Bateau</item>
+        <item>Manoir</item>
+        <item>Site</item>
+        <item>Other</item>
+    </string-array>
+
+
+
 
 
 </resources>

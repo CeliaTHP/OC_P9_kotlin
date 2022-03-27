@@ -65,7 +65,7 @@ abstract class EstateDatabase : RoomDatabase() {
 
                     val contentValues = ContentValues().apply {
                         put("id", 0)
-                        put("type", EstateType.APPARTMENT.name)
+                        put("type", EstateType.APARTMENT.name)
                         put("city", "PreParis")
                         put("price_in_dollars", 360000.0)
                         put("surface_in_square_meters", 50)

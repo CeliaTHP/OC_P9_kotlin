@@ -56,7 +56,7 @@ object FakeEstateApi {
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
             "0",
-            EstateType.APPARTMENT,
+            EstateType.APARTMENT,
             "Paris",
             360000,
             50,
@@ -138,7 +138,7 @@ object FakeEstateApi {
 
         Estate(
             "4",
-            EstateType.APPARTMENT,
+            EstateType.APARTMENT,
             "Paris",
             60000,
             28,

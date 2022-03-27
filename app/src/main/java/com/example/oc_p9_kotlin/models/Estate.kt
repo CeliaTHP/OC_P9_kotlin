@@ -44,7 +44,7 @@ data class Estate(
 
 enum class EstateType {
     HOUSE,
-    APPARTMENT,
+    APARTMENT,
     BUILDING,
     LOFT,
     CASTLE,

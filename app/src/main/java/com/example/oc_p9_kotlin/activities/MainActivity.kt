@@ -1,6 +1,7 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -59,11 +60,9 @@ class MainActivity : BaseActivity() {
 
         binding.toolbar.overflowIcon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
-        //binding.toolbar.setTitleTextAppearance(this,R.style.CustomTextViewStyle)
         setSupportActionBar(binding.toolbar)
 
         //default estate
-
 
         initViewModels()
 
@@ -88,7 +87,7 @@ class MainActivity : BaseActivity() {
     private fun initListeners() {
 
         binding.fab.setOnClickListener {
-
+            this.startActivity(Intent(this, AddEstateActivity::class.java))
 
         }
 
