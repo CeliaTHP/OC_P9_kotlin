@@ -21,7 +21,8 @@
     <string name="details_bedrooms">Chambres : %1$s</string>
     <string name="details_specs">Informations</string>
     <string name="details_map">Carte</string>
-    <string name="details_address">Address</string>
+    <string name="details_address">Adresse</string>
+
 
     <!--Item Estate-->
     <string name="item_estate_type">Type</string>
@@ -30,6 +31,10 @@
 
     <!--Add Estate-->
     <string name="add_estate_title">Ajouter un bien</string>
+    <string name="add_estate_type">Type</string>
+    <string name="add_estate_city">Ville</string>
+    <string name="add_estate_price">Prix</string>
+    <string name="add_estate_surface">Surface</string>
 
 
     <string-array name="estate_type_array">

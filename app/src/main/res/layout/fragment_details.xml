@@ -308,11 +308,10 @@
                     android:id="@+id/details_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="10dp"
                     android:textColor="@color/main_text"
                     android:textSize="14sp"
                     android:textStyle="italic"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_map"
                     tools:text="@string/details_address" />

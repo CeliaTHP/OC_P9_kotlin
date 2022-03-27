@@ -13,25 +13,27 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-     <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
-     <item name="android:buttonStyle">@style/CustomButtonStyle</item>
+        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
+        <item name="android:buttonStyle">@style/CustomButtonStyle</item>
+        <item name="actionMenuTextColor">@color/red</item>
 
- </style>
+    </style>
 
- <style name="CustomTextViewStyle" parent="android:Widget.TextView">
-     <item name="fontFamily">sans-serif</item>
- </style>
 
- <style name="CustomButtonStyle" parent="android:Widget.Holo.Button">
-     <item name="fontFamily">sans-serif</item>
- </style>
+    <style name="CustomTextViewStyle" parent="android:Widget.TextView">
+        <item name="fontFamily">sans-serif</item>
+    </style>
 
- <style name="Theme.OC_P9_kotlin.NoActionBar">
-     <item name="windowActionBar">false</item>
-     <item name="windowNoTitle">true</item>
- </style>
+    <style name="CustomButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="fontFamily">sans-serif</item>
+    </style>
 
- <style name="Theme.OC_P9_kotlin.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.OC_P9_kotlin.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
- <style name="Theme.OC_P9_kotlin.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.OC_P9_kotlin.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.OC_P9_kotlin.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

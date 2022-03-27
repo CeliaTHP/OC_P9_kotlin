@@ -24,6 +24,7 @@
     <string name="details_map">Map</string>
     <string name="details_address">Address</string>
 
+
     <!--Item Estate-->
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">City</string>
@@ -31,8 +32,14 @@
 
     <!--Add Estate-->
     <string name="add_estate_title">Add an estate</string>
+    <string name="add_estate_type">Type</string>
+    <string name="add_estate_city">City</string>
+    <string name="add_estate_price">Price</string>
+    <string name="add_estate_surface">Surface</string>
 
-        <string-array name="estate_type_array">
+
+
+    <string-array name="estate_type_array">
             <item>House</item>
             <item>Apartment</item>
             <item>Building</item>

@@ -8,8 +8,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
@@ -19,24 +17,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
-import com.example.oc_p9_kotlin.databases.EstateDatabase
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
-import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.addTo
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
-class MainActivity : BaseActivity() {
+class MainActivity : CompositeDisposableActivity() {
 
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
@@ -171,13 +161,18 @@ class MainActivity : BaseActivity() {
         for (i in grantResults.indices) {
             permissionsToRequest.add(permissions[i])
         }
+
+        /*
         if (permissionsToRequest.size > 0) {
+
             ActivityCompat.requestPermissions(
                 this,
                 permissionsToRequest.toArray(arrayOfNulls(0)),
                 REQUEST_PERMISSIONS_REQUEST_CODE
             )
-        }
+
+    }
+         */
     }
 
 
@@ -223,28 +218,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d(TAG, "onKeyUp")
-        handleBackButton()
-        return super.onKeyUp(keyCode, event)
-
-    }
-
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        Log.d(TAG, "dispatchKeyEvent")
-        return super.dispatchKeyEvent(event)
-
-
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d(TAG, "onKeyDown")
-        //handleBackButton()
-        return super.onKeyDown(keyCode, event)
-
-
-    }
-
     override fun onBackPressed() {
 
         //super.onBackPressed()
@@ -258,6 +231,7 @@ class MainActivity : BaseActivity() {
 
 
     }
+
 
     fun handleBackButton() {
 
