@@ -81,7 +81,6 @@ class MainActivity : BaseActivity() {
         initListeners()
 
 
-
         Log.d(TAG, "onCreate")
 
     }
@@ -89,6 +88,7 @@ class MainActivity : BaseActivity() {
     private fun initListeners() {
 
         binding.fab.setOnClickListener {
+
 
         }
 
@@ -202,7 +202,6 @@ class MainActivity : BaseActivity() {
 
         updateDetails()
     }
-
 
 
     fun updateDetails() {

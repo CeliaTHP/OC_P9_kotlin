@@ -4,63 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="8dp"
-    app:cardCornerRadius="20dp"
     android:layout_margin="10dp"
     android:background="?android:attr/selectableItemBackground"
->
+    android:elevation="8dp"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
 
-    <ImageView
-        android:id="@+id/item_estate_pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_house"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main_text" />
+        <ImageView
+            android:id="@+id/item_estate_pic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_house"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/main_text" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/item_estate_pic"
-        app:layout_constraintStart_toEndOf="@id/item_estate_pic"
-        app:layout_constraintTop_toTopOf="@id/item_estate_pic">
-
-        <TextView
-            android:id="@+id/item_estate_type"
+        <LinearLayout
+            android:id="@+id/item_estate_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/item_estate_pic"
+            app:layout_constraintStart_toEndOf="@id/item_estate_pic"
+            app:layout_constraintTop_toTopOf="@id/item_estate_pic">
+
+            <TextView
+                android:id="@+id/item_estate_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="@string/item_estate_type" />
+
+            <TextView
+                android:id="@+id/item_estate_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_text"
+                tools:text="@string/item_estate_city" />
+
+            <TextView
+                android:id="@+id/item_estate_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_purple"
+                android:textSize="20sp"
+                tools:text="@string/item_estate_price" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_estate_sold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="-20"
+            android:text="@string/item_estate_sold"
+            android:textAllCaps="true"
+            android:textColor="@color/red"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/main_text"
-            tools:text="@string/item_estate_type" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/item_estate_pic"
+            app:layout_constraintEnd_toEndOf="@id/item_estate_pic"
+            app:layout_constraintStart_toStartOf="@id/item_estate_pic"
+            app:layout_constraintTop_toTopOf="@id/item_estate_pic" />
 
-        <TextView
-            android:id="@+id/item_estate_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/main_text"
-            tools:text="@string/item_estate_city" />
-
-        <TextView
-            android:id="@+id/item_estate_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/main_purple"
-            tools:text="@string/item_estate_price" />
-
-
-
-    </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

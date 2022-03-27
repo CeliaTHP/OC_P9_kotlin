@@ -34,5 +34,7 @@
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">Ville</string>
     <string name="item_estate_price">0€</string>
+    <string name="item_estate_sold">Vendu</string>
+
 
 </resources>

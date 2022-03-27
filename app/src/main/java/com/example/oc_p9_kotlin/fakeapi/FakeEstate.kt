@@ -38,6 +38,20 @@ object FakeEstateApi {
         longitude = 2.3791019838878382
     }
 
+    private var location5 = Location("5").apply {
+        latitude = 48.89219394766597
+        longitude = 2.2218665353504528
+    }
+
+    private var location6 = Location("6").apply {
+        latitude = 49.00061043126319
+        longitude = 1.6919191257189081
+    }
+
+    private var location7 = Location("7").apply {
+        latitude = 45.680565545670596
+        longitude = 1.0997837831349402
+    }
 
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
@@ -117,7 +131,7 @@ object FakeEstateApi {
                     " a grand dining room, a sun room and a roomy garage.",
             Date(),
             null,
-            isAvailable = true,
+            isAvailable = false,
             isFurnished = true,
             null
         ),
@@ -138,6 +152,64 @@ object FakeEstateApi {
             Date(),
             null,
             isAvailable = true,
+            isFurnished = false,
+            null
+        ),
+        Estate(
+            "5",
+            EstateType.LOFT,
+            "Nanterre",
+            72000.0,
+            32,
+            3,
+            1,
+            2,
+            "5 green road 92000, Nanterre",
+            location5,
+            "The building is shaped like an L. The extension extends into a covered patio circling around half the house." +
+                    "The second floor is the same size as the first, but part of it hangs over the edge of the floor below, creating an overhang on one side and a balcony on the other." +
+                    "This floor has a very different style than the floor below.",
+            Date(),
+            null,
+            isAvailable = true,
+            isFurnished = true,
+            null
+        ),
+        Estate(
+            "6",
+            EstateType.BUILDING,
+            "Mantes-la-Jolie",
+            320000.0,
+            52,
+            6,
+            3,
+            5,
+            "6 green road 78200, Mantes-La-Jolie",
+            location6,
+            "From the outside this house looks stylish. It has been built with yellow pine wood and has white cedar wooden decorations." +
+                    "Tall, half rounded windows add to the overall style of the house and have been added to the house in a mostly symmetric way.",
+            Date(),
+            null,
+            isAvailable = true,
+            isFurnished = false,
+            null
+        ),
+        Estate(
+            "7",
+            EstateType.HOUSE,
+            "Les Cars",
+            650000.0,
+            60,
+            5,
+            2,
+            4,
+            "7 green road 87230, Les Cars",
+            location7,
+            "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
+                    "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
+            Date(),
+            null,
+            isAvailable = false,
             isFurnished = false,
             null
         )

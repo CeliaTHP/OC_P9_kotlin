@@ -1,10 +1,15 @@
 package com.example.oc_p9_kotlin.adapters
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
+
 
 class EstateAdapter(
     val estateList: List<Estate>,
@@ -36,13 +41,17 @@ class EstateAdapter(
         holder.itemView.setOnClickListener {
             onClick(estate)
         }
-        holder.itemEstateLayoutBinding.itemEstateType.text = estate.type.name.lowercase().replaceFirstChar { it.uppercase()  }
-
+        holder.itemEstateLayoutBinding.itemEstateType.text =
+            estate.type.name.lowercase().replaceFirstChar { it.uppercase() }
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
         holder.itemEstateLayoutBinding.itemEstatePrice.text = estate.priceInDollars.toString()
 
+        if (!estate.isAvailable)
+            holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE
+
 
     }
+
 
     override fun getItemCount(): Int {
         return estateList.size
