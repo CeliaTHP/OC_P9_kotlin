@@ -10,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/details_main_card"
@@ -282,6 +281,7 @@
             android:layout_margin="10dp"
             android:elevation="8dp"
             app:cardCornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/details_specs_card">
@@ -289,8 +289,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/details_map"
@@ -320,7 +319,8 @@
                     android:id="@+id/details_map_view"
                     android:layout_width="match_parent"
                     android:layout_height="280dp"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_address" />
