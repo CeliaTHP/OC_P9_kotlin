@@ -49,6 +49,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         //TODO : uncomment to display map
         Configuration.getInstance()
             .load(context, PreferenceManager.getDefaultSharedPreferences(context));
@@ -145,7 +146,7 @@ class DetailsFragment : Fragment() {
         Log.d(TAG, "updateUI $estate")
 
         binding.detailsType.text =
-            estate.type.toString().lowercase().replaceFirstChar { it.uppercase() }
+            estate.getEstateType(context)
 
         binding.detailsPrice.text = Utils().getPrice(estate)
         binding.detailsCity.text = estate.city

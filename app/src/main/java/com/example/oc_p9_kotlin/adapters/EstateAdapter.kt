@@ -55,17 +55,18 @@ class EstateAdapter(
         holder.itemView.setOnClickListener {
             onClick(estate)
         }
+
         holder.itemEstateLayoutBinding.itemEstateType.text =
-            estate.type.name.lowercase().replaceFirstChar { it.uppercase() }
+            estate.getEstateType(holder.itemView.context)
+
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
 
         holder.itemEstateLayoutBinding.itemEstatePrice.text =
             Utils().getPrice(estate)
 
-        if (!estate.isAvailable){
+        if (!estate.isAvailable) {
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.INVISIBLE
         }
 
