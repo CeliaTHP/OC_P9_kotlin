@@ -50,8 +50,17 @@
     <string name="add_estate_title">Add an estate</string>
     <string name="add_estate_type">Type</string>
     <string name="add_estate_city">City</string>
+    <string name="add_estate_address">Address</string>
     <string name="add_estate_price">Price</string>
     <string name="add_estate_surface">Surface</string>
+    <string name="add_estate_rooms">Room(s)</string>
+    <string name="add_estate_bathrooms">Bathroom(s)</string>
+    <string name="add_estate_bedrooms">Bedroom(s)</string>
+    <string name="add_estate_description">Description</string>
+    <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
+
+
+
 
     <string name="type_house">House</string>
     <string name="type_apartment">Apartment</string>

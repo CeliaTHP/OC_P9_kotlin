@@ -11,6 +11,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#ABB2B9</color>
 
+    <color name="lighter_background">#474747 </color>
     <color name="background">#292929</color>
 
     <color name="main_text">#FFFFFFFF</color>

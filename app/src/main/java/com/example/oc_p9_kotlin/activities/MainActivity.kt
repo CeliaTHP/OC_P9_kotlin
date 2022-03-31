@@ -301,7 +301,15 @@ class MainActivity : CompositeDisposableActivity() {
         for (i in 0 until menu.size()) {
             val item = menu.getItem(i)
             val s = SpannableString(item.title)
-            s.setSpan(ForegroundColorSpan(ResourcesCompat.getColor(resources,R.color.main_text,null)), 0, s.length, 0)
+            s.setSpan(
+                ForegroundColorSpan(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.main_text,
+                        null
+                    )
+                ), 0, s.length, 0
+            )
             item.title = s
         }
 

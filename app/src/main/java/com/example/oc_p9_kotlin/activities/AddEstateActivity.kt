@@ -14,9 +14,10 @@ import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 
 class AddEstateActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         private const val TAG = "AddEstateActivity"
     }
+
     private lateinit var binding: ActivityAddEstateBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +34,22 @@ class AddEstateActivity : AppCompatActivity() {
             AppCompatResources.getDrawable(this, R.drawable.ic_back_arrow)
 
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+
+        initListeners()
 
         initSpinner()
 
 
+    }
+
+    private fun initListeners() {
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        binding.fab.setOnClickListener {
+            Log.d(TAG, "can Create Estate")
+        }
     }
 
     private fun initSpinner() {

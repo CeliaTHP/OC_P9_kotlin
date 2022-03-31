@@ -48,8 +48,15 @@
     <string name="add_estate_title">Ajouter un bien</string>
     <string name="add_estate_type">Type</string>
     <string name="add_estate_city">Ville</string>
+    <string name="add_estate_address">Adresse</string>
     <string name="add_estate_price">Prix</string>
     <string name="add_estate_surface">Surface</string>
+    <string name="add_estate_rooms">Pièce(s)</string>
+    <string name="add_estate_bathrooms">Salle(s) de bains</string>
+    <string name="add_estate_bedrooms">Chambre(s)</string>
+    <string name="add_estate_description">Description</string>
+    <string name="add_estate_description_hint">De l\'extérieur, cette maison semble luxueuse. Elle a été construite avec …</string>
+
 
     <string name="type_house">Maison</string>
     <string name="type_apartment">Appartement</string>
