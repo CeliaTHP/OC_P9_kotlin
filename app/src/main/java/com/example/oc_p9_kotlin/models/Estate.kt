@@ -1,10 +1,12 @@
 package com.example.oc_p9_kotlin.models
 
+import android.content.Context
 import android.location.Location
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.oc_p9_kotlin.R
 import kotlinx.parcelize.Parcelize
 import java.util.*
 

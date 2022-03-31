@@ -1,5 +1,21 @@
 <resources>
+
+    <!-- App-->
     <string name="app_name">Real Estate Manager</string>
+
+    <!-- Actions-->
+    <string name="action_filter_all">See all</string>
+    <string name="action_filter">Filtres</string>
+    <string name="action_filter_house">See houses</string>
+    <string name="action_filter_apartments">See apartments</string>
+    <string name="action_filter_building">See buildings</string>
+    <string name="action_filter_loft">See lofts</string>
+    <string name="action_filter_castle">See castles</string>
+    <string name="action_filter_boat">See boats</string>
+    <string name="action_filter_mansion">See mansions</string>
+    <string name="action_filter_site">See sites</string>
+    <string name="action_filter_other">See others</string>
+
     <string name="action_settings">Settings</string>
 
     <!-- Strings used for fragments for navigation -->
@@ -37,19 +53,28 @@
     <string name="add_estate_price">Price</string>
     <string name="add_estate_surface">Surface</string>
 
+    <string name="type_house">House</string>
+    <string name="type_apartment">Apartment</string>
+    <string name="type_building">Building</string>
+    <string name="type_loft">Loft</string>
+    <string name="type_castle">Castle</string>
+    <string name="type_boat">Boat</string>
+    <string name="type_mansion">Mansion</string>
+    <string name="type_site">Site</string>
+    <string name="type_other">Other</string>
 
 
     <string-array name="estate_type_array">
-            <item>House</item>
-            <item>Apartment</item>
-            <item>Building</item>
-            <item>Loft</item>
-            <item>Castle</item>
-            <item>Boat</item>
-            <item>Mansion</item>
-            <item>Site</item>
-            <item>Other</item>
-        </string-array>
+        <item>House</item>
+        <item>Apartment</item>
+        <item>Building</item>
+        <item>Loft</item>
+        <item>Castle</item>
+        <item>Boat</item>
+        <item>Mansion</item>
+        <item>Site</item>
+        <item>Other</item>
+    </string-array>
 
 
 </resources>

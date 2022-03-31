@@ -4,7 +4,58 @@
     tools:context="com.example.oc_p9_kotlin.activities.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title= "@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/action_settings"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_all"
+        android:title="@string/action_filter_all"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_house"
+        android:title="@string/action_filter_house"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_apartment"
+        android:title="@string/action_filter_apartments"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_building"
+        android:title="@string/action_filter_building"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_loft"
+        android:title="@string/action_filter_loft"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_castle"
+        android:title="@string/action_filter_castle"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_boat"
+        android:title="@string/action_filter_boat"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_mansion"
+        android:title="@string/action_filter_mansion"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_site"
+        android:title="@string/action_filter_site"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_filter_other"
+        android:title="@string/action_filter_other"
+        app:showAsAction="collapseActionView" />
+
+
 </menu>

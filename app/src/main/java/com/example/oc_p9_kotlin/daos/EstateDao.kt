@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Observable
 interface EstateDao {
 
     @Query("SELECT * FROM estate")
-    fun getAll(): Observable<List<Estate>>
+    fun getAll(): Observable<MutableList<Estate>>
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
     fun getById(estateId: String): Estate

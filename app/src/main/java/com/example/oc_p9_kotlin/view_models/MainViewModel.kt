@@ -34,7 +34,7 @@ class MainViewModel(val estateDao: EstateDao) : ViewModel() {
 
     }
 
-    fun getAll(): Observable<List<Estate>> =
+    fun getAll(): Observable<MutableList<Estate>> =
         estateDao.getAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

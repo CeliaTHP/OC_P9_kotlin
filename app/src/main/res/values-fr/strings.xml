@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App-->
     <string name="app_name">Real Estate Manager</string>
+
+    <!-- Actions-->
+    <string name="action_filter_all">Voir tout</string>
+    <string name="action_filter">Filtres</string>
+    <string name="action_filter_house">Voir maisons</string>
+    <string name="action_filter_apartments">Voir appartements</string>
+    <string name="action_filter_building">Voir bâtiments</string>
+    <string name="action_filter_loft">Voir lofts</string>
+    <string name="action_filter_castle">Voir châteaux</string>
+    <string name="action_filter_boat">Voir bateaux</string>
+    <string name="action_filter_mansion">Voir manoirs</string>
+    <string name="action_filter_site">Voir sites</string>
+    <string name="action_filter_other">Voir autres</string>
+
     <string name="action_settings">Paramètres</string>
 
     <!-- Strings used for fragments for navigation -->
@@ -36,6 +51,16 @@
     <string name="add_estate_price">Prix</string>
     <string name="add_estate_surface">Surface</string>
 
+    <string name="type_house">Maison</string>
+    <string name="type_apartment">Appartement</string>
+    <string name="type_building">Bâtiment</string>
+    <string name="type_loft">Loft</string>
+    <string name="type_castle">Château</string>
+    <string name="type_boat">Bateau</string>
+    <string name="type_mansion">Manoir</string>
+    <string name="type_site">Site</string>
+    <string name="type_other">Autre</string>
+
 
     <string-array name="estate_type_array">
         <item>Maison</item>
@@ -48,9 +73,6 @@
         <item>Site</item>
         <item>Other</item>
     </string-array>
-
-
-
 
 
 </resources>

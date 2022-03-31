@@ -53,6 +53,17 @@ object FakeEstateApi {
         longitude = 1.0997837831349402
     }
 
+    private var location8 = Location("8").apply {
+        latitude = 46.09428662002291
+        longitude = 6.053419269568852
+    }
+
+    private var location9 = Location("9").apply {
+        latitude = 48.49467907808304
+        longitude = 6.996455269621434
+    }
+
+
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
             "0",
@@ -207,6 +218,46 @@ object FakeEstateApi {
             location7,
             "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
+            Date(),
+            null,
+            isAvailable = false,
+            isFurnished = false,
+            null
+        ),
+
+        Estate(
+            "8",
+            EstateType.MANSION,
+            "Feigères",
+            2300000,
+            120,
+            12,
+            2,
+            10,
+            "8 green road 74160, Feigères",
+            location8,
+            "The building is shaped like a squared S. The two extensions extend into wooden overhanging panels circling around half the house." +
+                    "The second floor is the same size as the first, which has been built exactly on top of the floor below it. This floor has a very different style than the floor below.",
+            Date(),
+            null,
+            isAvailable = true,
+            isFurnished = false,
+            null
+        ),
+
+        Estate(
+            "9",
+            EstateType.OTHER,
+            "Angomont",
+            65000,
+            20,
+            3,
+            1,
+            1,
+            "8 green road 54540, Angomont",
+            location9,
+            "The roof is low and slanted to one side and is covered with seagrass. One large chimney sits at the side of the house. Large, skylight windows let in plenty of light to the rooms below the roof." +
+                    "The house itself is surrounded by a gorgeous garden, including various trees, bushes, flowers and a large pond.",
             Date(),
             null,
             isAvailable = false,

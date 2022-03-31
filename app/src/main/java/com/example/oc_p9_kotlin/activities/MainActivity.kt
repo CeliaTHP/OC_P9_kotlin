@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -21,6 +19,7 @@ import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.kotlin.addTo
@@ -35,8 +34,9 @@ class MainActivity : CompositeDisposableActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var estateAdapter: EstateAdapter
 
-    private var estateList = emptyList<Estate>()
+    private var estateList = mutableListOf<Estate>()
 
     private lateinit var mainViewModel: MainViewModel
 
@@ -99,7 +99,7 @@ class MainActivity : CompositeDisposableActivity() {
                         //Updating our list with retrieved data
                         estateList = it
                         Log.d(TAG, "data already found : list = " + estateList.size)
-                        initRecyclerView(estateList)
+                        initRecyclerView(estateList, null)
 
                         //Setting our first item as default selected estate
                         Log.d(TAG, "set default estate " + estateList[0])
@@ -176,14 +176,16 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
 
-    private fun initRecyclerView(estateList: List<Estate>) {
-        binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.listRecyclerView.adapter = EstateAdapter(
-            estateList
-        ) {
+    private fun initRecyclerView(estateList: MutableList<Estate>, filter: EstateType?) {
 
+        estateAdapter = EstateAdapter(
+            estateList, filter
+        ) {
             onEstateClick(it)
         }
+        binding.listRecyclerView.adapter = estateAdapter
+        binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
+
 
     }
 
@@ -257,8 +259,92 @@ class MainActivity : CompositeDisposableActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+
+                Log.d(TAG, "SETTINGS")
+                true
+            }
+            R.id.action_filter_all -> {
+
+                estateAdapter.updateData(estateList)
+
+                Log.d(TAG, "ALL")
+                true
+            }
+            R.id.action_filter_house -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.HOUSE } as MutableList<Estate>)
+
+                Log.d(TAG, "HOUSE")
+                true
+            }
+            R.id.action_filter_apartment -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.APARTMENT } as MutableList<Estate>)
+
+                Log.d(TAG, "APARTMENT")
+                true
+            }
+
+            R.id.action_filter_building -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.BUILDING } as MutableList<Estate>)
+
+                //estateAdapter.setFilter(EstateType.BUILDING)
+
+                Log.d(TAG, "BUILDING")
+                true
+            }
+
+            R.id.action_filter_loft -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.LOFT } as MutableList<Estate>)
+
+                //estateAdapter.setFilter(EstateType.LOFT)
+
+                Log.d(TAG, "LOFT")
+                true
+            }
+
+            R.id.action_filter_castle -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.CASTLE } as MutableList<Estate>)
+                Log.d(TAG, "CASTLE")
+                true
+            }
+
+            R.id.action_filter_boat -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.BOAT } as MutableList<Estate>)
+
+                Log.d(TAG, "BOAT")
+                true
+            }
+
+            R.id.action_filter_mansion -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.MANSION } as MutableList<Estate>)
+
+                Log.d(TAG, "MANSION")
+                true
+            }
+            R.id.action_filter_site -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.SITE } as MutableList<Estate>)
+
+                Log.d(TAG, "SITE")
+                true
+            }
+            R.id.action_filter_other -> {
+
+                estateAdapter.updateData(estateList.filter { it.type == EstateType.OTHER } as MutableList<Estate>)
+
+                Log.d(TAG, "OTHER")
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
+
         }
     }
 
