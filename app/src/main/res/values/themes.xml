@@ -12,10 +12,17 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
         <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
         <item name="android:buttonStyle">@style/CustomButtonStyle</item>
+
+        <item name="actionMenuTextAppearance">@color/red</item>
         <item name="actionMenuTextColor">@color/red</item>
+        <item name="android:actionMenuTextColor">@color/red</item>
+        <item name="android:actionMenuTextAppearance">@color/red</item>
+
+
+
+
 
     </style>
 

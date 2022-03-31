@@ -2,8 +2,11 @@ package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -26,6 +29,7 @@ import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
+
 
 class MainActivity : CompositeDisposableActivity() {
 
@@ -293,6 +297,14 @@ class MainActivity : CompositeDisposableActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            val s = SpannableString(item.title)
+            s.setSpan(ForegroundColorSpan(ResourcesCompat.getColor(resources,R.color.main_text,null)), 0, s.length, 0)
+            item.title = s
+        }
+
         return true
     }
 
