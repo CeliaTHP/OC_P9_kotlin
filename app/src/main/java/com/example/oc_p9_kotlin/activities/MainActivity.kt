@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
@@ -48,9 +50,7 @@ class MainActivity : CompositeDisposableActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.overflowIcon =
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
-        setSupportActionBar(binding.toolbar)
+        initToolbar()
 
         //default estate
 
@@ -75,6 +75,26 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
     private fun initListeners() {
+
+        binding.slidingPaneLayout.addPanelSlideListener(object :
+            SlidingPaneLayout.PanelSlideListener {
+            override fun onPanelSlide(panel: View, slideOffset: Float) {
+                Log.d(TAG, "onPanelSlide")
+            }
+
+            override fun onPanelOpened(panel: View) {
+                Log.d(TAG, "onPanelOpened")
+                initToolbar()
+
+            }
+
+            override fun onPanelClosed(panel: View) {
+                Log.d(TAG, "onPanelClosed")
+                initToolbar()
+
+            }
+
+        })
 
         binding.fab.setOnClickListener {
             this.startActivity(Intent(this, AddEstateActivity::class.java))
@@ -101,17 +121,8 @@ class MainActivity : CompositeDisposableActivity() {
                         Log.d(TAG, "data already found : list = " + estateList.size)
                         initRecyclerView(estateList, null)
 
-                        //Setting our first item as default selected estate
-                        Log.d(TAG, "set default estate " + estateList[0])
-                        onEstateEvent.setSelectedEstate(estateList[0])
-                        EventBus.getDefault().postSticky(onEstateEvent)
+                        updateDefaultEstate(estateList)
 
-                        for (estate in estateList) {
-                            Log.d(
-                                TAG, "location = " +
-                                        estate.location.latitude.toString() + " - " + estate.location.longitude.toString()
-                            )
-                        }
                     }
 
                 }, {
@@ -119,6 +130,13 @@ class MainActivity : CompositeDisposableActivity() {
                 }).addTo(bag)
 
 
+    }
+
+    private fun updateDefaultEstate(estateList: MutableList<Estate>) {
+        //Setting our first item as default selected estate
+        Log.d(TAG, "set default estate " + estateList[0])
+        onEstateEvent.setSelectedEstate(estateList[0])
+        EventBus.getDefault().postSticky(onEstateEvent)
     }
 
     private fun initViewModels() {
@@ -189,7 +207,7 @@ class MainActivity : CompositeDisposableActivity() {
 
     }
 
-    fun onEstateClick(estate: Estate) {
+    private fun onEstateClick(estate: Estate) {
         Log.d(TAG, estate.type.toString())
         Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
 
@@ -200,7 +218,7 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
 
-    fun updateDetails() {
+    private fun updateDetails() {
 
         // A method on the Fragment that owns the SlidingPaneLayout,
         // called by the adapter when an item is selected.
@@ -235,7 +253,7 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
 
-    fun handleBackButton() {
+    private fun handleBackButton() {
 
         with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
@@ -248,6 +266,30 @@ class MainActivity : CompositeDisposableActivity() {
         }
     }
 
+
+    public fun initToolbar() {
+
+        with(binding.slidingPaneLayout) {
+            if (!isOpen && isSlideable || !isSlideable) {
+                Log.d(TAG, "shouldNotHideIcon")
+                binding.toolbar.overflowIcon =
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
+                setSupportActionBar(binding.toolbar)
+
+
+            } else {
+                Log.d(TAG, "shouldHideIcon")
+                binding.toolbar.overflowIcon =
+                    null
+            }
+        }
+
+        setSupportActionBar(binding.toolbar)
+
+
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -258,94 +300,38 @@ class MainActivity : CompositeDisposableActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> {
 
-                Log.d(TAG, "SETTINGS")
-                true
+        if (item.itemId == R.id.action_settings) {
+            Log.d(TAG, "SETTINGS")
+
+        } else {
+
+
+            val filteredList = when (item.itemId) {
+
+                R.id.action_filter_all -> estateList
+                R.id.action_filter_house -> estateList.filter { it.type == EstateType.HOUSE } as MutableList<Estate>
+                R.id.action_filter_apartment -> estateList.filter { it.type == EstateType.APARTMENT } as MutableList<Estate>
+                R.id.action_filter_building -> estateList.filter { it.type == EstateType.BUILDING } as MutableList<Estate>
+                R.id.action_filter_loft -> estateList.filter { it.type == EstateType.LOFT } as MutableList<Estate>
+                R.id.action_filter_castle -> estateList.filter { it.type == EstateType.CASTLE } as MutableList<Estate>
+                R.id.action_filter_boat -> estateList.filter { it.type == EstateType.BOAT } as MutableList<Estate>
+                R.id.action_filter_mansion -> estateList.filter { it.type == EstateType.MANSION } as MutableList<Estate>
+                R.id.action_filter_site -> estateList.filter { it.type == EstateType.SITE } as MutableList<Estate>
+                R.id.action_filter_other -> estateList.filter { it.type == EstateType.OTHER } as MutableList<Estate>
+
+                else -> estateList
+
             }
-            R.id.action_filter_all -> {
-
-                estateAdapter.updateData(estateList)
-
-                Log.d(TAG, "ALL")
-                true
-            }
-            R.id.action_filter_house -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.HOUSE } as MutableList<Estate>)
-
-                Log.d(TAG, "HOUSE")
-                true
-            }
-            R.id.action_filter_apartment -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.APARTMENT } as MutableList<Estate>)
-
-                Log.d(TAG, "APARTMENT")
-                true
-            }
-
-            R.id.action_filter_building -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.BUILDING } as MutableList<Estate>)
-
-                //estateAdapter.setFilter(EstateType.BUILDING)
-
-                Log.d(TAG, "BUILDING")
-                true
-            }
-
-            R.id.action_filter_loft -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.LOFT } as MutableList<Estate>)
-
-                //estateAdapter.setFilter(EstateType.LOFT)
-
-                Log.d(TAG, "LOFT")
-                true
-            }
-
-            R.id.action_filter_castle -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.CASTLE } as MutableList<Estate>)
-                Log.d(TAG, "CASTLE")
-                true
-            }
-
-            R.id.action_filter_boat -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.BOAT } as MutableList<Estate>)
-
-                Log.d(TAG, "BOAT")
-                true
-            }
-
-            R.id.action_filter_mansion -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.MANSION } as MutableList<Estate>)
-
-                Log.d(TAG, "MANSION")
-                true
-            }
-            R.id.action_filter_site -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.SITE } as MutableList<Estate>)
-
-                Log.d(TAG, "SITE")
-                true
-            }
-            R.id.action_filter_other -> {
-
-                estateAdapter.updateData(estateList.filter { it.type == EstateType.OTHER } as MutableList<Estate>)
-
-                Log.d(TAG, "OTHER")
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-
+            estateAdapter.updateData(filteredList)
+            updateDefaultEstate(filteredList)
         }
+
+
+
+        return true
+
+
     }
 
 /*

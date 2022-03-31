@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.R
+import com.example.oc_p9_kotlin.activities.MainActivity
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
@@ -129,6 +130,10 @@ class DetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.detailsMapView.onResume()
+        if (!EventBus.getDefault().isRegistered(this)) {
+            Log.d(TAG, "register EventBus")
+            EventBus.getDefault().register(this)
+        }
 
     }
 
