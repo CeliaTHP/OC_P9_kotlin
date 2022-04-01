@@ -75,7 +75,8 @@
             app:layout_constraintBottom_toBottomOf="@id/item_estate_pic"
             app:layout_constraintEnd_toEndOf="@id/item_estate_pic"
             app:layout_constraintStart_toStartOf="@id/item_estate_pic"
-            app:layout_constraintTop_toTopOf="@id/item_estate_pic" />
+            app:layout_constraintTop_toTopOf="@id/item_estate_pic"
+            tools:visibility="visible" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
