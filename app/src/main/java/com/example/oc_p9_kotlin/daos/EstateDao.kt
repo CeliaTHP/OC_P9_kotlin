@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.EstateType
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 
@@ -20,8 +21,7 @@ interface EstateDao {
     fun getById(estateId: String): Estate
 
     @Query("SELECT * FROM estate WHERE type LIKE :estateType")
-    fun findByType(estateType: String): List<Estate>
-
+    fun getByType(estateType: EstateType): Observable<MutableList<Estate>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertEstate(estate: Estate)

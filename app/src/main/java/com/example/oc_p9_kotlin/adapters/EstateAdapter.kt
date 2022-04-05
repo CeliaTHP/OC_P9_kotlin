@@ -16,7 +16,6 @@ import java.text.NumberFormat
 
 class EstateAdapter(
     var estateList: MutableList<Estate>,
-    val filter: EstateType?,
     val onClick: (Estate) -> Unit
 ) : RecyclerView.Adapter<EstateAdapter.EstateViewHolder>() {
 

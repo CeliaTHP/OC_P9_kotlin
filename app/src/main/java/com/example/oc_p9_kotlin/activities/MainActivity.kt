@@ -2,7 +2,6 @@ package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
@@ -27,6 +26,7 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 
@@ -40,11 +40,14 @@ class MainActivity : CompositeDisposableActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var estateAdapter: EstateAdapter
+    private lateinit var adapter: EstateAdapter
+    private var listBag = CompositeDisposable()
 
     private var estateList = mutableListOf<Estate>()
+    private var filteredList = mutableListOf<Estate>()
 
-    private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var viewModel: MainViewModel
 
     private var onEstateEvent = OnEstateEvent()
 
@@ -56,11 +59,15 @@ class MainActivity : CompositeDisposableActivity() {
 
         initToolbar()
 
+        initRecyclerView(estateList)
+
+
         //default estate
 
         initViewModels()
+        generateDataIfEmptyDb()
 
-        initObservables()
+        getEstateList()
         //initRecyclerView(estateList)
         //TODO : uncomment to display map
         requestMapPermissions()
@@ -76,6 +83,23 @@ class MainActivity : CompositeDisposableActivity() {
 
         Log.d(TAG, "onCreate")
 
+    }
+
+    private fun generateDataIfEmptyDb() {
+        //Generating data on our database
+
+        viewModel.getAll().firstOrError()
+            .subscribe(
+                {
+                    if (it.isNullOrEmpty()) {
+                        Log.d(TAG, "generateData")
+                        viewModel.generateData()
+                    }
+
+                }, {
+                    Log.d(TAG, "error getEstateList")
+                })
+            .addTo(bag)
     }
 
     private fun initListeners() {
@@ -109,29 +133,33 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
 
-    private fun initObservables() {
+    private fun getEstateList(estateType: EstateType? = null) {
 
-        mainViewModel.getAll()
+        listBag.clear()
+
+        if (estateType == null) {
+            viewModel.getAll()
+        } else {
+            viewModel.getByType(estateType)
+        }
             .subscribe(
                 {
-                    if (it.isNullOrEmpty()) {
-                        //Generating data on our database
-                        Log.d(TAG, "generateData")
-                        mainViewModel.generateData()
-
-                    } else {
-                        //Updating our list with retrieved data
-                        estateList = it
-                        Log.d(TAG, "data already found : list = " + estateList.size)
-                        initRecyclerView(estateList, null)
-
-                        updateDefaultEstate(estateList)
-
-                    }
-
+                    onEstateListReceived(it)
                 }, {
+                    //TODO : Error Toast
+                    Log.d(TAG, "error getEstateList")
 
-                }).addTo(bag)
+                }).addTo(listBag)
+    }
+
+
+    private fun onEstateListReceived(estateList: MutableList<Estate>) {
+
+        //Updating our list with retrieved data
+        this.estateList = estateList
+        adapter.updateData(estateList)
+        Log.d(TAG, "data already found : list = " + estateList.size)
+        updateDefaultEstate(estateList)
 
 
     }
@@ -145,7 +173,7 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun initViewModels() {
 
-        mainViewModel =
+        viewModel =
             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
 
     }
@@ -198,14 +226,14 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
 
-    private fun initRecyclerView(estateList: MutableList<Estate>, filter: EstateType?) {
+    private fun initRecyclerView(estateList: MutableList<Estate>) {
 
-        estateAdapter = EstateAdapter(
-            estateList, filter
+        adapter = EstateAdapter(
+            estateList
         ) {
             onEstateClick(it)
         }
-        binding.listRecyclerView.adapter = estateAdapter
+        binding.listRecyclerView.adapter = adapter
         binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
 
 
@@ -325,26 +353,24 @@ class MainActivity : CompositeDisposableActivity() {
             Log.d(TAG, "SETTINGS")
 
         } else {
+            when (item.itemId) {
+                R.id.action_filter_all -> getEstateList()
+                R.id.action_filter_house -> getEstateList(EstateType.HOUSE)
+                R.id.action_filter_apartment -> getEstateList(EstateType.APARTMENT)
+                R.id.action_filter_building -> getEstateList(EstateType.BUILDING)
+                R.id.action_filter_loft -> getEstateList(EstateType.LOFT)
+                R.id.action_filter_castle -> getEstateList(EstateType.CASTLE)
+                R.id.action_filter_boat -> getEstateList(EstateType.BOAT)
+                R.id.action_filter_mansion -> getEstateList(EstateType.MANSION)
+                R.id.action_filter_site -> getEstateList(EstateType.SITE)
+                R.id.action_filter_other -> getEstateList(EstateType.OTHER)
 
-
-            val filteredList = when (item.itemId) {
-
-                R.id.action_filter_all -> estateList
-                R.id.action_filter_house -> estateList.filter { it.type == EstateType.HOUSE } as MutableList<Estate>
-                R.id.action_filter_apartment -> estateList.filter { it.type == EstateType.APARTMENT } as MutableList<Estate>
-                R.id.action_filter_building -> estateList.filter { it.type == EstateType.BUILDING } as MutableList<Estate>
-                R.id.action_filter_loft -> estateList.filter { it.type == EstateType.LOFT } as MutableList<Estate>
-                R.id.action_filter_castle -> estateList.filter { it.type == EstateType.CASTLE } as MutableList<Estate>
-                R.id.action_filter_boat -> estateList.filter { it.type == EstateType.BOAT } as MutableList<Estate>
-                R.id.action_filter_mansion -> estateList.filter { it.type == EstateType.MANSION } as MutableList<Estate>
-                R.id.action_filter_site -> estateList.filter { it.type == EstateType.SITE } as MutableList<Estate>
-                R.id.action_filter_other -> estateList.filter { it.type == EstateType.OTHER } as MutableList<Estate>
-
-                else -> estateList
+                else -> getEstateList()
 
             }
-            estateAdapter.updateData(filteredList)
-            updateDefaultEstate(filteredList)
+
+            //estateAdapter.updateData(filteredList)
+            //updateDefaultEstate(filteredList)
         }
 
 

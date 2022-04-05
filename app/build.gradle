@@ -75,6 +75,10 @@ dependencies {
     // optional - RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
 
+    // Places
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+
+
 
 
 
