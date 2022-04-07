@@ -166,6 +166,12 @@ class DetailsFragment : Fragment() {
             getString(R.string.details_bedrooms, estate.bedrooms.toString())
         binding.detailsAddress.text = estate.address
 
+        if (!estate.isAvailable) {
+            binding.detailsSold.visibility = View.VISIBLE
+        } else {
+            binding.detailsSold.visibility = View.INVISIBLE
+        }
+
 
         initMap(estate)
 

@@ -77,12 +77,14 @@
                     app:layout_constraintTop_toBottomOf="@id/details_price" />
 
 
+                <!--
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_price" />
+                    -->
 
 
                 <ImageView
@@ -93,6 +95,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_media_title"
                     app:tint="@color/main_text" />
+
+                <TextView
+                    android:id="@+id/details_sold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rotation="-20"
+                    android:text="@string/item_estate_sold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/red"
+                    android:textSize="42sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/details_media_title"
+                    tools:visibility="visible" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
