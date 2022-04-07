@@ -23,6 +23,8 @@
     <string name="details_fragment_label">Fragment Détails</string>
     <string name="split_fragment_label">Fragment Split</string>
     <string name="connection_error">erreur de connexion : impossible de charger la carte.\nveuillez réessayer</string>
+    <string name="data_error">erreur lors du chargement des données</string>
+
 
     <!--Details-->
     <string name="details_type">Type</string>

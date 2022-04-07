@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
@@ -95,9 +96,8 @@ class MainActivity : CompositeDisposableActivity() {
                         Log.d(TAG, "generateData")
                         viewModel.generateData()
                     }
-
                 }, {
-                    Log.d(TAG, "error getEstateList")
+                    Log.d(TAG, "error getEstateList" + it.message)
                 })
             .addTo(bag)
     }
@@ -144,10 +144,13 @@ class MainActivity : CompositeDisposableActivity() {
         }
             .subscribe(
                 {
-                    onEstateListReceived(it)
+                    if (!it.isNullOrEmpty()) {
+                        Log.d(TAG, "list received : " + it.toString())
+                        onEstateListReceived(it)
+                    }
                 }, {
-                    //TODO : Error Toast
-                    Log.d(TAG, "error getEstateList")
+                    Log.d(TAG, "error getEstateList" + it.message)
+                    Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
                 }).addTo(listBag)
     }

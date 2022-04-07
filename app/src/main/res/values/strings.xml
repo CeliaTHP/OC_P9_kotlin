@@ -23,6 +23,8 @@
     <string name="details_fragment_label">Details Fragment</string>
     <string name="split_fragment_label">Split Fragment</string>
     <string name="connection_error">connection error : cannot load map.\nPlease try again</string>
+    <string name="data_error">error while loading data</string>
+
 
     <!--Details-->
     <string name="details_type">Type</string>
@@ -58,8 +60,6 @@
     <string name="add_estate_bedrooms">Bedroom(s)</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
-
-
 
 
     <string name="type_house">House</string>
