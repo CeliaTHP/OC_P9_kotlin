@@ -151,7 +151,7 @@ class DetailsFragment : Fragment() {
         Log.d(TAG, "updateUI $estate")
 
         binding.detailsType.text =
-            estate.getEstateType(context)
+            Estate.getEstateType(context, estate.type)
 
         binding.detailsPrice.text = Utils().getPrice(estate)
         binding.detailsCity.text = estate.city

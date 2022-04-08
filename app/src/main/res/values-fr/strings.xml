@@ -32,7 +32,6 @@
     <string name="details_description">Description</string>
 
     <!--Specs-->
-    <string name="details_surface">Surface : %1$d m²</string>
     <string name="details_rooms">Pièces : %1$s</string>
     <string name="details_bathrooms">Salles de bains : %1$s</string>
     <string name="details_bedrooms">Chambres : %1$s</string>
@@ -51,7 +50,9 @@
     <string name="add_estate_type">Type</string>
     <string name="add_estate_city">Ville</string>
     <string name="add_estate_address">Adresse</string>
+    <string name="add_estate_address_hint">36 rue de la Paix</string>
     <string name="add_estate_price">Prix</string>
+    <string name="add_estate_price_hint" translatable="false">526 000 €</string>
     <string name="add_estate_surface">Surface</string>
     <string name="add_estate_rooms">Pièce(s)</string>
     <string name="add_estate_bathrooms">Salle(s) de bains</string>
@@ -76,11 +77,11 @@
         <item>Appartement</item>
         <item>Bâtiment</item>
         <item>Loft</item>
-        <item>Chateau</item>
+        <item>Château</item>
         <item>Bateau</item>
         <item>Manoir</item>
         <item>Site</item>
-        <item>Other</item>
+        <item>Autre</item>
     </string-array>
 
 

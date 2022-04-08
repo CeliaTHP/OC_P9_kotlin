@@ -34,7 +34,7 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
     <!--Specs-->
-    <string name="details_surface">Surface : %1$d sq m</string>
+    <string name="details_surface" translatable="false">Surface : %1$d m²</string>
     <string name="details_rooms">Rooms : %1$s</string>
     <string name="details_bathrooms">Bathrooms : %1$s</string>
     <string name="details_bedrooms">Bedrooms : %1$s</string>
@@ -52,12 +52,19 @@
     <string name="add_estate_title">Add an estate</string>
     <string name="add_estate_type">Type</string>
     <string name="add_estate_city">City</string>
+    <string name="add_estate_city_hint" translatable="false">Paris</string>
     <string name="add_estate_address">Address</string>
+    <string name="add_estate_address_hint">36 Peace street</string>
     <string name="add_estate_price">Price</string>
+    <string name="add_estate_price_hint" translatable="false">571 600 $</string>
     <string name="add_estate_surface">Surface</string>
+    <string name="add_estate_surface_hint" translatable="false">27 m ²</string>
     <string name="add_estate_rooms">Room(s)</string>
+    <string name="add_estate_rooms_hint" translatable="false">2</string>
     <string name="add_estate_bathrooms">Bathroom(s)</string>
+    <string name="add_estate_bathrooms_hint" translatable="false">4</string>
     <string name="add_estate_bedrooms">Bedroom(s)</string>
+    <string name="add_estate_bedrooms_hint" translatable="false">1</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
 

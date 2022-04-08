@@ -1,21 +1,16 @@
 package com.example.oc_p9_kotlin.activities
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import java.util.Arrays
+import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.EstateType
 
 
 class AddEstateActivity : AppCompatActivity() {
@@ -27,6 +22,7 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityAddEstateBinding
+    private var estateType: EstateType = EstateType.HOUSE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +31,9 @@ class AddEstateActivity : AppCompatActivity() {
         binding = ActivityAddEstateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        //Default type
+        binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
 
 
         initPlaces()
@@ -47,7 +46,6 @@ class AddEstateActivity : AppCompatActivity() {
     private fun initPlaces() {
 
     }
-
 
 
     private fun initToolbar() {
@@ -105,27 +103,56 @@ class AddEstateActivity : AppCompatActivity() {
 
     private fun onEstateTypeButtonClick() {
 
-
         val listPopupWindow =
             ListPopupWindow(this, null, com.google.android.material.R.attr.listPopupWindowStyle)
         listPopupWindow.anchorView = binding.addEstateTypeButton
+
+        val items: Array<String> = resources.getStringArray(R.array.estate_type_array)
+
         listPopupWindow.setAdapter(
             ArrayAdapter(
                 this,
-                R.layout.dropdown_menu_popup_item,
-                arrayOf("type1", "type2", "type3")
+                android.R.layout.simple_selectable_list_item,
+                items
             )
         )
 
         listPopupWindow.setOnItemClickListener { _, _, position: Int, _ ->
-            //callback(position)
+
+
+            Log.d(TAG, "was : " + estateType.name)
+
+            estateType = when (position) {
+
+                0 -> EstateType.HOUSE
+                1 -> EstateType.APARTMENT
+                2 -> EstateType.BUILDING
+                3 -> EstateType.LOFT
+                4 -> EstateType.CASTLE
+                5 -> EstateType.BOAT
+                6 -> EstateType.MANSION
+                7 -> EstateType.SITE
+                else -> EstateType.OTHER
+
+            }
+            Log.d(TAG, "is now : " + estateType.name)
+
+            onTypeSelected(estateType)
             //setType
+
             listPopupWindow.dismiss()
         }
+
         listPopupWindow.show()
 
+    }
+
+    private fun onTypeSelected(estateType: EstateType) {
+
+        binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
 
     }
+
 
     private fun initSpinner() {
 
@@ -139,6 +166,7 @@ class AddEstateActivity : AppCompatActivity() {
             // Apply the adapter to the spinner
             // binding.addEstateTypeSpinner.adapter = adapter
         }
+
 /*
         binding.addEstateTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

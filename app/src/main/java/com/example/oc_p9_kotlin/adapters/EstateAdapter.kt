@@ -56,7 +56,7 @@ class EstateAdapter(
         }
 
         holder.itemEstateLayoutBinding.itemEstateType.text =
-            estate.getEstateType(holder.itemView.context)
+            Estate.getEstateType(holder.itemView.context, estate.type)
 
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
 
