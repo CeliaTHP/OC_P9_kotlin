@@ -47,6 +47,7 @@ class MainActivity : CompositeDisposableActivity() {
     private var estateList = mutableListOf<Estate>()
     private var filteredList = mutableListOf<Estate>()
 
+    private var isOverflowIconEnabled = false
 
     private lateinit var viewModel: MainViewModel
 
@@ -307,6 +308,7 @@ class MainActivity : CompositeDisposableActivity() {
         with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
                 Log.d(TAG, "shouldNotHideIcon")
+                isOverflowIconEnabled = true
                 binding.toolbar.overflowIcon =
                     ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
                 setSupportActionBar(binding.toolbar)
@@ -314,14 +316,23 @@ class MainActivity : CompositeDisposableActivity() {
 
             } else {
                 Log.d(TAG, "shouldHideIcon")
+                isOverflowIconEnabled = false
                 binding.toolbar.overflowIcon =
                     null
+
             }
         }
 
         setSupportActionBar(binding.toolbar)
 
 
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return if (isOverflowIconEnabled)
+            super.onPrepareOptionsMenu(menu)
+        else
+            false
     }
 
 

@@ -63,6 +63,7 @@ data class Estate(
                 }
             }
         }
+
     }
 /*
     fun getEstateType(context: Context?): String {

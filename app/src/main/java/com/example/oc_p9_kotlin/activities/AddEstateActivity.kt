@@ -148,7 +148,6 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private fun onTypeSelected(estateType: EstateType) {
-
         binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
 
     }
