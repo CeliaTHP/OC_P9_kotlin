@@ -56,7 +56,10 @@
     <string name="add_estate_address">Address</string>
     <string name="add_estate_address_hint">36 Peace street</string>
     <string name="add_estate_price">Price</string>
-    <string name="add_estate_price_hint" translatable="false">571 600 $</string>
+    <string name="add_estate_price_hint">571 600 $</string>
+    <string name="add_estate_price_hint_euros" translatable="false">526 000 €</string>
+    <string name="add_estate_price_hint_dollars" translatable="false">571 600 $</string>
+
     <string name="add_estate_surface">Surface</string>
     <string name="add_estate_surface_hint" translatable="false">27 m ²</string>
     <string name="add_estate_rooms">Room(s)</string>

@@ -52,7 +52,7 @@
     <string name="add_estate_address">Adresse</string>
     <string name="add_estate_address_hint">36 rue de la Paix</string>
     <string name="add_estate_price">Prix</string>
-    <string name="add_estate_price_hint" translatable="false">526 000 €</string>
+    <string name="add_estate_price_hint">526 000 €</string>
     <string name="add_estate_surface">Surface</string>
     <string name="add_estate_rooms">Pièce(s)</string>
     <string name="add_estate_bathrooms">Salle(s) de bains</string>

@@ -142,10 +142,11 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/add_estate_price_input"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="@string/add_estate_price_hint"
+                    app:layout_constraintEnd_toStartOf="@id/add_estate_price_switch"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/add_estate_price">
 
@@ -154,7 +155,22 @@
                         android:layout_height="wrap_content"
                         android:inputType="number" />
 
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/add_estate_price_switch"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="60dp"
+                    android:layout_height="0dp"
+                    android:background="@color/dark_purple"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_dollar"
+                    app:layout_constraintBottom_toBottomOf="@id/add_estate_price_input"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/add_estate_price_input"
+                    app:layout_constraintTop_toTopOf="@id/add_estate_price_input"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:id="@+id/add_estate_surface"

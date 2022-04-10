@@ -11,6 +11,7 @@ import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import java.util.Locale
 
 
 class AddEstateActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class AddEstateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddEstateBinding
     private var estateType: EstateType = EstateType.HOUSE
+    private var isInDollars: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,7 @@ class AddEstateActivity : AppCompatActivity() {
         binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
 
 
+        initCurrency()
         initPlaces()
         initToolbar()
         initListeners()
@@ -44,6 +47,50 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private fun initPlaces() {
+
+    }
+
+    private fun initCurrency(isInDollars: Boolean? = null) {
+
+        if (isInDollars == null) {
+            Log.d(TAG, "no option, default currency used")
+            val language = Locale.getDefault().language
+            if (language == Locale.FRENCH.language) {
+                setCurrencyUI(false)
+            } else {
+                setCurrencyUI(true)
+            }
+        } else {
+            if (isInDollars) {
+                Log.d(TAG, "should be Dollars")
+                setCurrencyUI(true)
+            } else {
+                Log.d(TAG, "should be Euros")
+                setCurrencyUI(false)
+            }
+        }
+
+
+    }
+
+    private fun setCurrencyUI(isInDollars: Boolean) {
+        if (isInDollars) {
+            binding.addEstatePriceSwitch.setImageDrawable(
+                AppCompatResources
+                    .getDrawable(this, R.drawable.ic_dollar)
+            )
+            binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_dollars)
+
+            this.isInDollars = true
+
+        } else {
+            binding.addEstatePriceSwitch.setImageDrawable(
+                AppCompatResources
+                    .getDrawable(this, R.drawable.ic_euro)
+            )
+            binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_euros)
+            this.isInDollars = false
+        }
 
     }
 
@@ -69,6 +116,19 @@ class AddEstateActivity : AppCompatActivity() {
 
         binding.addEstateTypeButton.setOnClickListener {
             onEstateTypeButtonClick()
+        }
+
+        binding.addEstatePriceSwitch.setOnClickListener {
+
+            if (isInDollars) {
+                Log.d(TAG, "wasDollars")
+                initCurrency(false)
+
+            } else {
+                Log.d(TAG, "wasEuro")
+                initCurrency(true)
+
+            }
         }
 
         binding.addEstateAddressInput.setOnClickListener {
