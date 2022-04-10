@@ -61,7 +61,7 @@
     <string name="add_estate_price_hint_dollars" translatable="false">571 600 $</string>
 
     <string name="add_estate_surface">Surface</string>
-    <string name="add_estate_surface_hint" translatable="false">27 m ²</string>
+    <string name="add_estate_surface_hint" translatable="false">27 (m ²)</string>
     <string name="add_estate_rooms">Room(s)</string>
     <string name="add_estate_rooms_hint" translatable="false">2</string>
     <string name="add_estate_bathrooms">Bathroom(s)</string>

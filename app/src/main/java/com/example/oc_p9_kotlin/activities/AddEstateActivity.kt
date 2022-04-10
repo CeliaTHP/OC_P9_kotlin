@@ -1,5 +1,6 @@
 package com.example.oc_p9_kotlin.activities
 
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -11,7 +12,10 @@ import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.utils.Utils
+import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 
 class AddEstateActivity : AppCompatActivity() {
@@ -36,7 +40,6 @@ class AddEstateActivity : AppCompatActivity() {
 
         //Default type
         binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
-
 
         initCurrency()
         initPlaces()
@@ -105,13 +108,82 @@ class AddEstateActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
     }
 
+    private fun verifyEstateCreation() {
+        var canCreate = true
+
+        val requiredEditTexts = arrayListOf(
+            binding.addEstateCityInput,
+            binding.addEstateAddressInput,
+            binding.addEstatePriceInput,
+            binding.addEstateSurfaceInput,
+            binding.addEstateRoomsInput,
+            binding.addEstateBathroomsInput,
+            binding.addEstateBedroomsInput,
+            binding.addEstateDescriptionInput
+        )
+
+        for (editText in requiredEditTexts) {
+            if (editText.editText?.text.isNullOrBlank()) {
+                editText.error = "Cannot be Empty"
+                canCreate = false
+            } else {
+                editText.error = null
+            }
+        }
+
+        if (canCreate) {
+            Log.d(TAG, "can create Estate")
+            with(binding) {
+                var location = Location("")
+                location.latitude = 49.54454396
+                location.longitude = 2.8484848
+
+                var priceInEuros = if (isInDollars)
+                    Utils().convertDollarToEuro(
+                        addEstatePriceInput.editText?.text.toString().toInt()
+                    )
+                else
+                    addEstatePriceInput.editText?.text.toString().toInt()
+
+                var estate = Estate(
+                    UUID.randomUUID().toString(),
+                    estateType,
+                    addEstateCityInput.editText?.text.toString(),
+                    priceInEuros,
+                    addEstateSurfaceInput.editText?.text.toString().toInt(),
+                    addEstateRoomsInput.editText?.text.toString().toInt(),
+                    addEstateBathroomsInput.editText?.text.toString().toInt(),
+                    addEstateBedroomsInput.editText?.text.toString().toInt(),
+                    addEstateAddressInput.editText?.text.toString(),
+                    //TODO : handle location
+                    location,
+                    addEstateDescriptionInput.editText?.text.toString(),
+                    Date(),
+                    null,
+                    isAvailable = true,
+                    false,
+                    null
+                )
+                Log.d(TAG, " created : " + estate.toString())
+                //TODO : create estate
+            }
+
+
+        } else {
+            Log.d(TAG, "can NOT create Estate")
+
+        }
+
+
+    }
+
     private fun initListeners() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
         binding.fab.setOnClickListener {
-            Log.d(TAG, "can Create Estate")
+            verifyEstateCreation()
         }
 
         binding.addEstateTypeButton.setOnClickListener {

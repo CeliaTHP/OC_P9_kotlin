@@ -26,12 +26,12 @@ class Utils {
      */
     fun convertDollarToEuro(dollars: Int): Int {
         //was 0.812
-        return Math.round(dollars * 0.91343).toInt()
+        return Math.round(dollars * 0.91945).toInt()
     }
 
     fun convertEuroToDollars(euros: Int): Int {
         //was 0.812
-        return Math.round(euros / 0.91343).toInt()
+        return Math.round(euros / 0.91945).toInt()
     }
 
     /**
