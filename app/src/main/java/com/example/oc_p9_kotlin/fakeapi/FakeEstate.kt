@@ -3,6 +3,7 @@ package com.example.oc_p9_kotlin.fakeapi
 import android.location.Location
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.models.Media
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,7 +64,6 @@ object FakeEstateApi {
         longitude = 6.996455269621434
     }
 
-
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
             "0",
@@ -79,6 +79,13 @@ object FakeEstateApi {
             "The house itself is surrounded by a tranquil garden, with various flowers, a long pond including a small waterfall and various rock formations.Large, octagon windows brighten up the house and have been added to the house in a fairly symmetrical pattern." +
                     "The house is equipped with a large kitchen and one average bathroom, it also has a large living room, five bedrooms, a cozy dining room," +
                     " a lounge area and a cozy storage room.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/TPBckBp"),
+                Media("1", "second_pic", "https://ibb.co/FsGRBXm"),
+                Media("2", "third_pic", "https://ibb.co/jWc2jvg"),
+                Media("3", "fourth_pic", "https://ibb.co/tzDL5Qw")
+
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -99,6 +106,12 @@ object FakeEstateApi {
             location1,
             "From the outside this house looks warm and cozy. It has been built with cypress wood and has burgandy brick decorations. Tall, rectangular windows brighten up the house and have been added to the house in a mostly symmetric way." +
                     " The house is equipped with a huge kitchen and one large bathroom, it also has a cozy living room, two bedrooms, a modest dining room, an office and a cozy garage.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/yBHkHYQ"),
+                Media("1", "second_pic", "https://ibb.co/Bg3Hwzg"),
+                Media("2", "third_pic", "https://ibb.co/JnLKqyg")
+
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -120,6 +133,14 @@ object FakeEstateApi {
             location2,
             "The roof is low and pyramid shaped and is covered with brown ceramic tiles. Two large chimneys poke out the center of the roof. Several long, thin windows let in plenty of light to the rooms below the roof.\n" +
                     "The house itself is surrounded by a gorgeous garden, including hanging grape vines, a pagoda, a pond and many different flowers..",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/fD8d66z"),
+                Media("1", "second_pic", "https://ibb.co/WKSQ45s"),
+                Media("2", "third_pic", "https://ibb.co/WKSQ45s"),
+                Media("3", "fourth_pic", "https://ibb.co/DgVqgFc"),
+                Media("4", "fifth_pic", "https://ibb.co/KzCC2xH"),
+                Media("5", "sixth_pic", "https://ibb.co/6w3JhvF")
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -140,6 +161,9 @@ object FakeEstateApi {
             location3,
             "The house is equipped with a large kitchen and three bathrooms, it also has a huge living room, five bedrooms," +
                     " a grand dining room, a sun room and a roomy garage.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/Q99wcfs"),
+            ),
             Date(),
             null,
             isAvailable = false,
@@ -160,6 +184,7 @@ object FakeEstateApi {
             location4,
             "From the outside this house looks impressive. It has been built with tan bricks and has oak wooden decorations. Short, wide windows allow enough light to enter the home and have been added to the house in a fairly asymmetrical pattern." +
                     " The house is equipped with a modern kitchen and one modern bathroom, it also has a large living room, three bedrooms, a large dining room and a small garage.",
+            null,
             Date(),
             null,
             isAvailable = true,
@@ -180,6 +205,11 @@ object FakeEstateApi {
             "The building is shaped like an L. The extension extends into a covered patio circling around half the house." +
                     "The second floor is the same size as the first, but part of it hangs over the edge of the floor below, creating an overhang on one side and a balcony on the other." +
                     "This floor has a very different style than the floor below.",
+            listOf(
+                Media(
+                    "0", "first_pic", "https://ibb.co/ysZjH9G"
+                ),
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -199,6 +229,9 @@ object FakeEstateApi {
             location6,
             "From the outside this house looks stylish. It has been built with yellow pine wood and has white cedar wooden decorations." +
                     "Tall, half rounded windows add to the overall style of the house and have been added to the house in a mostly symmetric way.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/TRSsnBQ"),
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -218,6 +251,9 @@ object FakeEstateApi {
             location7,
             "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/KNVghLs"),
+            ),
             Date(),
             null,
             isAvailable = false,
@@ -238,6 +274,11 @@ object FakeEstateApi {
             location8,
             "The building is shaped like a squared S. The two extensions extend into wooden overhanging panels circling around half the house." +
                     "The second floor is the same size as the first, which has been built exactly on top of the floor below it. This floor has a very different style than the floor below.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/X5d7HSp"),
+                Media("1", "second_pic", "https://ibb.co/RyTMN7D"),
+                Media("2", "third_pic", "https://ibb.co/rfFFm1k"),
+            ),
             Date(),
             null,
             isAvailable = true,
@@ -258,6 +299,15 @@ object FakeEstateApi {
             location9,
             "The roof is low and slanted to one side and is covered with seagrass. One large chimney sits at the side of the house. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by a gorgeous garden, including various trees, bushes, flowers and a large pond.",
+            listOf(
+                Media("0", "first_pic", "https://ibb.co/LZFTNtz"),
+                Media("1", "second_pic", "https://ibb.co/Dtbf73S"),
+                Media("2", "third_pic", "https://ibb.co/pR6YDQL"),
+                Media("3", "fourth_pic", "https://ibb.co/rvzqtZd"),
+                Media("4", "fifth_pic", "https://ibb.co/FbgzCLS"),
+                Media("5", "sixth_pic", "https://ibb.co/8DXhyqX"),
+
+            ),
             Date(),
             null,
             isAvailable = false,

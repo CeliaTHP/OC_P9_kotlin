@@ -28,7 +28,7 @@ data class Estate(
     //var nearbyPlaces : List<NearbyPlaces>
     var location: Location,
     var description: String,
-    //var medias: List<Media>,
+    var medias: List<Media>?,
     @ColumnInfo(name = "entry_date")
     var entryDate: Date,
     @ColumnInfo(name = "sale_date")

@@ -70,6 +70,7 @@
     <string name="add_estate_bedrooms_hint" translatable="false">1</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
+    <string name="add_estate_input_error">Cannot be Empty</string>
 
 
     <string name="type_house">House</string>

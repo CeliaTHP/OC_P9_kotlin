@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
@@ -46,14 +48,12 @@ class EstateAdapter(
     ) {
 
         val estate = estateList[position]
-        Log.d(TAG, "estate : " + estate)
-
-        Log.d(TAG, "size : " + estateList.size)
-
 
         holder.itemView.setOnClickListener {
             onClick(estate)
         }
+
+
 
         holder.itemEstateLayoutBinding.itemEstateType.text =
             Estate.getEstateType(holder.itemView.context, estate.type)
@@ -62,6 +62,21 @@ class EstateAdapter(
 
         holder.itemEstateLayoutBinding.itemEstatePrice.text =
             Utils().getPrice(estate)
+
+        if (!estate.medias.isNullOrEmpty()) {
+            val mediaUrl = estate.medias!![0].url
+            Log.d(TAG, mediaUrl)
+
+
+            Glide
+                .with(holder.itemView.context)
+                .load(mediaUrl)
+                .error(R.drawable.ic_house)
+                .centerCrop()
+                .into(holder.itemEstateLayoutBinding.itemEstatePic)
+
+
+        }
 
         if (!estate.isAvailable) {
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE

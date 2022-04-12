@@ -124,7 +124,7 @@ class AddEstateActivity : AppCompatActivity() {
 
         for (editText in requiredEditTexts) {
             if (editText.editText?.text.isNullOrBlank()) {
-                editText.error = "Cannot be Empty"
+                editText.error = getString(R.string.add_estate_input_error)
                 canCreate = false
             } else {
                 editText.error = null
@@ -158,6 +158,8 @@ class AddEstateActivity : AppCompatActivity() {
                     //TODO : handle location
                     location,
                     addEstateDescriptionInput.editText?.text.toString(),
+                    //TODO : handle picture
+                    null,
                     Date(),
                     null,
                     isAvailable = true,

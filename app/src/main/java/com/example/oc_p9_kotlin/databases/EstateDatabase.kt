@@ -3,8 +3,6 @@ package com.example.oc_p9_kotlin.databases
 import android.content.ContentValues
 import android.content.Context
 import android.location.Location
-import android.telecom.Call
-import android.util.Log
 import androidx.room.Database
 import androidx.room.OnConflictStrategy
 import androidx.room.Room
@@ -13,16 +11,20 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.oc_p9_kotlin.daos.EstateDao
-import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.models.Media
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 import java.util.Date
+
 
 @Database(entities = [Estate::class], version = 1)
 @TypeConverters(
     EstateDatabase.DateConverter::class,
-    EstateDatabase.LocationConverter::class
+    EstateDatabase.LocationConverter::class,
+    EstateDatabase.MediaList::class,
 )
 abstract class EstateDatabase : RoomDatabase() {
 
@@ -136,11 +138,25 @@ abstract class EstateDatabase : RoomDatabase() {
         }
     }
 
+    class MediaList {
+        @TypeConverter
+        fun fromMediaList(medias: List<Media?>?): String? {
+            if (medias == null) {
+                return null
+            }
+            val type: Type = object : TypeToken<List<Media?>?>() {}.type
+            return Gson().toJson(medias, type)
+        }
 
-
-
-
-
+        @TypeConverter
+        fun toMediaList(medias: String?): List<Media>? {
+            if (medias == null) {
+                return null
+            }
+            val type: Type = object : TypeToken<List<Media?>?>() {}.type
+            return Gson().fromJson<List<Media>>(medias, type)
+        }
+    }
 
 
 }
