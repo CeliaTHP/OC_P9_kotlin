@@ -1,7 +1,10 @@
 package com.example.oc_p9_kotlin.activities
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +32,9 @@ class AddEstateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEstateBinding
     private var estateType: EstateType = EstateType.HOUSE
     private var isInDollars: Boolean = true
+
+    private val REQUEST_IMAGE_CAPTURE = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,12 +185,27 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+        }
+    }
+
     private fun initListeners() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        binding.fab.setOnClickListener {
+        binding.addEstateTakePic.setOnClickListener {
+            dispatchTakePictureIntent()
+
+
+        }
+
+        binding.addEstateConfirm.setOnClickListener {
             verifyEstateCreation()
         }
 
@@ -234,6 +255,15 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
+/*
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data.extras.get("data") as Bitmap
+            imageView.setImageBitmap(imageBitmap)
+        }    }
+
+
+ */
 
     private fun onEstateTypeButtonClick() {
 
