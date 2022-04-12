@@ -80,7 +80,9 @@ class EstateAdapter(
 
         if (!estate.isAvailable) {
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE
+            holder.itemEstateLayoutBinding.itemEstatePic.alpha = 0.5f
         } else {
+            holder.itemEstateLayoutBinding.itemEstatePic.alpha = 1f
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.INVISIBLE
         }
 

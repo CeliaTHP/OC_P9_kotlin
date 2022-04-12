@@ -20,7 +20,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/round_background"
-            android:src="@drawable/ic_house_purple"
+            android:src="@drawable/ic_house"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
