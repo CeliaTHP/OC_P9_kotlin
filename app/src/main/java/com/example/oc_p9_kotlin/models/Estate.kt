@@ -7,8 +7,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.oc_p9_kotlin.R
+import java.util.Date
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 @Parcelize
 @Entity
@@ -38,45 +38,19 @@ data class Estate(
     @ColumnInfo(name = "assigned_agent_id")
     var assignedAgentId: String?
 
-) : Parcelable {
-
-    companion object {
-
-        fun getEstateType(context: Context?, estateType: EstateType): String {
-
-            if (context == null)
-                return estateType.name
-            else {
-                return when (estateType) {
-                    EstateType.HOUSE -> context.getString(R.string.type_house)
-                    EstateType.APARTMENT -> context.getString(R.string.type_apartment)
-                    EstateType.BUILDING -> context.getString(R.string.type_building)
-                    EstateType.LOFT -> context.getString(R.string.type_loft)
-                    EstateType.CASTLE -> context.getString(R.string.type_castle)
-                    EstateType.BOAT -> context.getString(R.string.type_boat)
-                    EstateType.MANSION -> context.getString(R.string.type_mansion)
-                    EstateType.SITE -> context.getString(R.string.type_site)
-                    else -> context.getString(R.string.type_other)
-
-                }
-            }
-        }
-
-    }
-}
+) : Parcelable
 
 
-enum class EstateType {
-    HOUSE,
-    APARTMENT,
-    BUILDING,
-    LOFT,
-    CASTLE,
-    BOAT,
-    MANSION,
-    SITE,
-    OTHER
-
+enum class EstateType(val stringValue: Int) {
+    HOUSE(R.string.type_house),
+    APARTMENT(R.string.type_apartment),
+    BUILDING(R.string.type_building),
+    LOFT(R.string.type_loft),
+    CASTLE(R.string.type_castle),
+    BOAT(R.string.type_boat),
+    MANSION(R.string.type_mansion),
+    SITE(R.string.type_site),
+    OTHER(R.string.type_other)
 }
 
 

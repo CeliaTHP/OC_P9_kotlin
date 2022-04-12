@@ -27,7 +27,6 @@ import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
-import com.google.android.material.textfield.TextInputLayout
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -61,7 +60,7 @@ class AddEstateActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //Default type
-        binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
+        binding.addEstateTypeButton.text = getString(estateType.stringValue)
 
         initViewModels()
 
@@ -433,7 +432,7 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private fun onTypeSelected(estateType: EstateType) {
-        binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
+        binding.addEstateTypeButton.text = getString(estateType.stringValue)
 
     }
 

@@ -146,7 +146,7 @@ object FakeEstateApi {
                 Media( "fourth pic", "https://imgur.com/2YoMmQO.png"),
                 Media( "fifth pic", "https://imgur.com/vJWTa6M.png"),
                 Media( "sixth pic", "https://imgur.com/RzVDiWH.png"),
-                Media( "seventh pic", "https://imgur.com/WntjHmD")
+                Media( "seventh pic", "https://imgur.com/WntjHmD.png")
             ),
             getEntryDate(),
             null,

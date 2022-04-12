@@ -161,7 +161,8 @@ class DetailsFragment : Fragment() {
         with(binding) {
 
             detailsType.text =
-                Estate.getEstateType(context, estate.type)
+                getString(estate.type.stringValue)
+
             detailsPrice.text = Utils().getPrice(estate)
             detailsCity.text = estate.city
             detailsDescriptionText.text = estate.description

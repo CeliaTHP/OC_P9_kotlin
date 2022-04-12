@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.utils.Utils
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
 class EstateAdapter(
@@ -54,9 +51,8 @@ class EstateAdapter(
         }
 
 
-
         holder.itemEstateLayoutBinding.itemEstateType.text =
-            Estate.getEstateType(holder.itemView.context, estate.type)
+            holder.itemView.context.getString(estate.type.stringValue)
 
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
 
