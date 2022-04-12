@@ -31,7 +31,6 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-
         val medias = intent?.getSerializableExtra("medias") as List<Media>
 
         initListeners()

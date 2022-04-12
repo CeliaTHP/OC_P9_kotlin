@@ -50,7 +50,6 @@ class EstateAdapter(
             onClick(estate)
         }
 
-
         holder.itemEstateLayoutBinding.itemEstateType.text =
             holder.itemView.context.getString(estate.type.stringValue)
 
@@ -58,6 +57,7 @@ class EstateAdapter(
 
         holder.itemEstateLayoutBinding.itemEstatePrice.text =
             Utils().getPrice(estate)
+
 
         if (!estate.medias.isNullOrEmpty()) {
             val mediaUrl = estate.medias!![0].url

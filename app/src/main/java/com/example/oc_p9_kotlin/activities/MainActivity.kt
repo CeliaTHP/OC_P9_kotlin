@@ -363,8 +363,8 @@ class MainActivity : CompositeDisposableActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if (item.itemId == R.id.action_settings) {
-            Log.d(TAG, "SETTINGS")
+        if (item.itemId == R.id.action_criteria) {
+            Log.d(TAG, "CRITERIA")
 
         } else {
             when (item.itemId) {

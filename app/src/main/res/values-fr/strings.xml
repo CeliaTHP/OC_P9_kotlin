@@ -16,7 +16,7 @@
     <string name="action_filter_site">Voir sites</string>
     <string name="action_filter_other">Voir autres</string>
 
-    <string name="action_settings">Paramètres</string>
+    <string name="action_criteria">Critères</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="list_fragment_label">Fragment Liste</string>

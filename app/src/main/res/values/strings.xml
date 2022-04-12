@@ -16,7 +16,7 @@
     <string name="action_filter_site">See sites</string>
     <string name="action_filter_other">See others</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_criteria">Criteria</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="list_fragment_label">List Fragment</string>
@@ -64,7 +64,7 @@
     <string name="add_estate_price_hint_dollars" translatable="false">571 600 $</string>
 
     <string name="add_estate_surface">Surface</string>
-    <string name="add_estate_surface_hint" translatable="false">27 (m ²)</string>
+    <string name="add_estate_surface_placeholder" translatable="false">%1$d (m ²)</string>
     <string name="add_estate_rooms">Room(s)</string>
     <string name="add_estate_rooms_hint" translatable="false">2</string>
     <string name="add_estate_bathrooms">Bathroom(s)</string>
