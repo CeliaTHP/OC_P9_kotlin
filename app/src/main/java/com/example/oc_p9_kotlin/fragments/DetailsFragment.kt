@@ -10,8 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.MainActivity
+import com.example.oc_p9_kotlin.adapters.EstateAdapter
+import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
@@ -37,6 +40,8 @@ class DetailsFragment : Fragment() {
     companion object {
         private const val TAG: String = "DetailsFragment"
     }
+
+    private lateinit var imageAdapter: ImageAdapter
 
     private var _binding: FragmentDetailsBinding? = null
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
@@ -172,8 +177,25 @@ class DetailsFragment : Fragment() {
             binding.detailsSold.visibility = View.INVISIBLE
         }
 
+        initPics(estate)
 
         initMap(estate)
+
+    }
+
+    private fun initPics(estate: Estate) {
+
+        estate.medias?.let {
+            imageAdapter = ImageAdapter(
+                it.toMutableList()
+            )
+            binding.detailsPicsRecyclerView.adapter = imageAdapter
+            binding.detailsPicsRecyclerView.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
+        }
+
+
 
     }
 
