@@ -76,18 +76,12 @@
 
     <string name="add_estate_input_error">Cannot be Empty</string>
     <string name="add_estate_pic_already_added">This photo has already been added</string>
+    <string name="add_estate_success">Your estate has been saved.</string>
 
     <string name="add_estate_dialog_title">New photo</string>
     <string name="add_estate_dialog_text">Select a name</string>
     <string name="add_estate_dialog_confirm">Confirm</string>
     <string name="add_estate_dialog_no">No</string>
-
-
-
-
-
-
-
 
 
     <string name="type_house">House</string>

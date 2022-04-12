@@ -5,10 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Media(
-    var id: String,
     var name: String,
     var url: String,
-
 ) : Parcelable {
 
 }

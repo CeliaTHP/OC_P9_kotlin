@@ -39,17 +39,19 @@ class ImageAdapter(
 
         val media = imageList[position]
 
+        Log.d(TAG, media.toString())
+
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
 
         Glide.with(holder.itemView.context)
             .load(media.url)
             .centerCrop()
-            .error(R.drawable.ic_house)
+            .error(R.drawable.ic_back_arrow)
             .into(holder.itemPicLayoutBinding.itemPic)
 
         if (isEditing) {
-            Log.d(TAG, "isLocal")
+            Log.d(TAG, "is Editing")
             holder.itemPicLayoutBinding.addEstateDelete.visibility = View.VISIBLE
             holder.itemPicLayoutBinding.addEstateDelete.setOnClickListener {
                 removeData(position)
@@ -57,8 +59,7 @@ class ImageAdapter(
             }
 
         } else {
-            Log.d(TAG, "is External")
-
+            Log.d(TAG, "is NOT Editing")
             holder.itemPicLayoutBinding.addEstateDelete.visibility = View.GONE
 
 

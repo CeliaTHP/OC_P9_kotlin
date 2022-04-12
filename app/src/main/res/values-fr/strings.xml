@@ -65,6 +65,8 @@
 
     <string name="add_estate_input_error">Ne peut pas être vide</string>
     <string name="add_estate_pic_already_added">Cette photo a déjà été ajoutée !</string>
+    <string name="add_estate_success">Votre bien a été ajouté.</string>
+
 
     <string name="add_estate_dialog_title">Nouvelle photo </string>
     <string name="add_estate_dialog_text">Choisissez un nom</string>

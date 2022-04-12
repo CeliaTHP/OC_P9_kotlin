@@ -1,7 +1,6 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.content.ActivityNotFoundException
-import android.content.DialogInterface
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
@@ -20,7 +19,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.AddEstateViewModelFactory
-import com.example.oc_p9_kotlin.MainViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
@@ -29,7 +27,6 @@ import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
-import com.example.oc_p9_kotlin.view_models.MainViewModel
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -62,14 +59,18 @@ class AddEstateActivity : AppCompatActivity() {
         binding = ActivityAddEstateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         //Default type
         binding.addEstateTypeButton.text = Estate.getEstateType(this, estateType)
 
         initViewModels()
+
+        // Init preferred currency (USD or EUR)
         initCurrency()
-        initPlaces()
-        initToolbar()
+
+        // Setting up toolbar according to our view
+        setUpToolbar()
+
+
         initListeners()
         initSpinner()
         initPics()
@@ -78,18 +79,12 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private fun initViewModels() {
-        viewModel =
-            ViewModelProvider(
-                this,
-                AddEstateViewModelFactory(this)
-            ).get(AddEstateViewModel::class.java)
-
+        viewModel = ViewModelProvider(
+            this, AddEstateViewModelFactory(this)
+        ).get(AddEstateViewModel::class.java)
 
     }
 
-    private fun initPlaces() {
-
-    }
 
     private fun initCurrency(isInDollars: Boolean? = null) {
 
@@ -136,7 +131,7 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
 
-    private fun initToolbar() {
+    private fun setUpToolbar() {
         //Setting up toolbar
         binding.toolbar.overflowIcon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
@@ -147,8 +142,10 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
     private fun verifyEstateCreation() {
+
         var canCreate = true
 
+        //Check if all required fields are filled
         val requiredEditTexts = arrayListOf(
             binding.addEstateCityInput,
             binding.addEstateAddressInput,
@@ -172,12 +169,13 @@ class AddEstateActivity : AppCompatActivity() {
         if (canCreate) {
             Log.d(TAG, "can create Estate")
             with(binding) {
-                var location = Location("")
+                val location = Location("")
                 //TODO: Handle location managment
                 location.latitude = 49.54454396
                 location.longitude = 2.8484848
 
-                var priceInEuros = if (isInDollars)
+                // Convert in Euros if price entered in dollars
+                val priceInEuros = if (isInDollars)
                     Utils().convertDollarToEuro(
                         addEstatePriceInput.editText?.text.toString().toInt()
                     )
@@ -185,6 +183,7 @@ class AddEstateActivity : AppCompatActivity() {
                     addEstatePriceInput.editText?.text.toString().toInt()
 
 
+                // Create our new Estate with our filled fields
                 var estate = Estate(
                     UUID.randomUUID().toString(),
                     estateType,
@@ -205,30 +204,30 @@ class AddEstateActivity : AppCompatActivity() {
                     null
                 )
 
+                // Add new estate to database
                 viewModel.insertEstate(estate)
+
+                Toast.makeText(
+                    this@AddEstateActivity,
+                    R.string.add_estate_success,
+                    Toast.LENGTH_LONG
+                ).show()
+
                 finish()
-
                 Log.d(TAG, " created : " + estate.toString())
-                //TODO : create estate
             }
-
-
-        } else {
-            Log.d(TAG, "can NOT create Estate")
-
         }
-
 
     }
 
     private fun selectPictureIntent() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        intent.action = Intent.ACTION_OPEN_DOCUMENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
     }
 
-    private fun dispatchTakePictureIntent() {
+    private fun takePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -272,17 +271,17 @@ class AddEstateActivity : AppCompatActivity() {
 
 
     private fun initListeners() {
+
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
         binding.addEstateAddPic.setOnClickListener {
             selectPictureIntent()
-
         }
 
         binding.addEstateTakePic.setOnClickListener {
-            dispatchTakePictureIntent()
+            takePictureIntent()
         }
 
         binding.addEstateConfirm.setOnClickListener {
@@ -324,11 +323,17 @@ class AddEstateActivity : AppCompatActivity() {
                 //imageView.setImageBitmap(imageBitmap)
             }
             if (requestCode == PICK_IMAGE) {
+                Log.d(TAG, "pick image : " + data?.data?.path)
+                Log.d(TAG, " " + data?.data?.toString())
+                Log.d(TAG, " " + data?.data?.encodedPath)
+                Log.d(TAG, " " + data?.data?.schemeSpecificPart)
+
+
                 var canAdd = true
                 var newMedia = Media(
-                    imageAdapter.itemCount.toString(),
                     (imageAdapter.itemCount + 1).toString(),
-                    data?.data.toString())
+                    data?.data.toString()
+                )
 
                 for (media in imageAdapter.imageList) {
                     if (media.url == newMedia.url) {
@@ -370,8 +375,8 @@ class AddEstateActivity : AppCompatActivity() {
         alert.setPositiveButton(
             getString(R.string.add_estate_dialog_confirm)
         ) { dialog, whichButton -> //What ever you want to do with the value
-            Log.d(TAG, "POSITIVE" + editText.text)
-            media.name = editText.text.toString()
+            if (!editText.text.isNullOrBlank())
+                media.name = editText.text.toString()
             imageAdapter.addData(media)
 
         }
