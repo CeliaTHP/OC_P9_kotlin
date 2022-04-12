@@ -8,6 +8,8 @@ import com.example.oc_p9_kotlin.models.EstateType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,14 +17,17 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(val estateDao: EstateDao) : ViewModel() {
 
+    private var executor: Executor = Executors.newSingleThreadExecutor()
+
     companion object {
         private const val TAG = "MainViewModel"
     }
 
     fun generateData() {
-        GlobalScope.launch(Dispatchers.IO) {
+        executor.execute {
             estateDao.insertAllEstates(FakeEstateApi.getFakeEstateList())
         }
+
 
     }
 
