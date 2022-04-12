@@ -1,5 +1,7 @@
 package com.example.oc_p9_kotlin.adapters
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +11,7 @@ import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.databinding.ItemPicLayoutBinding
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
+import java.io.File
 
 class ImageAdapter(
 
@@ -36,16 +39,41 @@ class ImageAdapter(
 
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
-        Glide.with(holder.itemView.context)
-            .load(media.url)
-            .centerCrop()
-            .error(R.drawable.ic_house)
-            .into(holder.itemPicLayoutBinding.itemPic)
+        if (media.isLocal) {
+            Glide.with(holder.itemView.context)
+                .load(File(media.url)) // Uri of the picture
+                .into(holder.itemPicLayoutBinding.itemPic)
+
+        } else {
+            Glide.with(holder.itemView.context)
+                .load(media.url)
+                .centerCrop()
+                .error(R.drawable.ic_house)
+                .into(holder.itemPicLayoutBinding.itemPic)
+        }
+
 
     }
 
     override fun getItemCount(): Int {
         return imageList.size
+    }
+
+
+    public fun updateData(newList: MutableList<Media>) {
+        Log.d(TAG, "old list : " + imageList.size)
+        this.imageList = newList
+        notifyDataSetChanged()
+        Log.d(TAG, "new list : " + newList.size)
+
+    }
+
+    public fun addData(media: Media) {
+        this.imageList.add(media)
+        notifyItemInserted(imageList.size)
+        Log.d(TAG, imageList.toString())
+
+
     }
 
     class ImageViewHolder(val itemPicLayoutBinding: ItemPicLayoutBinding) :

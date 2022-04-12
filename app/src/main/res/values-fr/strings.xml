@@ -50,6 +50,7 @@
     <!--Add Estate-->
     <string name="add_estate_title">Ajouter un bien</string>
     <string name="add_estate_type">Type</string>
+    <string name="add_estate_medias">Médias</string>
     <string name="add_estate_city">Ville</string>
     <string name="add_estate_address">Adresse</string>
     <string name="add_estate_address_hint">36 rue de la Paix</string>

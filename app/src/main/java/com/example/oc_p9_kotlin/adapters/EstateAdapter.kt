@@ -67,14 +67,12 @@ class EstateAdapter(
             val mediaUrl = estate.medias!![0].url
             Log.d(TAG, mediaUrl)
 
-
             Glide
                 .with(holder.itemView.context)
                 .load(mediaUrl)
                 .error(R.drawable.ic_house)
                 .centerCrop()
                 .into(holder.itemEstateLayoutBinding.itemEstatePic)
-
 
         }
 
@@ -106,11 +104,10 @@ class EstateAdapter(
     }
 
     public fun updateData(newList: MutableList<Estate>) {
+        Log.d(TAG, "old list : " + estateList.toString())
         this.estateList = newList
         notifyDataSetChanged()
-        Log.d(TAG, "old list : " + estateList.toString())
         Log.d(TAG, "new list : " + newList.toString())
-
     }
 
     class EstateViewHolder(val itemEstateLayoutBinding: ItemEstateLayoutBinding) :

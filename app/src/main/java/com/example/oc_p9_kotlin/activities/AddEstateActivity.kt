@@ -6,15 +6,19 @@ import android.location.Location
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.R
+import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.Utils
 import java.util.Date
 import java.util.Locale
@@ -33,7 +37,11 @@ class AddEstateActivity : AppCompatActivity() {
     private var estateType: EstateType = EstateType.HOUSE
     private var isInDollars: Boolean = true
 
+    private var mediaList: MutableList<Media> = mutableListOf()
+    private lateinit var imageAdapter: ImageAdapter
+
     private val REQUEST_IMAGE_CAPTURE = 1
+    private val PICK_IMAGE = 2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +60,8 @@ class AddEstateActivity : AppCompatActivity() {
         initToolbar()
         initListeners()
         initSpinner()
+        initPics()
+
 
     }
 
@@ -185,6 +195,13 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
+    private fun selectPictureIntent() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+    }
+
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -194,15 +211,51 @@ class AddEstateActivity : AppCompatActivity() {
         }
     }
 
+    private fun initPics() {
+
+        Log.d(TAG, "initPics")
+
+        binding.addEstateDefaultPic.visibility = View.GONE
+
+        imageAdapter = ImageAdapter(
+            mutableListOf()
+        )
+
+        binding.addEstateRecyclerView.adapter = imageAdapter
+        binding.addEstateRecyclerView.layoutManager =
+            LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
+
+    }
+
+/*
+        estate.medias?.let {
+            binding.detailsDefaultPic.visibility = View.GONE
+            imageAdapter = ImageAdapter(
+                it.toMutableList()
+            )
+            binding.detailsPicsRecyclerView.adapter = imageAdapter
+            binding.detailsPicsRecyclerView.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
+
+        }
+
+ */
+
+
     private fun initListeners() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
+        binding.addEstateAddPic.setOnClickListener {
+            selectPictureIntent()
+
+        }
+
         binding.addEstateTakePic.setOnClickListener {
             dispatchTakePictureIntent()
-
-
         }
 
         binding.addEstateConfirm.setOnClickListener {
@@ -228,42 +281,42 @@ class AddEstateActivity : AppCompatActivity() {
 
         binding.addEstateAddressInput.setOnClickListener {
 
-            /*
-            val fieldList =
-                Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
-
-            val intent =
-                Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList)
-                    .build(this.applicationContext)
-
-
-            val resultLauncher =
-                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        // There are no request codes
-                        val data: Intent? = result.data
-                        Log.d(TAG, "data : $data")
-                    }
-                }
-
-            resultLauncher.launch(intent)
-
-             */
 
         }
 
 
     }
 
-/*
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data.extras.get("data") as Bitmap
-            imageView.setImageBitmap(imageBitmap)
-        }    }
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                Log.d(TAG, "image capture : " + data?.data)
+                //val imageBitmap = data.extras.get("data") as Bitmap
+                //imageView.setImageBitmap(imageBitmap)
+            }
+            if (requestCode == PICK_IMAGE) {
 
+                var newMedia = Media(
+                    imageAdapter.itemCount.toString(),
+                    (imageAdapter.itemCount + 1).toString(),
+                    data?.data.toString()
+                )
+                //mediaList.add()
+                //imageAdapter.updateData(mediaList)
 
- */
+                imageAdapter.addData(newMedia)
+
+                Log.d(TAG, "pick image : " + data?.data)
+
+            }
+        } else {
+            Log.d(TAG, "request code : $requestCode RESULT NOT OK ")
+
+        }
+    }
+
 
     private fun onEstateTypeButtonClick() {
 

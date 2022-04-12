@@ -53,6 +53,7 @@
     <!--Add Estate-->
     <string name="add_estate_title">Add an estate</string>
     <string name="add_estate_type">Type</string>
+    <string name="add_estate_medias">Medias</string>
     <string name="add_estate_city">City</string>
     <string name="add_estate_city_hint" translatable="false">Paris</string>
     <string name="add_estate_address">Address</string>
