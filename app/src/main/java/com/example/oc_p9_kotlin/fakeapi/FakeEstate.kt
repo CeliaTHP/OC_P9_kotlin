@@ -4,7 +4,6 @@ import android.location.Location
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
-import java.text.SimpleDateFormat
 import java.util.*
 
 object FakeEstateApi {
@@ -64,6 +63,15 @@ object FakeEstateApi {
         longitude = 6.996455269621434
     }
 
+
+    private fun getEntryDate(): Date {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        cal.add(Calendar.DATE, -10)
+        return cal.time
+    }
+
+
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
             "0",
@@ -86,7 +94,7 @@ object FakeEstateApi {
                 Media("3", "fourth_pic", "https://imgur.com/PAVM3nU.png")
 
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = true,
@@ -112,7 +120,7 @@ object FakeEstateApi {
                 Media("2", "third_pic", "https://imgur.com/tRsPwQl.png")
 
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = false,
@@ -142,7 +150,7 @@ object FakeEstateApi {
                 Media("5", "sixth_pic", "https://imgur.com/RzVDiWH.png"),
                 Media("6", "seventh_pic", "https://imgur.com/WntjHmD")
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = false,
@@ -165,8 +173,8 @@ object FakeEstateApi {
             listOf(
                 Media("0", "first_pic", "https://imgur.com/jVwBWXf.png"),
             ),
+            getEntryDate(),
             Date(),
-            null,
             isAvailable = false,
             isFurnished = true,
             null
@@ -186,7 +194,7 @@ object FakeEstateApi {
             "From the outside this house looks impressive. It has been built with tan bricks and has oak wooden decorations. Short, wide windows allow enough light to enter the home and have been added to the house in a fairly asymmetrical pattern." +
                     " The house is equipped with a modern kitchen and one modern bathroom, it also has a large living room, three bedrooms, a large dining room and a small garage.",
             null,
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = false,
@@ -211,7 +219,7 @@ object FakeEstateApi {
                 Media("1", "second_pic", "https://imgur.com/NFAZ5ht.png"),
                 Media("2", "third_pic", "https://imgur.com/YLA8Q0X.png"),
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = true,
@@ -233,7 +241,7 @@ object FakeEstateApi {
             listOf(
                 Media("0", "first_pic", "https://imgur.com/2cG7sb4.png"),
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = false,
@@ -253,8 +261,8 @@ object FakeEstateApi {
             "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
             null,
+            getEntryDate(),
             Date(),
-            null,
             isAvailable = false,
             isFurnished = false,
             null
@@ -278,7 +286,7 @@ object FakeEstateApi {
                 Media("1", "second_pic", "https://imgur.com/u9FY0Dc.png"),
                 Media("2", "third_pic", "https://imgur.com/RRWOGrY.png"),
             ),
-            Date(),
+            getEntryDate(),
             null,
             isAvailable = true,
             isFurnished = false,
@@ -307,8 +315,8 @@ object FakeEstateApi {
                 Media("5", "sixth_pic", "https://imgur.com/TqCmgAN.png"),
 
                 ),
+            getEntryDate(),
             Date(),
-            null,
             isAvailable = false,
             isFurnished = false,
             null

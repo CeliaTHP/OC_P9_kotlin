@@ -86,10 +86,48 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_media_title" />
 
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="details_pics_recycler_view,details_default_pic" />
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier">
+
+                    <TextView
+                        android:id="@+id/details_entry_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_estate_entry_date"
+                        android:textColor="@color/main_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/details_sale_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_estate_sale_date"
+                        android:textColor="@color/main_text"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
                 <ImageView
                     android:id="@+id/details_default_pic"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:layout_margin="10dp"
                     android:src="@drawable/ic_house_purple"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -100,17 +138,15 @@
                     android:id="@+id/details_sold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:rotation="-20"
                     android:text="@string/item_estate_sold"
                     android:textAllCaps="true"
                     android:textColor="@color/red"
-                    android:textSize="42sp"
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/details_media_title"
+                    app:layout_constraintTop_toBottomOf="@id/barrier"
                     tools:visibility="visible" />
 
 

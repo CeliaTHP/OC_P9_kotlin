@@ -21,6 +21,7 @@ import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
+import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import org.greenrobot.eventbus.EventBus
@@ -153,30 +154,45 @@ class DetailsFragment : Fragment() {
 
 
     private fun updateUI(estate: Estate) {
-        Log.d(TAG, "updateUI $estate")
+        with(binding) {
 
-        binding.detailsType.text =
-            Estate.getEstateType(context, estate.type)
+            detailsType.text =
+                Estate.getEstateType(context, estate.type)
+            detailsPrice.text = Utils().getPrice(estate)
+            detailsCity.text = estate.city
+            detailsDescriptionText.text = estate.description
+            detailsSurface.text =
+                getString(R.string.details_surface, estate.surfaceInSquareMeters)
+            detailsRooms.text = getString(R.string.details_rooms, estate.rooms.toString())
+            detailsBathrooms.text =
+                getString(R.string.details_bathrooms, estate.bathrooms.toString())
+            detailsBedrooms.text =
+                getString(R.string.details_bedrooms, estate.bedrooms.toString())
+            detailsAddress.text = estate.address
+            detailsEntryDate.text =
+                root.context.getString(
+                    R.string.item_estate_entry_date,
+                    DateFormat.getDateInstance(DateFormat.SHORT).format(estate.entryDate)
+                )
 
-        binding.detailsPrice.text = Utils().getPrice(estate)
-        binding.detailsCity.text = estate.city
+            if (!estate.isAvailable) {
+                detailsSold.visibility = View.VISIBLE
 
-        binding.detailsDescriptionText.text = estate.description
-        binding.detailsSurface.text =
-            getString(R.string.details_surface, estate.surfaceInSquareMeters)
-        binding.detailsRooms.text = getString(R.string.details_rooms, estate.rooms.toString())
-        binding.detailsBathrooms.text =
-            getString(R.string.details_bathrooms, estate.bathrooms.toString())
-        binding.detailsBedrooms.text =
-            getString(R.string.details_bedrooms, estate.bedrooms.toString())
-        binding.detailsAddress.text = estate.address
+                estate.saleDate?.let {
+                    detailsSaleDate.visibility = View.VISIBLE
+                    detailsSaleDate.text = root.context.getString(
+                        R.string.item_estate_sale_date,
+                        DateFormat.getDateInstance(DateFormat.SHORT)
+                            .format(it)
+                    )
+                }
 
-        if (!estate.isAvailable) {
-            binding.detailsSold.visibility = View.VISIBLE
-        } else {
-            binding.detailsSold.visibility = View.INVISIBLE
+
+            } else {
+                detailsSold.visibility = View.INVISIBLE
+            }
+
         }
-
         initPics(estate)
         initMap(estate)
 

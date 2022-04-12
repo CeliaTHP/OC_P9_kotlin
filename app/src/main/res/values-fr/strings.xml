@@ -43,6 +43,8 @@
     <!--Item Estate-->
     <string name="item_estate_type">Type</string>
     <string name="item_estate_city">Ville</string>
+    <string name="item_estate_entry_date">date d\'entrée : %1$s</string>
+    <string name="item_estate_sale_date">date de vente : %1$s</string>
     <string name="item_estate_sold">Vendu</string>
 
     <!--Add Estate-->
