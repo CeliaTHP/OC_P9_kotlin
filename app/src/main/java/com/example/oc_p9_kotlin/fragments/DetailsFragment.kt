@@ -74,11 +74,20 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initListeners() {
+
         binding.detailsRefreshButton.setOnClickListener {
             estate?.let {
                 Log.d(TAG, "refresh button click listener")
                 updateUI(it)
             }
+        }
+
+        binding.detailsFullscreen.setOnClickListener {
+            estate?.medias?.let {
+                viewFullscreen(it)
+            }
+
+
         }
     }
 
@@ -198,15 +207,11 @@ class DetailsFragment : Fragment() {
 
         estate.medias?.let {
             binding.detailsDefaultPic.visibility = View.GONE
+            binding.detailsFullscreen.visibility = View.VISIBLE
             imageAdapter = ImageAdapter(
                 it.toMutableList()
             ) {
-                Log.d(TAG, "start Full Screen Activity")
-                val list: List<Media> = it
-                var intent =
-                    Intent(binding.root.context, FullScreenPictureActivity::class.java)
-                intent.putExtra("medias", list as Serializable)
-                startActivity(intent)
+                viewFullscreen(it)
             }
             binding.detailsPicsRecyclerView.adapter = imageAdapter
             binding.detailsPicsRecyclerView.layoutManager =
@@ -216,6 +221,15 @@ class DetailsFragment : Fragment() {
         }
 
 
+    }
+
+    private fun viewFullscreen(medias: List<Media>) {
+        Log.d(TAG, "start Full Screen Activity")
+        val list: List<Media> = medias
+        val intent =
+            Intent(binding.root.context, FullScreenPictureActivity::class.java)
+        intent.putExtra("medias", list as Serializable)
+        startActivity(intent)
     }
 
 

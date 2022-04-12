@@ -88,6 +88,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_media_title" />
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/details_fullscreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/fab_margin"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_fullscreen"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="@id/details_pics_recycler_view"
+                    app:layout_constraintTop_toTopOf="@id/details_pics_recycler_view"
+                    tools:visibility="visible" />
+
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/barrier"
                     android:layout_width="0dp"

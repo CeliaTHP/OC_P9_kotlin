@@ -19,7 +19,6 @@ class ImageAdapter(
 
     var imageList: MutableList<Media>,
     private var isEditing: Boolean = false,
-    private var isFullScreen: Boolean = false,
     private var onLongClick: () -> Unit
 
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
@@ -46,19 +45,12 @@ class ImageAdapter(
 
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
-        if (!isFullScreen) {
             Glide.with(holder.itemView.context)
                 .load(media.url)
                 .centerCrop()
                 .error(R.drawable.ic_back_arrow)
                 .into(holder.itemPicLayoutBinding.itemPic)
-        } else {
-            Glide.with(holder.itemView.context)
-                .load(media.url)
-                .error(R.drawable.ic_back_arrow)
-                .into(holder.itemPicLayoutBinding.itemPic)
 
-        }
 
 
         holder.itemView.setOnLongClickListener {

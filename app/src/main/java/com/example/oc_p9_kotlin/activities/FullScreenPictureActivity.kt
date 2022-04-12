@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
+import com.example.oc_p9_kotlin.adapters.ImageFullScreenAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenPictureBinding
 import com.example.oc_p9_kotlin.models.Estate
@@ -20,7 +21,7 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullScreenPictureBinding
 
-    private lateinit var imageAdapter: ImageAdapter
+    private lateinit var imageAdapter: ImageFullScreenAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
     private fun initListeners() {
 
-        binding.fullScreenClose.setOnClickListener {
+        binding.fullScreenBack.setOnClickListener {
             finish()
         }
 
@@ -51,13 +52,9 @@ class FullScreenPictureActivity : AppCompatActivity() {
         Log.d(TAG, "initPics")
         binding.fullScreenDefaultPic.visibility = View.GONE
 
-        imageAdapter = ImageAdapter(
-            medias.toMutableList(),
-            isEditing = false,
-            isFullScreen = true
-        ) {
-
-        }
+        imageAdapter = ImageFullScreenAdapter(
+            medias.toMutableList()
+        )
 
 
         binding.fullScreenRecyclerView.adapter = imageAdapter
