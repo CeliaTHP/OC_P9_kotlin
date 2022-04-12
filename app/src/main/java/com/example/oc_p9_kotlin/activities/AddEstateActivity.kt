@@ -27,6 +27,7 @@ import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import com.google.android.material.textfield.TextInputLayout
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -111,19 +112,19 @@ class AddEstateActivity : AppCompatActivity() {
 
     private fun setCurrencyUI(isInDollars: Boolean) {
         if (isInDollars) {
-            binding.addEstatePriceSwitch.setImageDrawable(
+            binding.addEstatePriceInput.startIconDrawable =
                 AppCompatResources
                     .getDrawable(this, R.drawable.ic_dollar)
-            )
+
             binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_dollars)
 
             this.isInDollars = true
 
         } else {
-            binding.addEstatePriceSwitch.setImageDrawable(
+            binding.addEstatePriceInput.startIconDrawable =
                 AppCompatResources
                     .getDrawable(this, R.drawable.ic_euro)
-            )
+
             binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_euros)
             this.isInDollars = false
         }
@@ -245,7 +246,7 @@ class AddEstateActivity : AppCompatActivity() {
         imageAdapter = ImageAdapter(
             mutableListOf(),
             true
-        )
+        ) {}
 
         binding.addEstateRecyclerView.adapter = imageAdapter
         binding.addEstateRecyclerView.layoutManager =
@@ -292,7 +293,7 @@ class AddEstateActivity : AppCompatActivity() {
             onEstateTypeButtonClick()
         }
 
-        binding.addEstatePriceSwitch.setOnClickListener {
+        binding.addEstatePriceInput.setStartIconOnClickListener {
 
             if (isInDollars) {
                 Log.d(TAG, "wasDollars")
@@ -374,7 +375,7 @@ class AddEstateActivity : AppCompatActivity() {
 
         alert.setPositiveButton(
             getString(R.string.add_estate_dialog_confirm)
-        ) { dialog, whichButton -> //What ever you want to do with the value
+        ) { _, _ -> //What ever you want to do with the value
             if (!editText.text.isNullOrBlank())
                 media.name = editText.text.toString()
             imageAdapter.addData(media)

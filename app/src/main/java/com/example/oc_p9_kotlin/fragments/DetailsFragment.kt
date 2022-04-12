@@ -1,8 +1,6 @@
 package com.example.oc_p9_kotlin.fragments
 
-import android.content.Context
-import android.media.metrics.Event
-import android.opengl.Visibility
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -13,24 +11,21 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.activities.MainActivity
-import com.example.oc_p9_kotlin.adapters.EstateAdapter
+import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
+import java.io.Serializable
 import java.text.DateFormat
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.config.Configuration
-import org.osmdroid.events.MapListener
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
 
@@ -205,13 +200,22 @@ class DetailsFragment : Fragment() {
             binding.detailsDefaultPic.visibility = View.GONE
             imageAdapter = ImageAdapter(
                 it.toMutableList()
-            )
-            binding.detailsPicsRecyclerView.adapter = imageAdapter
-            binding.detailsPicsRecyclerView.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            ) {
+                Log.d(TAG, "start Full Screen Activity")
+                val list: List<Media> = it
+                var intent =
+                    Intent(binding.root.context, FullScreenPictureActivity::class.java)
+                intent.putExtra("medias", list as Serializable)
+                startActivity(intent)
+            }
 
 
         }
+
+        binding.detailsPicsRecyclerView.adapter = imageAdapter
+        binding.detailsPicsRecyclerView.layoutManager =
+            LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
 
     }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.databinding.ItemPicLayoutBinding
@@ -17,7 +18,9 @@ import java.io.File
 class ImageAdapter(
 
     var imageList: MutableList<Media>,
-    var isEditing: Boolean = false
+    private var isEditing: Boolean = false,
+    private var isFullScreen: Boolean = false,
+    private var onLongClick: () -> Unit
 
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
@@ -43,19 +46,35 @@ class ImageAdapter(
 
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
+        if (!isFullScreen) {
+            Glide.with(holder.itemView.context)
+                .load(media.url)
+                .centerCrop()
+                .error(R.drawable.ic_back_arrow)
+                .into(holder.itemPicLayoutBinding.itemPic)
+        } else {
+            Glide.with(holder.itemView.context)
+                .load(media.url)
+                .error(R.drawable.ic_back_arrow)
+                .into(holder.itemPicLayoutBinding.itemPic)
 
-        Glide.with(holder.itemView.context)
-            .load(media.url)
-            .centerCrop()
-            .error(R.drawable.ic_back_arrow)
-            .into(holder.itemPicLayoutBinding.itemPic)
+        }
+
+
+        holder.itemView.setOnLongClickListener {
+            Log.d(TAG, "longClick")
+            onLongClick()
+            true
+        }
+
 
         if (isEditing) {
             Log.d(TAG, "is Editing")
             holder.itemPicLayoutBinding.addEstateDelete.visibility = View.VISIBLE
+
+
             holder.itemPicLayoutBinding.addEstateDelete.setOnClickListener {
                 removeData(position)
-
             }
 
         } else {
@@ -66,6 +85,10 @@ class ImageAdapter(
         }
 
 
+    }
+
+    interface OnLongClickListener {
+        fun onLongClick(estate: Estate)
     }
 
     override fun getItemCount(): Int {
