@@ -11,8 +11,14 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
 
 class ImageAdapter(
+
     var imageList: MutableList<Media>
+
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+
+    companion object {
+        var TAG = "ImageAdapter"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         return ImageViewHolder(
@@ -32,6 +38,7 @@ class ImageAdapter(
 
         Glide.with(holder.itemView.context)
             .load(media.url)
+            .centerCrop()
             .error(R.drawable.ic_house)
             .into(holder.itemPicLayoutBinding.itemPic)
 

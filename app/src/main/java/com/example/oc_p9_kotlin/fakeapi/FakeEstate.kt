@@ -80,10 +80,10 @@ object FakeEstateApi {
                     "The house is equipped with a large kitchen and one average bathroom, it also has a large living room, five bedrooms, a cozy dining room," +
                     " a lounge area and a cozy storage room.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/TPBckBp"),
-                Media("1", "second_pic", "https://ibb.co/FsGRBXm"),
-                Media("2", "third_pic", "https://ibb.co/jWc2jvg"),
-                Media("3", "fourth_pic", "https://ibb.co/tzDL5Qw")
+                Media("0", "first_pic", "https://imgur.com/X4YUxC8.png"),
+                Media("1", "second_pic", "https://imgur.com/iuf7Olz.png"),
+                Media("2", "third_pic", "https://imgur.com/CltG3DI.png"),
+                Media("3", "fourth_pic", "https://imgur.com/PAVM3nU.png")
 
             ),
             Date(),
@@ -107,9 +107,9 @@ object FakeEstateApi {
             "From the outside this house looks warm and cozy. It has been built with cypress wood and has burgandy brick decorations. Tall, rectangular windows brighten up the house and have been added to the house in a mostly symmetric way." +
                     " The house is equipped with a huge kitchen and one large bathroom, it also has a cozy living room, two bedrooms, a modest dining room, an office and a cozy garage.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/yBHkHYQ"),
-                Media("1", "second_pic", "https://ibb.co/Bg3Hwzg"),
-                Media("2", "third_pic", "https://ibb.co/JnLKqyg")
+                Media("0", "first_pic", "https://imgur.com/1mUoNjw.png"),
+                Media("1", "second_pic", "https://imgur.com/10h2bTP.png"),
+                Media("2", "third_pic", "https://imgur.com/tRsPwQl.png")
 
             ),
             Date(),
@@ -134,12 +134,13 @@ object FakeEstateApi {
             "The roof is low and pyramid shaped and is covered with brown ceramic tiles. Two large chimneys poke out the center of the roof. Several long, thin windows let in plenty of light to the rooms below the roof.\n" +
                     "The house itself is surrounded by a gorgeous garden, including hanging grape vines, a pagoda, a pond and many different flowers..",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/fD8d66z"),
-                Media("1", "second_pic", "https://ibb.co/WKSQ45s"),
-                Media("2", "third_pic", "https://ibb.co/WKSQ45s"),
-                Media("3", "fourth_pic", "https://ibb.co/DgVqgFc"),
-                Media("4", "fifth_pic", "https://ibb.co/KzCC2xH"),
-                Media("5", "sixth_pic", "https://ibb.co/6w3JhvF")
+                Media("0", "first_pic", "https://imgur.com/B9V6Czp.png"),
+                Media("1", "second_pic", "https://imgur.com/vKEgG9u.png"),
+                Media("2", "third_pic", "https://imgur.com/7bwxd4s.png"),
+                Media("3", "fourth_pic", "https://imgur.com/2YoMmQO.png"),
+                Media("4", "fifth_pic", "https://imgur.com/vJWTa6M.png"),
+                Media("5", "sixth_pic", "https://imgur.com/RzVDiWH.png"),
+                Media("6", "seventh_pic", "https://imgur.com/WntjHmD")
             ),
             Date(),
             null,
@@ -162,7 +163,7 @@ object FakeEstateApi {
             "The house is equipped with a large kitchen and three bathrooms, it also has a huge living room, five bedrooms," +
                     " a grand dining room, a sun room and a roomy garage.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/Q99wcfs"),
+                Media("0", "first_pic", "https://imgur.com/jVwBWXf.png"),
             ),
             Date(),
             null,
@@ -206,9 +207,9 @@ object FakeEstateApi {
                     "The second floor is the same size as the first, but part of it hangs over the edge of the floor below, creating an overhang on one side and a balcony on the other." +
                     "This floor has a very different style than the floor below.",
             listOf(
-                Media(
-                    "0", "first_pic", "https://ibb.co/ysZjH9G"
-                ),
+                Media("0", "first_pic", "https://imgur.com/aPuQBbO.png"),
+                Media("1", "second_pic", "https://imgur.com/NFAZ5ht.png"),
+                Media("2", "third_pic", "https://imgur.com/YLA8Q0X.png"),
             ),
             Date(),
             null,
@@ -230,7 +231,7 @@ object FakeEstateApi {
             "From the outside this house looks stylish. It has been built with yellow pine wood and has white cedar wooden decorations." +
                     "Tall, half rounded windows add to the overall style of the house and have been added to the house in a mostly symmetric way.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/TRSsnBQ"),
+                Media("0", "first_pic", "https://imgur.com/2cG7sb4.png"),
             ),
             Date(),
             null,
@@ -251,9 +252,7 @@ object FakeEstateApi {
             location7,
             "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
-            listOf(
-                Media("0", "first_pic", "https://ibb.co/KNVghLs"),
-            ),
+            null,
             Date(),
             null,
             isAvailable = false,
@@ -275,9 +274,9 @@ object FakeEstateApi {
             "The building is shaped like a squared S. The two extensions extend into wooden overhanging panels circling around half the house." +
                     "The second floor is the same size as the first, which has been built exactly on top of the floor below it. This floor has a very different style than the floor below.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/X5d7HSp"),
-                Media("1", "second_pic", "https://ibb.co/RyTMN7D"),
-                Media("2", "third_pic", "https://ibb.co/rfFFm1k"),
+                Media("0", "first_pic", "https://imgur.com/1hSWQTq.png"),
+                Media("1", "second_pic", "https://imgur.com/u9FY0Dc.png"),
+                Media("2", "third_pic", "https://imgur.com/RRWOGrY.png"),
             ),
             Date(),
             null,
@@ -300,14 +299,14 @@ object FakeEstateApi {
             "The roof is low and slanted to one side and is covered with seagrass. One large chimney sits at the side of the house. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by a gorgeous garden, including various trees, bushes, flowers and a large pond.",
             listOf(
-                Media("0", "first_pic", "https://ibb.co/LZFTNtz"),
-                Media("1", "second_pic", "https://ibb.co/Dtbf73S"),
-                Media("2", "third_pic", "https://ibb.co/pR6YDQL"),
-                Media("3", "fourth_pic", "https://ibb.co/rvzqtZd"),
-                Media("4", "fifth_pic", "https://ibb.co/FbgzCLS"),
-                Media("5", "sixth_pic", "https://ibb.co/8DXhyqX"),
+                Media("0", "first_pic", "https://imgur.com/wTKdKsT.png"),
+                Media("1", "second_pic", "https://imgur.com/gnD4qxI.png"),
+                Media("2", "third_pic", "https://imgur.com/dx5TlJO.png"),
+                Media("3", "fourth_pic", "https://imgur.com/ozijiGD.png"),
+                Media("4", "fifth_pic", "https://imgur.com/HYjR1LG.png"),
+                Media("5", "sixth_pic", "https://imgur.com/TqCmgAN.png"),
 
-            ),
+                ),
             Date(),
             null,
             isAvailable = false,

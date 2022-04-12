@@ -1,6 +1,7 @@
 package com.example.oc_p9_kotlin.fragments
 
 import android.content.Context
+import android.media.metrics.Event
 import android.opengl.Visibility
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -93,7 +94,6 @@ class DetailsFragment : Fragment() {
         estate?.let {
             Log.d(TAG, "onEstateEvent : " + estate.toString())
             updateUI(it)
-
         }
 
     }
@@ -178,14 +178,15 @@ class DetailsFragment : Fragment() {
         }
 
         initPics(estate)
-
         initMap(estate)
+
 
     }
 
     private fun initPics(estate: Estate) {
 
         estate.medias?.let {
+            binding.detailsDefaultPic.visibility = View.GONE
             imageAdapter = ImageAdapter(
                 it.toMutableList()
             )
@@ -193,9 +194,8 @@ class DetailsFragment : Fragment() {
             binding.detailsPicsRecyclerView.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
+
         }
-
-
 
     }
 
@@ -210,10 +210,6 @@ class DetailsFragment : Fragment() {
 
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
 
     override fun onStop() {
         super.onStop()
@@ -221,7 +217,6 @@ class DetailsFragment : Fragment() {
             EventBus.getDefault().unregister(this)
             Log.d(TAG, "unregister EventBus")
         }
-
 
     }
 
