@@ -35,8 +35,6 @@ data class Estate(
     var saleDate: Date?,
     @ColumnInfo(name = "is_available")
     var isAvailable: Boolean,
-    @ColumnInfo(name = "is_furnished")
-    var isFurnished: Boolean,
     @ColumnInfo(name = "assigned_agent_id")
     var assignedAgentId: String?
 

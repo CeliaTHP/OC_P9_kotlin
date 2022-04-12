@@ -3,6 +3,7 @@ package com.example.oc_p9_kotlin.adapters
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,7 +16,8 @@ import java.io.File
 
 class ImageAdapter(
 
-    var imageList: MutableList<Media>
+    var imageList: MutableList<Media>,
+    var isEditing: Boolean = false
 
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
@@ -39,17 +41,27 @@ class ImageAdapter(
 
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
-        if (media.isLocal) {
-            Glide.with(holder.itemView.context)
-                .load(File(media.url)) // Uri of the picture
-                .into(holder.itemPicLayoutBinding.itemPic)
+
+        Glide.with(holder.itemView.context)
+            .load(media.url)
+            .centerCrop()
+            .error(R.drawable.ic_house)
+            .into(holder.itemPicLayoutBinding.itemPic)
+
+        if (isEditing) {
+            Log.d(TAG, "isLocal")
+            holder.itemPicLayoutBinding.addEstateDelete.visibility = View.VISIBLE
+            holder.itemPicLayoutBinding.addEstateDelete.setOnClickListener {
+                removeData(position)
+
+            }
 
         } else {
-            Glide.with(holder.itemView.context)
-                .load(media.url)
-                .centerCrop()
-                .error(R.drawable.ic_house)
-                .into(holder.itemPicLayoutBinding.itemPic)
+            Log.d(TAG, "is External")
+
+            holder.itemPicLayoutBinding.addEstateDelete.visibility = View.GONE
+
+
         }
 
 
@@ -73,6 +85,13 @@ class ImageAdapter(
         notifyItemInserted(imageList.size)
         Log.d(TAG, imageList.toString())
 
+    }
+
+    public fun removeData(position: Int) {
+        this.imageList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
+        Log.d(TAG, imageList.toString())
 
     }
 

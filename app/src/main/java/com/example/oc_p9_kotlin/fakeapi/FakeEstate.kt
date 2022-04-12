@@ -97,7 +97,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = true,
             null
         ),
 
@@ -123,7 +122,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = false,
             null
         ),
 
@@ -153,7 +151,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = false,
             null
         ),
 
@@ -176,7 +173,6 @@ object FakeEstateApi {
             getEntryDate(),
             Date(),
             isAvailable = false,
-            isFurnished = true,
             null
         ),
 
@@ -197,7 +193,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = false,
             null
         ),
         Estate(
@@ -222,7 +217,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = true,
             null
         ),
         Estate(
@@ -244,7 +238,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = false,
             null
         ),
         Estate(
@@ -264,7 +257,6 @@ object FakeEstateApi {
             getEntryDate(),
             Date(),
             isAvailable = false,
-            isFurnished = false,
             null
         ),
 
@@ -289,7 +281,6 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            isFurnished = false,
             null
         ),
 
@@ -318,7 +309,6 @@ object FakeEstateApi {
             getEntryDate(),
             Date(),
             isAvailable = false,
-            isFurnished = false,
             null
         )
 

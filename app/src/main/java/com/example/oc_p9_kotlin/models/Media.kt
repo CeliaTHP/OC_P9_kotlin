@@ -8,7 +8,6 @@ data class Media(
     var id: String,
     var name: String,
     var url: String,
-    var isLocal: Boolean = false
 
 ) : Parcelable {
 
