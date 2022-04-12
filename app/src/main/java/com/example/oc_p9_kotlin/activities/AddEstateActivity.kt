@@ -250,7 +250,7 @@ class AddEstateActivity : AppCompatActivity() {
 
         binding.addEstateRecyclerView.adapter = imageAdapter
         binding.addEstateRecyclerView.layoutManager =
-            LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
 
     }

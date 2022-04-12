@@ -208,13 +208,12 @@ class DetailsFragment : Fragment() {
                 intent.putExtra("medias", list as Serializable)
                 startActivity(intent)
             }
+            binding.detailsPicsRecyclerView.adapter = imageAdapter
+            binding.detailsPicsRecyclerView.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
 
         }
-
-        binding.detailsPicsRecyclerView.adapter = imageAdapter
-        binding.detailsPicsRecyclerView.layoutManager =
-            LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
 
     }

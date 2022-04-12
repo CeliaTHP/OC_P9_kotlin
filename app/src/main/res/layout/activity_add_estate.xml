@@ -140,27 +140,15 @@
                     app:barrierDirection="bottom"
                     app:constraint_referenced_ids="add_estate_recycler_view,add_estate_default_pic" />
 
-                <TextView
-                    android:id="@+id/add_estate_city"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_city"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrier" />
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/add_estate_city_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_city_hint"
+                    android:hint="@string/add_estate_city"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_city">
+                    app:layout_constraintTop_toBottomOf="@id/barrier">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -169,26 +157,15 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/add_estate_address"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_address"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_city_input" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/add_estate_address_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_address_hint"
+                    android:hint="@string/add_estate_address"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_address">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_city_input">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -196,19 +173,6 @@
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:id="@+id/add_estate_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_price"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_address_input" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -216,11 +180,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_price_hint"
-                    app:startIconDrawable="@drawable/ic_dollar"
+                    android:hint="@string/add_estate_price"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_price">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_address_input"
+                    app:startIconDrawable="@drawable/ic_dollar">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -228,19 +192,6 @@
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:id="@+id/add_estate_surface"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_surface"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_price_input" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -248,9 +199,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_surface_hint"
+                    android:hint="@string/add_estate_surface"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_surface">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_price_input">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -258,19 +209,6 @@
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:id="@+id/add_estate_rooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_rooms"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_surface_input" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -278,9 +216,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_rooms_hint"
+                    android:hint="@string/add_estate_rooms"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_rooms">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_surface_input">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -288,19 +226,6 @@
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:id="@+id/add_estate_bathrooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_bathrooms"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_rooms_input" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -308,9 +233,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_bathrooms_hint"
+                    android:hint="@string/add_estate_bathrooms"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_bathrooms">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_rooms_input">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -320,27 +245,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <TextView
-                    android:id="@+id/add_estate_bedrooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/add_estate_bedrooms"
-                    android:textColor="@color/main_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_bathrooms_input" />
-
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/add_estate_bedrooms_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/add_estate_bedrooms_hint"
+                    android:hint="@string/add_estate_bedrooms"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_bedrooms">
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_bathrooms_input">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -367,24 +279,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_layout">
 
-            <TextView
-                android:id="@+id/add_estate_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/add_estate_description"
-                android:textColor="@color/main_text"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_estate_description_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_estate_description_hint"
+                android:hint="@string/add_estate_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_estate_bedrooms">
+                app:layout_constraintTop_toBottomOf="@id/bottom_layout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

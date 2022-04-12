@@ -63,31 +63,6 @@ data class Estate(
         }
 
     }
-/*
-    fun getEstateType(context: Context?): String {
-
-        if (context == null)
-            return this.type.name
-        else {
-            return when (this.type) {
-                EstateType.HOUSE -> context.getString(R.string.type_house)
-                EstateType.APARTMENT -> context.getString(R.string.type_apartment)
-                EstateType.BUILDING -> context.getString(R.string.type_building)
-                EstateType.LOFT -> context.getString(R.string.type_loft)
-                EstateType.CASTLE -> context.getString(R.string.type_castle)
-                EstateType.BOAT -> context.getString(R.string.type_boat)
-                EstateType.MANSION -> context.getString(R.string.type_mansion)
-                EstateType.SITE -> context.getString(R.string.type_site)
-                else -> context.getString(R.string.type_other)
-
-
-            }
-        }
-
-    }
-
- */
-
 }
 
 
