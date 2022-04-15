@@ -45,6 +45,7 @@ class EstateAdapter(
     ) {
 
         val estate = estateList[position]
+        var mediaUrl = ""
 
         holder.itemView.setOnClickListener {
             onClick(estate)
@@ -59,8 +60,9 @@ class EstateAdapter(
             Utils().getPrice(estate)
 
 
+
         if (!estate.medias.isNullOrEmpty()) {
-            val mediaUrl = estate.medias!![0].url
+            mediaUrl = estate.medias!![0].url
             Log.d(TAG, mediaUrl)
 
             Glide
