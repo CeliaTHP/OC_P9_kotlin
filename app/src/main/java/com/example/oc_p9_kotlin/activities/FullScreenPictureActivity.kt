@@ -1,5 +1,7 @@
 package com.example.oc_p9_kotlin.activities
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +11,15 @@ import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.ImageFullScreenAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenPictureBinding
+import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
+import java.io.Serializable
 
 class FullScreenPictureActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "FullScreenPictureAct"
-
     }
 
     private lateinit var binding: ActivityFullScreenPictureBinding
@@ -38,6 +41,7 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
     }
 
+
     private fun initListeners() {
 
         binding.fullScreenBack.setOnClickListener {
@@ -49,13 +53,16 @@ class FullScreenPictureActivity : AppCompatActivity() {
     private fun initPics(medias: List<Media>) {
 
         Log.d(TAG, "initPics")
-        binding.fullScreenDefaultPic.visibility = View.GONE
+        if (!medias.isNullOrEmpty()) {
 
-        imageAdapter = ImageFullScreenAdapter(
-            medias.toMutableList()
-        )
-        binding.fullScreenRecyclerView.adapter = imageAdapter
+            binding.fullScreenDefaultPic.visibility = View.GONE
 
+            imageAdapter = ImageFullScreenAdapter(
+                medias
+            )
+            binding.fullScreenRecyclerView.adapter = imageAdapter
+
+        }
     }
 
 }

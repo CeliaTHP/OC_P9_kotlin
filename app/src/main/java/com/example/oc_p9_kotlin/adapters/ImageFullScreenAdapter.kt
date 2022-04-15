@@ -11,7 +11,7 @@ import com.example.oc_p9_kotlin.models.Media
 
 class ImageFullScreenAdapter(
 
-    var imageList: MutableList<Media>,
+    var imageList: List<Media>,
 ) : RecyclerView.Adapter<ImageFullScreenAdapter.ImageViewHolder>() {
 
     companion object {

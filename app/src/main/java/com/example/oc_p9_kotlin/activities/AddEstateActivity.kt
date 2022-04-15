@@ -71,7 +71,6 @@ class AddEstateActivity : AppCompatActivity() {
 
 
         initListeners()
-        initSpinner()
         initPics()
 
 
@@ -444,7 +443,7 @@ class AddEstateActivity : AppCompatActivity() {
             }
             Log.d(TAG, "is now : " + estateType.name)
 
-            onTypeSelected(estateType)
+            binding.addEstateTypeButton.text = getString(estateType.stringValue)
             //setType
 
             listPopupWindow.dismiss()
@@ -457,39 +456,5 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
-    private fun onTypeSelected(estateType: EstateType) {
-        binding.addEstateTypeButton.text = getString(estateType.stringValue)
-
-    }
-
-
-    private fun initSpinner() {
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.estate_type_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            // binding.addEstateTypeSpinner.adapter = adapter
-        }
-
-/*
-        binding.addEstateTypeSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, id: Long) {
-                    Log.d(TAG, "onItemSelected : $pos $id")
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    Log.d(TAG, "onNothingSelected ")
-                }
-
-            }
-
- */
-    }
 
 }
