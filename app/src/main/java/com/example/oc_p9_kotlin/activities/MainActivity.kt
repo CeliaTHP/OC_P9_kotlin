@@ -66,6 +66,7 @@ class MainActivity : CompositeDisposableActivity() {
 
         //default estate
 
+
         initViewModels()
         generateDataIfEmptyDb()
 
@@ -174,8 +175,8 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun initViewModels() {
 
-        viewModel =
-            ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
+           viewModel =
+             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
 
     }
 

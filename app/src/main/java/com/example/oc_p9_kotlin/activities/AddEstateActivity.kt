@@ -87,21 +87,20 @@ class AddEstateActivity : AppCompatActivity() {
 
     private fun initCurrency(currency: Currency? = null) {
         when (currency) {
-            Currency.DOLLAR -> {
-                setCurrencyInDollars()
-            }
-            Currency.EURO -> {
-                setCurrencyInEuros()
-            }
-            null -> {
-                Log.d(TAG, "no option, default currency used")
-                if (Locale.getDefault().language == Locale.FRENCH.language) {
-                    setCurrencyInEuros()
-                } else {
-                    setCurrencyInDollars()
-                }
-            }
+            Currency.DOLLAR -> setCurrencyInDollars()
+            Currency.EURO -> setCurrencyInEuros()
+            null -> setCurrencyFromLocale()
         }
+    }
+
+    private fun setCurrencyFromLocale() {
+        Log.d(TAG, "no option, default currency used")
+        if (Locale.getDefault().language == Locale.FRENCH.language) {
+            setCurrencyInEuros()
+        } else {
+            setCurrencyInDollars()
+        }
+
     }
 
     private fun setCurrencyInDollars() {
@@ -109,22 +108,17 @@ class AddEstateActivity : AppCompatActivity() {
         binding.addEstatePriceInput.startIconDrawable =
             AppCompatResources
                 .getDrawable(this, R.drawable.ic_dollar)
-
         binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_dollars)
-
         this.currency = Currency.DOLLAR
 
     }
 
     private fun setCurrencyInEuros() {
         Log.d(TAG, "should be Euros")
-
         binding.addEstatePriceInput.startIconDrawable =
             AppCompatResources
                 .getDrawable(this, R.drawable.ic_euro)
-
         binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_euros)
-
         this.currency = Currency.EURO
 
     }
