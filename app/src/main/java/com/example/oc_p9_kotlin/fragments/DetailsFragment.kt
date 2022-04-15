@@ -219,8 +219,8 @@ class DetailsFragment : Fragment() {
                 binding.detailsDefaultPic.visibility = View.GONE
                 binding.detailsFullscreen.visibility = View.VISIBLE
                 imageAdapter = ImageAdapter(
-                    it.toMutableList()
-                ) {
+                    it.toMutableList(),
+                    false, {}) {
                     viewFullscreen(it)
                 }
                 binding.detailsPicsRecyclerView.adapter = imageAdapter

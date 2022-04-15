@@ -134,6 +134,7 @@ class AddEstateActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
     }
 
+
     private fun verifyEstateCreation() {
 
         var canCreate = true
@@ -159,56 +160,49 @@ class AddEstateActivity : AppCompatActivity() {
             }
         }
 
-        if (canCreate) {
-            Log.d(TAG, "can create Estate")
-            with(binding) {
-                val location = Location("")
-                //TODO: Handle location managment
-                location.latitude = 49.54454396
-                location.longitude = 2.8484848
+        if (!canCreate)
+            return
 
-                // Convert in Euros if price entered in dollars
-                val priceInEuros = if (currency == Currency.DOLLAR)
-                    Utils().convertDollarToEuro(
-                        addEstatePriceInput.editText?.text.toString().toInt()
-                    )
-                else
-                    addEstatePriceInput.editText?.text.toString().toInt()
+        Log.d(TAG, "can create Estate")
 
+        val location = Location("")
+        //TODO: Handle location managment
+        location.latitude = 49.54454396
+        location.longitude = 2.8484848
 
-                // Create our new Estate with our filled fields
-                var estate = Estate(
-                    UUID.randomUUID().toString(),
-                    estateType,
-                    addEstateCityInput.editText?.text.toString(),
-                    priceInEuros,
-                    addEstateSurfaceInput.editText?.text.toString().toInt(),
-                    addEstateRoomsInput.editText?.text.toString().toInt(),
-                    addEstateBathroomsInput.editText?.text.toString().toInt(),
-                    addEstateBedroomsInput.editText?.text.toString().toInt(),
-                    addEstateAddressInput.editText?.text.toString(),
-                    //TODO : handle location
-                    location,
-                    addEstateDescriptionInput.editText?.text.toString(),
-                    imageAdapter.imageList,
-                    Date(),
-                    null,
-                    isAvailable = true,
-                    null
-                )
+        with(binding) {
 
-                // Add new estate to database
-                viewModel.insertEstate(estate)
-
-                Toast.makeText(
-                    this@AddEstateActivity,
-                    R.string.add_estate_success,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                finish()
-                Log.d(TAG, " created : " + estate.toString())
+            // Convert in Euros if price entered in dollars
+            val priceInEuros = if (currency == Currency.DOLLAR) {
+                Utils().convertDollarToEuro(addEstatePriceInput.editText?.text.toString().toInt())
+            } else {
+                addEstatePriceInput.editText?.text.toString().toInt()
             }
+
+            // Create our new Estate with our filled fields
+            val estate = Estate(
+                UUID.randomUUID().toString(),
+                estateType,
+                addEstateCityInput.editText?.text.toString(),
+                priceInEuros,
+                addEstateSurfaceInput.editText?.text.toString().toInt(),
+                addEstateRoomsInput.editText?.text.toString().toInt(),
+                addEstateBathroomsInput.editText?.text.toString().toInt(),
+                addEstateBedroomsInput.editText?.text.toString().toInt(),
+                addEstateAddressInput.editText?.text.toString(),
+                //TODO : handle location
+                location,
+                addEstateDescriptionInput.editText?.text.toString(),
+                imageAdapter.imageList,
+                Date(),
+                null,
+                isAvailable = true,
+                null
+            )
+            viewModel.insertEstate(estate)
+
+            Log.d(TAG, " created : " + estate.toString())
+
         }
 
     }
@@ -236,17 +230,29 @@ class AddEstateActivity : AppCompatActivity() {
 
         Log.d(TAG, "initPics")
 
-        binding.addEstateDefaultPic.visibility = View.GONE
 
         imageAdapter = ImageAdapter(
             mutableListOf(),
-            true
-        ) {}
+            true,
+            { verifyPlaceholder() },
+            {
+
+            }
+        )
 
         binding.addEstateRecyclerView.adapter = imageAdapter
         binding.addEstateRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
+
+    }
+
+    private fun verifyPlaceholder() {
+        if (imageAdapter.itemCount > 0) {
+            binding.addEstateDefaultPic.visibility = View.GONE
+        } else {
+            binding.addEstateDefaultPic.visibility = View.VISIBLE
+        }
 
     }
 

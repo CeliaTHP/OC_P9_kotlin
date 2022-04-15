@@ -19,6 +19,7 @@ class ImageAdapter(
 
     var imageList: MutableList<Media>,
     private var isEditing: Boolean = false,
+    private var onDataUpdate: () -> Unit,
     private var onLongClick: () -> Unit
 
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
@@ -45,11 +46,11 @@ class ImageAdapter(
 
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
-            Glide.with(holder.itemView.context)
-                .load(media.url)
-                .centerCrop()
-                .error(R.drawable.ic_back_arrow)
-                .into(holder.itemPicLayoutBinding.itemPic)
+        Glide.with(holder.itemView.context)
+            .load(media.url)
+            .centerCrop()
+            .error(R.drawable.ic_back_arrow)
+            .into(holder.itemPicLayoutBinding.itemPic)
 
 
 
@@ -79,10 +80,6 @@ class ImageAdapter(
 
     }
 
-    interface OnLongClickListener {
-        fun onLongClick(estate: Estate)
-    }
-
     override fun getItemCount(): Int {
         return imageList.size
     }
@@ -100,6 +97,7 @@ class ImageAdapter(
         this.imageList.add(media)
         notifyItemInserted(imageList.size)
         Log.d(TAG, imageList.toString())
+        onDataUpdate()
 
     }
 
@@ -108,6 +106,7 @@ class ImageAdapter(
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount)
         Log.d(TAG, imageList.toString())
+        onDataUpdate()
 
     }
 
