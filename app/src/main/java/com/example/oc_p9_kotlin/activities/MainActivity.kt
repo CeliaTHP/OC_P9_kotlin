@@ -137,30 +137,57 @@ class MainActivity : CompositeDisposableActivity() {
         listBag.clear()
 
         if (estateType == null) {
-            viewModel.getAll()
+            fetchAllEstateAndUpdateList()
         } else {
-            viewModel.getByType(estateType)
+            fetchEstateOfTypeAndUpdateList(estateType)
         }
+
+    }
+
+    private fun fetchAllEstateAndUpdateList() {
+        Log.d(TAG, "fetchAllEstate")
+        viewModel.getAll()
             .subscribe(
                 {
                     if (!it.isNullOrEmpty()) {
                         Log.d(TAG, "list received : " + it.toString())
-                        onEstateListReceived(it)
+                        updateEstateList(it)
+                    } else {
+                        updateEstateList(mutableListOf())
                     }
                 }, {
                     Log.d(TAG, "error getEstateList" + it.message)
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
                 }).addTo(listBag)
+
+
+    }
+
+    private fun fetchEstateOfTypeAndUpdateList(estateType: EstateType) {
+        viewModel.getByType(estateType)
+            .subscribe(
+                {
+                    if (!it.isNullOrEmpty()) {
+                        Log.d(TAG, "list received : " + it.toString())
+                        updateEstateList(it)
+                    } else {
+                        updateEstateList(mutableListOf())
+                    }
+                }, {
+                    Log.d(TAG, "error getEstateList" + it.message)
+                    Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
+
+                }).addTo(listBag)
+
     }
 
 
-    private fun onEstateListReceived(estateList: MutableList<Estate>) {
+    private fun updateEstateList(estateList: MutableList<Estate>) {
 
         //Updating our list with retrieved data
         this.estateList = estateList
         adapter.updateData(estateList)
-        Log.d(TAG, "data already found : list = " + estateList.size)
         updateDefaultEstate(estateList)
 
 
@@ -175,8 +202,8 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun initViewModels() {
 
-           viewModel =
-             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
 
     }
 
@@ -273,22 +300,6 @@ class MainActivity : CompositeDisposableActivity() {
 
 
     override fun onBackPressed() {
-
-        //super.onBackPressed()
-        Log.d(TAG, "onBackPressed")
-
-        Log.d(TAG, "isOpen : " + binding.slidingPaneLayout.isOpen)
-        Log.d(TAG, "isSlideable: " + binding.slidingPaneLayout.isSlideable)
-
-        //if close & slideable ou open & pas sliedable close
-        handleBackButton()
-
-
-    }
-
-
-    private fun handleBackButton() {
-
         with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
                 finish()
@@ -304,19 +315,21 @@ class MainActivity : CompositeDisposableActivity() {
     public fun initToolbar() {
 
         with(binding.slidingPaneLayout) {
-            if (!isOpen && isSlideable || !isSlideable) {
+            if (isOpen && isSlideable) {
+
+                Log.d(TAG, "shouldHideIcon")
+                isOverflowIconEnabled = false
+                binding.toolbar.overflowIcon =
+                    null
+
+            } else {
+
                 Log.d(TAG, "shouldNotHideIcon")
                 isOverflowIconEnabled = true
                 binding.toolbar.overflowIcon =
                     ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
                 setSupportActionBar(binding.toolbar)
 
-
-            } else {
-                Log.d(TAG, "shouldHideIcon")
-                isOverflowIconEnabled = false
-                binding.toolbar.overflowIcon =
-                    null
 
             }
         }
