@@ -54,12 +54,7 @@ class FullScreenPictureActivity : AppCompatActivity() {
         imageAdapter = ImageFullScreenAdapter(
             medias.toMutableList()
         )
-
-
         binding.fullScreenRecyclerView.adapter = imageAdapter
-        binding.fullScreenRecyclerView.layoutManager =
-            LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-
 
     }
 

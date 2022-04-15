@@ -218,14 +218,13 @@ class DetailsFragment : Fragment() {
             estate.medias?.let {
                 binding.detailsDefaultPic.visibility = View.GONE
                 binding.detailsFullscreen.visibility = View.VISIBLE
+
                 imageAdapter = ImageAdapter(
                     it.toMutableList(),
                     false, {}) {
                     viewFullscreen(it)
                 }
                 binding.detailsPicsRecyclerView.adapter = imageAdapter
-                binding.detailsPicsRecyclerView.layoutManager =
-                    LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
             }
         }

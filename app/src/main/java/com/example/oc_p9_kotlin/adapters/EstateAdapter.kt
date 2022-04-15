@@ -64,8 +64,8 @@ class EstateAdapter(
         if (!estate.medias.isNullOrEmpty()) {
             Log.d(TAG, "MEDIA FOR " + estate.toString())
 
-            val mediaUrl = estate.medias!![0].url
-            Log.d(TAG, mediaUrl)
+            val mediaUrl = estate.medias!![0].uri
+            Log.d(TAG, " " +  mediaUrl)
 
             Glide
                 .with(holder.itemView.context)

@@ -17,7 +17,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.AddEstateViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
@@ -28,6 +27,7 @@ import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import java.io.Serializable
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -230,21 +230,27 @@ class AddEstateActivity : AppCompatActivity() {
 
         Log.d(TAG, "initPics")
 
-
         imageAdapter = ImageAdapter(
             mutableListOf(),
             true,
             { verifyPlaceholder() },
             {
-
+                viewFullscreen(imageAdapter.imageList)
             }
         )
 
         binding.addEstateRecyclerView.adapter = imageAdapter
-        binding.addEstateRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
 
+    }
+
+    private fun viewFullscreen(medias: List<Media>) {
+        Log.d(TAG, "start Full Screen Activity")
+        val list: List<Media> = medias
+        val intent =
+            Intent(binding.root.context, FullScreenPictureActivity::class.java)
+        intent.putExtra("medias", list as Serializable)
+        startActivity(intent)
     }
 
     private fun verifyPlaceholder() {
@@ -338,14 +344,16 @@ class AddEstateActivity : AppCompatActivity() {
                 )
 
                 for (media in imageAdapter.imageList) {
-                    if (media.url == newMedia.url) {
+                    if (media.uri == newMedia.uri) {
                         canAdd = false
                         Log.d(TAG, "ALREADY SELECTED")
 
                     }
                 }
+
                 //mediaList.add()
                 //imageAdapter.updateData(mediaList)
+
                 if (canAdd) {
                     createAddDialog(newMedia)
                     binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
@@ -377,12 +385,17 @@ class AddEstateActivity : AppCompatActivity() {
         }
 
         alert.setView(editText)
+        alert.setCancelable(false)
 
         alert.setPositiveButton(
             getString(R.string.add_estate_dialog_confirm)
         ) { _, _ -> //What ever you want to do with the value
             if (!editText.text.isNullOrBlank())
                 media.name = editText.text.toString()
+
+            if (binding.addEstateDefaultPic.visibility == View.VISIBLE)
+                binding.addEstateDefaultPic.visibility = View.GONE
+
             imageAdapter.addData(media)
 
         }
@@ -437,7 +450,10 @@ class AddEstateActivity : AppCompatActivity() {
             listPopupWindow.dismiss()
         }
 
-        listPopupWindow.show()
+        if (!listPopupWindow.isShowing)
+            listPopupWindow.show()
+        else
+            listPopupWindow.dismiss()
 
     }
 

@@ -1,19 +1,14 @@
 package com.example.oc_p9_kotlin.adapters
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.databinding.ItemEstateLayoutBinding
 import com.example.oc_p9_kotlin.databinding.ItemPicLayoutBinding
-import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
-import java.io.File
 
 class ImageAdapter(
 
@@ -47,7 +42,7 @@ class ImageAdapter(
         holder.itemPicLayoutBinding.itemPicTitle.text = media.name
 
         Glide.with(holder.itemView.context)
-            .load(media.url)
+            .load(media.uri)
             .centerCrop()
             .error(R.drawable.ic_back_arrow)
             .into(holder.itemPicLayoutBinding.itemPic)
