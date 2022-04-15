@@ -180,6 +180,14 @@ class DetailsFragment : Fragment() {
                     DateFormat.getDateInstance(DateFormat.SHORT).format(estate.entryDate)
                 )
 
+            if (estate.assignedAgentName != null) {
+                detailsAgent.visibility = View.VISIBLE
+                detailsAgent.text = getString(R.string.item_estate_agent, estate.assignedAgentName)
+
+            } else {
+                detailsAgent.visibility = View.GONE
+            }
+
             if (!estate.isAvailable) {
                 detailsSold.visibility = View.VISIBLE
 

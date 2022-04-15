@@ -59,42 +59,6 @@ abstract class EstateDatabase : RoomDatabase() {
             }
         }
 
-        private fun prepopulateDatabase(): Callback {
-            return object : Callback() {
-
-                override fun onCreate(db: SupportSQLiteDatabase) {
-                    super.onCreate(db)
-
-                    val contentValues = ContentValues().apply {
-                        put("id", 0)
-                        put("type", EstateType.APARTMENT.name)
-                        put("city", "PreParis")
-                        put("price_in_dollars", 360000.0)
-                        put("surface_in_square_meters", 50)
-                        put("rooms", 4)
-                        put("bathrooms", 1)
-                        put("bedrooms", 2)
-                        put("address", "00 green road 75001, PreParis")
-                        put("latitude", 48.87868213644286)
-                        put("longitude", 2.3641768593711796)
-                        put(
-                            "description",
-                            "Super description from prepopulated database...Super description from prepopulated database...Super description from prepopulated database..." +
-                                    "Super description from prepopulated database...Super description from prepopulated database...Super description from prepopulated database"
-                        )
-                        put("entry_date", Date().time)
-                        put("isAvailable", true)
-                        put("isFurnished", false)
-
-                    }
-
-                    db.insert(DATABASE_NAME, OnConflictStrategy.ABORT, contentValues)
-
-
-                }
-            }
-        }
-
     }
 
 

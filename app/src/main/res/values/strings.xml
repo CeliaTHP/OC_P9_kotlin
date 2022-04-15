@@ -48,6 +48,7 @@
     <string name="item_estate_city">City</string>
     <string name="item_estate_entry_date">entry date : %1$s</string>
     <string name="item_estate_sale_date">sale date : %1$s</string>
+    <string name="item_estate_agent">Agent in charge : %1$s</string>
     <string name="item_estate_sold">Sold</string>
 
     <!--Add Estate-->

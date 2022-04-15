@@ -122,7 +122,7 @@ object FakeEstateApi {
             getEntryDate(),
             null,
             isAvailable = true,
-            null
+            "Simon Blue"
         ),
 
 
@@ -257,7 +257,7 @@ object FakeEstateApi {
             getEntryDate(),
             Date(),
             isAvailable = false,
-            null
+            "Victoria Purple"
         ),
 
         Estate(

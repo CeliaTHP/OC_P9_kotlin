@@ -36,7 +36,7 @@ data class Estate(
     @ColumnInfo(name = "is_available")
     var isAvailable: Boolean,
     @ColumnInfo(name = "assigned_agent_id")
-    var assignedAgentId: String?
+    var assignedAgentName: String?
 
 ) : Parcelable
 
