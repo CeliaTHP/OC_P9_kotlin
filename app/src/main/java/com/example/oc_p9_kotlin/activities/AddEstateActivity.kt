@@ -22,6 +22,7 @@ import com.example.oc_p9_kotlin.AddEstateViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
+import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
@@ -36,15 +37,13 @@ class AddEstateActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "AddEstateActivity"
-        private const val AUTOCOMPLETE_REQUEST_CODE = 1
-
     }
 
     private lateinit var viewModel: AddEstateViewModel
 
     private lateinit var binding: ActivityAddEstateBinding
     private var estateType: EstateType = EstateType.HOUSE
-    private var isInDollars: Boolean = true
+    private var currency: Currency? = null
 
     private lateinit var imageAdapter: ImageAdapter
 
@@ -86,47 +85,47 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
 
-    private fun initCurrency(isInDollars: Boolean? = null) {
-
-        if (isInDollars == null) {
-            Log.d(TAG, "no option, default currency used")
-            val language = Locale.getDefault().language
-            if (language == Locale.FRENCH.language) {
-                setCurrencyUI(false)
-            } else {
-                setCurrencyUI(true)
+    private fun initCurrency(currency: Currency? = null) {
+        when (currency) {
+            Currency.DOLLAR -> {
+                setCurrencyInDollars()
             }
-        } else {
-            if (isInDollars) {
-                Log.d(TAG, "should be Dollars")
-                setCurrencyUI(true)
-            } else {
-                Log.d(TAG, "should be Euros")
-                setCurrencyUI(false)
+            Currency.EURO -> {
+                setCurrencyInEuros()
+            }
+            null -> {
+                Log.d(TAG, "no option, default currency used")
+                if (Locale.getDefault().language == Locale.FRENCH.language) {
+                    setCurrencyInEuros()
+                } else {
+                    setCurrencyInDollars()
+                }
             }
         }
+    }
 
+    private fun setCurrencyInDollars() {
+        Log.d(TAG, "should be Dollars")
+        binding.addEstatePriceInput.startIconDrawable =
+            AppCompatResources
+                .getDrawable(this, R.drawable.ic_dollar)
+
+        binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_dollars)
+
+        this.currency = Currency.DOLLAR
 
     }
 
-    private fun setCurrencyUI(isInDollars: Boolean) {
-        if (isInDollars) {
-            binding.addEstatePriceInput.startIconDrawable =
-                AppCompatResources
-                    .getDrawable(this, R.drawable.ic_dollar)
+    private fun setCurrencyInEuros() {
+        Log.d(TAG, "should be Euros")
 
-            binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_dollars)
+        binding.addEstatePriceInput.startIconDrawable =
+            AppCompatResources
+                .getDrawable(this, R.drawable.ic_euro)
 
-            this.isInDollars = true
+        binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_euros)
 
-        } else {
-            binding.addEstatePriceInput.startIconDrawable =
-                AppCompatResources
-                    .getDrawable(this, R.drawable.ic_euro)
-
-            binding.addEstatePriceInput.hint = getString(R.string.add_estate_price_hint_euros)
-            this.isInDollars = false
-        }
+        this.currency = Currency.EURO
 
     }
 
@@ -175,7 +174,7 @@ class AddEstateActivity : AppCompatActivity() {
                 location.longitude = 2.8484848
 
                 // Convert in Euros if price entered in dollars
-                val priceInEuros = if (isInDollars)
+                val priceInEuros = if (currency == Currency.DOLLAR)
                     Utils().convertDollarToEuro(
                         addEstatePriceInput.editText?.text.toString().toInt()
                     )
@@ -224,7 +223,10 @@ class AddEstateActivity : AppCompatActivity() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_OPEN_DOCUMENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Picture"),
+            PICK_IMAGE
+        )
     }
 
     private fun takePictureIntent() {
@@ -294,13 +296,13 @@ class AddEstateActivity : AppCompatActivity() {
 
         binding.addEstatePriceInput.setStartIconOnClickListener {
 
-            if (isInDollars) {
+            if (currency == Currency.DOLLAR) {
                 Log.d(TAG, "wasDollars")
-                initCurrency(false)
+                initCurrency(Currency.EURO)
 
             } else {
                 Log.d(TAG, "wasEuro")
-                initCurrency(true)
+                initCurrency(Currency.DOLLAR)
 
             }
         }
@@ -350,7 +352,11 @@ class AddEstateActivity : AppCompatActivity() {
 
 
                 } else {
-                    Toast.makeText(this, R.string.add_estate_pic_already_added, Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this,
+                        R.string.add_estate_pic_already_added,
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
 
@@ -388,7 +394,11 @@ class AddEstateActivity : AppCompatActivity() {
     private fun onEstateTypeButtonClick() {
 
         val listPopupWindow =
-            ListPopupWindow(this, null, com.google.android.material.R.attr.listPopupWindowStyle)
+            ListPopupWindow(
+                this,
+                null,
+                com.google.android.material.R.attr.listPopupWindowStyle
+            )
         listPopupWindow.anchorView = binding.addEstateTypeButton
 
         val items: Array<String> = resources.getStringArray(R.array.estate_type_array)

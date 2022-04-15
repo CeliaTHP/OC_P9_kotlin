@@ -108,17 +108,14 @@ class MainActivity : CompositeDisposableActivity() {
         binding.slidingPaneLayout.addPanelSlideListener(object :
             SlidingPaneLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View, slideOffset: Float) {
-                Log.d(TAG, "onPanelSlide")
             }
 
             override fun onPanelOpened(panel: View) {
-                Log.d(TAG, "onPanelOpened")
                 initToolbar()
 
             }
 
             override fun onPanelClosed(panel: View) {
-                Log.d(TAG, "onPanelClosed")
                 initToolbar()
 
             }

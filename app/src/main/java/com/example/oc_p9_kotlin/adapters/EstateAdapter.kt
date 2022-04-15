@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
@@ -45,7 +46,6 @@ class EstateAdapter(
     ) {
 
         val estate = estateList[position]
-        var mediaUrl = ""
 
         holder.itemView.setOnClickListener {
             onClick(estate)
@@ -62,7 +62,9 @@ class EstateAdapter(
 
 
         if (!estate.medias.isNullOrEmpty()) {
-            mediaUrl = estate.medias!![0].url
+            Log.d(TAG, "MEDIA FOR " + estate.toString())
+
+            val mediaUrl = estate.medias!![0].url
             Log.d(TAG, mediaUrl)
 
             Glide
@@ -71,6 +73,14 @@ class EstateAdapter(
                 .error(R.drawable.ic_house)
                 .centerCrop()
                 .into(holder.itemEstateLayoutBinding.itemEstatePic)
+
+        } else {
+            holder.itemEstateLayoutBinding.itemEstatePic.setImageDrawable(
+                AppCompatResources.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.ic_house
+                )
+            )
 
         }
 

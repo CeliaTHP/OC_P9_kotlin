@@ -53,6 +53,11 @@ enum class EstateType(val stringValue: Int) {
     OTHER(R.string.type_other)
 }
 
+enum class Currency {
+    DOLLAR,
+    EURO
+}
+
 
 
 
