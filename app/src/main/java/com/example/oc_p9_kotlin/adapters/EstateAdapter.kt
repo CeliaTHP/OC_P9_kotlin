@@ -65,7 +65,7 @@ class EstateAdapter(
             Log.d(TAG, "MEDIA FOR " + estate.toString())
 
             val mediaUrl = estate.medias!![0].uri
-            Log.d(TAG, " " +  mediaUrl)
+            Log.d(TAG, "mediaURL " +  mediaUrl)
 
             Glide
                 .with(holder.itemView.context)
@@ -100,16 +100,6 @@ class EstateAdapter(
         return estateList.size
     }
 
-    fun setFilter(estateType: EstateType) {
-
-        var filteredList = estateList.filter {
-            it.type == estateType
-        } as MutableList
-        Log.d(TAG, "filteredList : " + filteredList.toString())
-
-        updateData(filteredList)
-
-    }
 
     public fun updateData(newList: MutableList<Estate>) {
         Log.d(TAG, "old list : " + estateList.toString())

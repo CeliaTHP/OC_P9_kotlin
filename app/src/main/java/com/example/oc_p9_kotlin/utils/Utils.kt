@@ -1,9 +1,13 @@
 package com.example.oc_p9_kotlin.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import android.net.wifi.WifiManager
+import android.provider.MediaStore.Images
 import android.util.Log
 import com.example.oc_p9_kotlin.models.Estate
+import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -87,6 +91,15 @@ class Utils {
 
         return "$formattedNumber $currency"
 
+    }
+
+
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 
 

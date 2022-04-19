@@ -2,6 +2,7 @@ package com.example.oc_p9_kotlin.activities
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.location.Location
 import android.os.Bundle
 import android.provider.MediaStore
@@ -199,6 +200,7 @@ class AddEstateActivity : AppCompatActivity() {
                 null
             )
             viewModel.insertEstate(estate)
+            finish()
 
             Log.d(TAG, " created : " + estate.toString())
 
@@ -249,6 +251,8 @@ class AddEstateActivity : AppCompatActivity() {
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)
         intent.putExtra("medias", list as Serializable)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
         startActivity(intent)
     }
 
@@ -325,47 +329,34 @@ class AddEstateActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                Log.d(TAG, "image capture : " + data?.data)
-                // val imageBitmap = data?.extras?.get("data") as Bitmap
-                //imageView.setImageBitmap(imageBitmap)
+
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                Log.d(TAG, "imageBitmap : " + imageBitmap.toString())
+
+
+                var uri = Utils().getImageUri(this, imageBitmap)
+
+                var newMedia = Media(
+                    (imageAdapter.itemCount + 1).toString(),
+                    uri.toString()
+                )
+                verifyAndAddMedia(newMedia)
+
             }
+
             if (requestCode == PICK_IMAGE) {
+
                 Log.d(TAG, "pick image : " + data?.data?.path)
                 Log.d(TAG, " " + data?.data?.toString())
                 Log.d(TAG, " " + data?.data?.encodedPath)
                 Log.d(TAG, " " + data?.data?.schemeSpecificPart)
 
-
-                var canAdd = true
                 var newMedia = Media(
                     (imageAdapter.itemCount + 1).toString(),
                     data?.data.toString()
                 )
 
-                for (media in imageAdapter.imageList) {
-                    if (media.uri == newMedia.uri) {
-                        canAdd = false
-                        Log.d(TAG, "ALREADY SELECTED")
-
-                    }
-                }
-
-                //mediaList.add()
-                //imageAdapter.updateData(mediaList)
-
-                if (canAdd) {
-                    createAddDialog(newMedia)
-                    binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
-
-
-                } else {
-                    Toast.makeText(
-                        this,
-                        R.string.add_estate_pic_already_added,
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
+                verifyAndAddMedia(newMedia)
 
 
             }
@@ -375,7 +366,34 @@ class AddEstateActivity : AppCompatActivity() {
         }
     }
 
-    private fun createAddDialog(media: Media) {
+    private fun verifyAndAddMedia(newMedia: Media) {
+        var canAdd = true
+
+        for (media in imageAdapter.imageList) {
+            if (media.uri == newMedia.uri) {
+                canAdd = false
+                Log.d(TAG, "ALREADY SELECTED")
+
+            }
+        }
+
+        if (canAdd) {
+            createAddDialog(newMedia)
+            binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
+
+        } else {
+            Toast.makeText(
+                this,
+                R.string.add_estate_pic_already_added,
+                Toast.LENGTH_LONG
+            )
+                .show()
+        }
+
+
+    }
+
+    private fun createAddDialog(newMedia: Media) {
 
         var editText = EditText(this)
         val alert: AlertDialog.Builder = AlertDialog.Builder(this).apply {
@@ -390,15 +408,15 @@ class AddEstateActivity : AppCompatActivity() {
             getString(R.string.add_estate_dialog_confirm)
         ) { _, _ -> //What ever you want to do with the value
             if (!editText.text.isNullOrBlank())
-                media.name = editText.text.toString()
+                newMedia.name = editText.text.toString()
 
             if (binding.addEstateDefaultPic.visibility == View.VISIBLE)
                 binding.addEstateDefaultPic.visibility = View.GONE
 
-            imageAdapter.addData(media)
+            imageAdapter.addData(newMedia)
+            Log.d(TAG, "added media :" + newMedia.toString())
 
         }
-
         alert.show()
     }
 
