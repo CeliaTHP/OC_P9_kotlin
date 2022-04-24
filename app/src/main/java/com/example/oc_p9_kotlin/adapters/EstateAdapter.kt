@@ -71,6 +71,7 @@ class EstateAdapter(
                 .with(holder.itemView.context)
                 .load(mediaUrl)
                 .error(R.drawable.ic_house)
+                .placeholder(R.drawable.ic_house)
                 .centerCrop()
                 .into(holder.itemEstateLayoutBinding.itemEstatePic)
 

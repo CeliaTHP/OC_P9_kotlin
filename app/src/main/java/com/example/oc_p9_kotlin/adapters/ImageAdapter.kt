@@ -44,7 +44,8 @@ class ImageAdapter(
         Glide.with(holder.itemView.context)
             .load(media.uri)
             .centerCrop()
-            .error(R.drawable.ic_back_arrow)
+            .placeholder(R.drawable.ic_house)
+            .error(R.drawable.ic_house)
             .into(holder.itemPicLayoutBinding.itemPic)
 
 

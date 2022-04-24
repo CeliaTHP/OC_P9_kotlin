@@ -40,6 +40,7 @@ class ImageFullScreenAdapter(
             .load(media.uri)
             .centerCrop()
             .error(R.drawable.ic_house)
+            .placeholder(R.drawable.ic_house)
             .into(holder.itemPicFullscreenLayoutBinding.itemPicFullscreen)
 
 

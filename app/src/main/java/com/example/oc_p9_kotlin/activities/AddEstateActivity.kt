@@ -251,7 +251,7 @@ class AddEstateActivity : AppCompatActivity() {
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)
         intent.putExtra("medias", list as Serializable)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+       // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         startActivity(intent)
     }
@@ -334,11 +334,14 @@ class AddEstateActivity : AppCompatActivity() {
                 Log.d(TAG, "imageBitmap : " + imageBitmap.toString())
 
 
-                var uri = Utils().getImageUri(this, imageBitmap)
+                var uri = Utils().getImageUri(this, imageBitmap).toString()
+
+                Log.d(TAG, "imageURI : " + uri)
+
 
                 var newMedia = Media(
                     (imageAdapter.itemCount + 1).toString(),
-                    uri.toString()
+                    uri
                 )
                 verifyAndAddMedia(newMedia)
 
@@ -351,9 +354,11 @@ class AddEstateActivity : AppCompatActivity() {
                 Log.d(TAG, " " + data?.data?.encodedPath)
                 Log.d(TAG, " " + data?.data?.schemeSpecificPart)
 
+                var uri = data?.data.toString()
+
                 var newMedia = Media(
                     (imageAdapter.itemCount + 1).toString(),
-                    data?.data.toString()
+                    uri
                 )
 
                 verifyAndAddMedia(newMedia)
