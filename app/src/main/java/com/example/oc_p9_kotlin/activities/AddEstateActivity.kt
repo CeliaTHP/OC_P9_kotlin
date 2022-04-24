@@ -50,7 +50,7 @@ class AddEstateActivity : AppCompatActivity() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 2
-    private val PICK_VIDEO = 2
+    private val PICK_VIDEO = 3
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -383,10 +383,11 @@ class AddEstateActivity : AppCompatActivity() {
 
             if (requestCode == PICK_VIDEO) {
 
+
                 var selectedImageUri = data?.getData();
                 Log.d(TAG, selectedImageUri.toString())
 
-
+/*
                 // OI FILE Manager
                 var filemanagerstring = selectedImageUri?.path
 
@@ -395,7 +396,11 @@ class AddEstateActivity : AppCompatActivity() {
                 if (selectedImagePath != null) {
                     Log.d(TAG, selectedImagePath.toString())
 
+
+
                 }
+
+ */
             }
         } else {
             Log.d(TAG, "request code : $requestCode RESULT NOT OK ")

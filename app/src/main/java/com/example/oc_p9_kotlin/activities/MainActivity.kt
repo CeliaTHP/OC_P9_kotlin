@@ -377,7 +377,6 @@ class MainActivity : CompositeDisposableActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         if (item.itemId == R.id.action_criteria) {
-            Log.d(TAG, "CRITERIA")
 
         } else {
             when (item.itemId) {
