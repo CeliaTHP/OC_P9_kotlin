@@ -1,32 +1,49 @@
 package com.example.oc_p9_kotlin.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
+import com.example.oc_p9_kotlin.databinding.ExoPlayerFullscreenBinding
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
-import java.io.Serializable
-import java.text.DateFormat
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.upstream.BandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.android.exoplayer2.upstream.HttpDataSource
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
+import java.io.Serializable
+import java.text.DateFormat
 
 
 /**
@@ -40,13 +57,19 @@ class DetailsFragment : Fragment() {
 
     private lateinit var imageAdapter: ImageAdapter
 
+    private lateinit var player: ExoPlayer
     private var _binding: FragmentDetailsBinding? = null
+
+    private var fullscreenFlag = false
+
+
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private var estate: Estate? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,10 +83,186 @@ class DetailsFragment : Fragment() {
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
+
+        initExoPlayer()
+
         return binding.root
 
 
     }
+
+    private fun initExoPlayer() {
+        var videoUri = Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")
+
+        player = ExoPlayer.Builder(binding.root.context).build()
+
+        binding.detailsPlayerView.player = player
+
+        var mediaItem = MediaItem.fromUri(videoUri)
+
+        player.addMediaItem(mediaItem)
+
+        player.prepare()
+
+        player.play()
+
+
+        /*
+        binding.detailsPlayerView.setOnClickListener {
+
+            if (fullscreenFlag) {
+                //When flag is true
+                //Set enter full screen image
+                playerViewBinding.exoFullscreenIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        binding.root.context,
+                        R.drawable.ic_fullscreen
+                    )
+                )
+                activity?.requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                fullscreenFlag = false
+
+            } else {
+                playerViewBinding.exoFullscreenIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        binding.root.context,
+                        R.drawable.ic_fullscreen_exit
+                    )
+                )
+
+                activity?.requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                fullscreenFlag = true
+            }
+
+        }
+
+
+         */
+
+
+
+
+    }
+
+/*
+    private fun initExoPlayer() {
+
+        var trackSelector: TrackSelector = DefaultTrackSelector(binding.root.context)
+
+        var videoUri = Uri.parse("https://www.youtube.com/watch?v=RPByhN4Fu_s")
+        var mediaItem = MediaItem.fromUri(videoUri)
+
+        //Initialize data source factory
+        var dataSourceFactory: HttpDataSource.Factory =
+            DefaultHttpDataSource.Factory().setUserAgent("exoplayer_video")
+
+
+        var mediaSource = ProgressiveMediaSource.Factory(
+            dataSourceFactory,
+            DefaultExtractorsFactory())
+
+
+
+        simpleExoPlayer = ExoPlayer.Builder(binding.root.context)
+            .setSeekForwardIncrementMs(10000)
+            .setSeekBackIncrementMs(10000)
+            .setMediaSourceFactory(mediaSource)
+            .setTrackSelector(trackSelector)
+            .build()
+
+
+        binding.detailsPlayerView.player = simpleExoPlayer
+
+        simpleExoPlayer.setMediaItem(mediaItem)
+        simpleExoPlayer.prepare()
+        simpleExoPlayer.playWhenReady = true
+
+        simpleExoPlayer.addListener(object : Player.Listener {
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+
+                if (playbackState == Player.STATE_BUFFERING) {
+                    //When buffering
+                    //Show progress bar
+                    binding.progressBar.visibility = View.VISIBLE
+                } else if (playbackState == Player.STATE_READY) {
+                    //When ready
+                    //Hide progress bar
+                    binding.progressBar.visibility = View.GONE
+
+                }
+            }
+
+
+        })
+
+        playerViewBinding.btnFullscreen.setOnClickListener {
+
+            if (fullscreenFlag) {
+                //When flag is true
+                //Set enter full screen image
+                playerViewBinding.btnFullscreen.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        binding.root.context,
+                        R.drawable.ic_fullscreen
+                    )
+                )
+                activity?.requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                fullscreenFlag = false
+
+            } else {
+                playerViewBinding.btnFullscreen.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        binding.root.context,
+                        R.drawable.ic_fullscreen_exit
+                    )
+                )
+
+                activity?.requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+
+                fullscreenFlag = true
+            }
+
+        }
+
+
+        simpleExoPlayer.play()
+
+
+    }
+
+
+ */
+
+    private fun initExoPlayer2() {
+        val player = ExoPlayer.Builder(binding.root.context).build()
+        var videoUrl = Uri.parse("https://www.youtube.com/watch?v=0sBBdWt8PuE")
+
+        var loadControl = DefaultLoadControl()
+        var bandwidthMeter: BandwidthMeter =
+            DefaultBandwidthMeter.Builder(binding.root.context).build()
+
+        var trackSelector: TrackSelector = DefaultTrackSelector(binding.root.context)
+
+
+        this.player =
+            ExoPlayer.Builder(binding.root.context).setTrackSelector(trackSelector).build()
+        binding.detailsPlayerView.player = player
+
+        //Initialize data source factory
+        var dataSourceFactory: HttpDataSource.Factory =
+            DefaultHttpDataSource.Factory().setUserAgent("exoplayer_video")
+
+        var mediaItem = MediaItem.fromUri(videoUrl)
+
+        //Initialize extractors factory
+        var mediaSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory,DefaultExtractorsFactory()).createMediaSource(mediaItem)
+
+
+    }
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -140,6 +339,10 @@ class DetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.detailsMapView.onResume()
+
+        player.playWhenReady = true
+        player.playbackState
+
         if (!EventBus.getDefault().isRegistered(this)) {
             Log.d(TAG, "register EventBus")
             EventBus.getDefault().register(this)
@@ -150,6 +353,10 @@ class DetailsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         binding.detailsMapView.onPause()
+
+        player.playWhenReady = false
+        player.playbackState
+
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
             Log.d(TAG, "onPause unregister EventBus")
