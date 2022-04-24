@@ -1,6 +1,7 @@
 package com.example.oc_p9_kotlin.utils
 
 import android.content.Context
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.net.wifi.WifiManager
@@ -83,7 +84,7 @@ class Utils {
         if (language != Locale.FRENCH.language) {
             currency = "$"
             price = convertEuroToDollars(price)
-            Log.d(TAG, "was " + estate.priceInEuros+ " is in Dollars : " + price )
+            Log.d(TAG, "was " + estate.priceInEuros + " is in Dollars : " + price)
         }
 
         val formattedNumber: String = formatter.format(price)
@@ -94,7 +95,6 @@ class Utils {
     }
 
 
-
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -102,6 +102,17 @@ class Utils {
         return Uri.parse(path)
     }
 
+
+    fun getRealPathFromURI(contentUri: Uri?, context: Context): String? {
+
+        if (contentUri == null)
+            return null
+        val proj = arrayOf(Images.Media.DATA)
+        val cursor: Cursor? = context.contentResolver.query(contentUri, proj, null, null, null)
+        val column_index = cursor?.getColumnIndexOrThrow(Images.Media.DATA)
+        cursor?.moveToFirst()
+        return column_index?.let { cursor?.getString(it) }
+    }
 
 //Verify if internet is enabled on the device
 /*

@@ -50,6 +50,7 @@ class AddEstateActivity : AppCompatActivity() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 2
+    private val PICK_VIDEO = 2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -220,6 +221,14 @@ class AddEstateActivity : AppCompatActivity() {
         )
     }
 
+    private fun selectVideoIntent() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "video/*"
+
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO)
+    }
+
     private fun takePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -297,6 +306,10 @@ class AddEstateActivity : AppCompatActivity() {
             takePictureIntent()
         }
 
+        binding.addEstateAddVideo.setOnClickListener {
+            selectVideoIntent()
+        }
+
         binding.addEstateConfirm.setOnClickListener {
             verifyEstateCreation()
         }
@@ -367,11 +380,29 @@ class AddEstateActivity : AppCompatActivity() {
 
 
             }
+
+            if (requestCode == PICK_VIDEO) {
+
+                var selectedImageUri = data?.getData();
+                Log.d(TAG, selectedImageUri.toString())
+
+
+                // OI FILE Manager
+                var filemanagerstring = selectedImageUri?.path
+
+                // MEDIA GALLERY
+                var selectedImagePath = Utils().getRealPathFromURI(selectedImageUri, this)
+                if (selectedImagePath != null) {
+                    Log.d(TAG, selectedImagePath.toString())
+
+                }
+            }
         } else {
             Log.d(TAG, "request code : $requestCode RESULT NOT OK ")
 
         }
     }
+
 
     private fun verifyAndAddMedia(newMedia: Media) {
         var canAdd = true
