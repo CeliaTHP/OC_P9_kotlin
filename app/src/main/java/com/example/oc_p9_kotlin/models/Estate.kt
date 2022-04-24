@@ -29,6 +29,7 @@ data class Estate(
     var location: Location,
     var description: String,
     var medias: List<Media>?,
+    var videos: List<Media>?,
     @ColumnInfo(name = "entry_date")
     var entryDate: Date,
     @ColumnInfo(name = "sale_date")

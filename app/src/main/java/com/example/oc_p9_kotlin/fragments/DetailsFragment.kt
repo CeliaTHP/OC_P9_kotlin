@@ -1,8 +1,6 @@
 package com.example.oc_p9_kotlin.fragments
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -11,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.R
@@ -57,8 +54,11 @@ class DetailsFragment : Fragment() {
 
     private lateinit var imageAdapter: ImageAdapter
 
-    private lateinit var player: ExoPlayer
+    private var player: ExoPlayer? = null
     private var _binding: FragmentDetailsBinding? = null
+
+    private lateinit var playerFullscreenBinding: ExoPlayerFullscreenBinding
+
 
     private var fullscreenFlag = false
 
@@ -84,28 +84,61 @@ class DetailsFragment : Fragment() {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
 
-        initExoPlayer()
+        playerFullscreenBinding = ExoPlayerFullscreenBinding.inflate(inflater, container, false)
+
 
         return binding.root
 
 
     }
 
-    private fun initExoPlayer() {
-        var videoUri = Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")
+    private fun initExoPlayer(estate: Estate) {
 
         player = ExoPlayer.Builder(binding.root.context).build()
-
         binding.detailsPlayerView.player = player
 
-        var mediaItem = MediaItem.fromUri(videoUri)
 
-        player.addMediaItem(mediaItem)
+        if (estate.videos.isNullOrEmpty())
+            return
 
-        player.prepare()
+        binding.detailsPlayerView.visibility = View.VISIBLE
 
-        player.play()
+        /*
+        var videoUri =
+            Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")
 
+         */
+
+
+        for (video in estate.videos!!) {
+            val mediaItem = MediaItem.fromUri(video.uri)
+            player?.addMediaItem(mediaItem)
+        }
+
+
+        player?.prepare()
+
+        player?.play()
+
+
+        playerFullscreenBinding.exoPlay.setOnClickListener {
+            Log.d(TAG, "onClick Play")
+
+        }
+
+        playerFullscreenBinding.exoFullscreen.setOnClickListener {
+            Log.d(TAG, "onClick FullScreenIcon")
+
+        }
+
+/*
+        playerFullscreenBinding.exoFullscreenIcon.setOnClickListener {
+            Log.d(TAG, "onClick FullScreenIcon")
+
+        }
+
+
+ */
 
         /*
         binding.detailsPlayerView.setOnClickListener {
@@ -138,8 +171,6 @@ class DetailsFragment : Fragment() {
 
 
          */
-
-
 
 
     }
@@ -257,12 +288,12 @@ class DetailsFragment : Fragment() {
         var mediaItem = MediaItem.fromUri(videoUrl)
 
         //Initialize extractors factory
-        var mediaSource: MediaSource = ProgressiveMediaSource.Factory(dataSourceFactory,DefaultExtractorsFactory()).createMediaSource(mediaItem)
+        var mediaSource: MediaSource =
+            ProgressiveMediaSource.Factory(dataSourceFactory, DefaultExtractorsFactory())
+                .createMediaSource(mediaItem)
 
 
     }
-
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -340,8 +371,8 @@ class DetailsFragment : Fragment() {
         super.onResume()
         binding.detailsMapView.onResume()
 
-        player.playWhenReady = true
-        player.playbackState
+        player?.playWhenReady = true
+        player?.playbackState
 
         if (!EventBus.getDefault().isRegistered(this)) {
             Log.d(TAG, "register EventBus")
@@ -354,8 +385,8 @@ class DetailsFragment : Fragment() {
         super.onPause()
         binding.detailsMapView.onPause()
 
-        player.playWhenReady = false
-        player.playbackState
+        player?.playWhenReady = false
+        player?.playbackState
 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
@@ -387,6 +418,8 @@ class DetailsFragment : Fragment() {
                     DateFormat.getDateInstance(DateFormat.SHORT).format(estate.entryDate)
                 )
 
+            
+
             if (estate.assignedAgentName != null) {
                 detailsAgent.visibility = View.VISIBLE
                 detailsAgent.text = getString(R.string.item_estate_agent, estate.assignedAgentName)
@@ -413,6 +446,7 @@ class DetailsFragment : Fragment() {
             }
 
         }
+        initExoPlayer(estate)
         initPics(estate)
         initMap(estate)
 

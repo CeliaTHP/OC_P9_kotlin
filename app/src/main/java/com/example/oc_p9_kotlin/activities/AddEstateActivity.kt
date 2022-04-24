@@ -194,6 +194,8 @@ class AddEstateActivity : AppCompatActivity() {
                 location,
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
+                //TODO : handle video addition
+                null,
                 Date(),
                 null,
                 isAvailable = true,
@@ -251,7 +253,7 @@ class AddEstateActivity : AppCompatActivity() {
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)
         intent.putExtra("medias", list as Serializable)
-       // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         startActivity(intent)
     }

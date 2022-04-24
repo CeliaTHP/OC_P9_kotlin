@@ -81,10 +81,13 @@
                     android:id="@+id/details_player_view"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:visibility="gone"
+                    app:controller_layout_id="@layout/exo_player_fullscreen"
                     app:layout_constraintBottom_toTopOf="@id/details_pics_recycler_view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/details_media_title" />
+                    app:layout_constraintTop_toBottomOf="@id/details_media_title"
+                    tools:visibility="visible" />
                 <!--
                                 <ProgressBar
                                     android:id="@+id/progress_bar"
@@ -100,7 +103,10 @@
                     android:id="@+id/details_pics_recycler_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:fadeScrollbars="false"
                     android:orientation="horizontal"
                     android:scrollbars="horizontal"
@@ -174,7 +180,7 @@
                     android:id="@+id/details_default_pic"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:src="@drawable/ic_house_purple"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

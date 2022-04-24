@@ -1,18 +1,15 @@
 package com.example.oc_p9_kotlin.databases
 
-import android.content.ContentValues
 import android.content.Context
 import android.location.Location
+import android.net.Uri
 import androidx.room.Database
-import androidx.room.OnConflictStrategy
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.models.Estate
-import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -24,7 +21,10 @@ import java.util.Date
 @TypeConverters(
     EstateDatabase.DateConverter::class,
     EstateDatabase.LocationConverter::class,
-    EstateDatabase.MediaList::class,
+    EstateDatabase.MediaListConverter::class,
+    EstateDatabase.UriConverter::class,
+    EstateDatabase.UriListConverter::class
+
 )
 abstract class EstateDatabase : RoomDatabase() {
 
@@ -102,7 +102,7 @@ abstract class EstateDatabase : RoomDatabase() {
         }
     }
 
-    class MediaList {
+    class MediaListConverter {
         @TypeConverter
         fun fromMediaList(medias: List<Media?>?): String? {
             if (medias == null) {
@@ -119,6 +119,52 @@ abstract class EstateDatabase : RoomDatabase() {
             }
             val type: Type = object : TypeToken<List<Media?>?>() {}.type
             return Gson().fromJson<List<Media>>(medias, type)
+        }
+    }
+
+    object StringListConverter {
+        @TypeConverter
+        fun fromString(value: String?): ArrayList<String> {
+            val listType = object : TypeToken<ArrayList<String?>?>() {}.type
+            return Gson().fromJson(value, listType)
+        }
+
+        @TypeConverter
+        fun fromArrayList(list: ArrayList<String?>?): String {
+            val gson = Gson()
+            return gson.toJson(list)
+        }
+    }
+
+    class UriListConverter {
+        @TypeConverter
+        fun fromUriList(uris: List<Uri?>?): String? {
+            if (uris == null) {
+                return null
+            }
+            val type: Type = object : TypeToken<List<Uri?>?>() {}.type
+            return Gson().toJson(uris, type)
+        }
+
+        @TypeConverter
+        fun toUriList(uris: String?): List<Uri>? {
+            if (uris == null) {
+                return null
+            }
+            val type: Type = object : TypeToken<List<Uri?>?>() {}.type
+            return Gson().fromJson<List<Uri>>(uris, type)
+        }
+    }
+
+    class UriConverter {
+        @TypeConverter
+        fun fromString(value: String?): Uri? {
+            return if (value == null) null else Uri.parse(value)
+        }
+
+        @TypeConverter
+        fun toString(uri: Uri?): String? {
+            return uri?.toString()
         }
     }
 
