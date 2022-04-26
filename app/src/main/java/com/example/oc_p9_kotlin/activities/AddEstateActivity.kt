@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -26,8 +27,11 @@ import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.Media
+import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import java.io.File
+import java.io.IOException
 import java.io.Serializable
 import java.util.Date
 import java.util.Locale
@@ -214,7 +218,7 @@ class AddEstateActivity : AppCompatActivity() {
     private fun selectPictureIntent() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_OPEN_DOCUMENT
+        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(
             Intent.createChooser(intent, "Select Picture"),
             PICK_IMAGE
@@ -364,25 +368,41 @@ class AddEstateActivity : AppCompatActivity() {
 
             if (requestCode == PICK_IMAGE) {
 
+
                 Log.d(TAG, "pick image : " + data?.data?.path)
                 Log.d(TAG, " " + data?.data?.toString())
                 Log.d(TAG, " " + data?.data?.encodedPath)
                 Log.d(TAG, " " + data?.data?.schemeSpecificPart)
 
-                var uri = data?.data.toString()
+                if (data == null) {
+                    //error
+                    return
+                }
+                try {
+                    data.data?.let {
+                        val uri: Uri = it
+                        val file: File = FileUtil.from(this, uri)
 
-                var newMedia = Media(
-                    (imageAdapter.itemCount + 1).toString(),
-                    uri
-                )
 
-                verifyAndAddMedia(newMedia)
+                        var finalUri = file.toURI()
+                        Log.d(TAG, "final URI : " + finalUri)
+
+
+                        var newMedia = Media(
+                            (imageAdapter.itemCount + 1).toString(),
+                            finalUri.toString()
+                        )
+
+                        verifyAndAddMedia(newMedia)
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
 
 
             }
-
             if (requestCode == PICK_VIDEO) {
-
 
                 var selectedImageUri = data?.getData();
                 Log.d(TAG, selectedImageUri.toString())

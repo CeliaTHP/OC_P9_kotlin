@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity

@@ -378,6 +378,7 @@ class MainActivity : CompositeDisposableActivity() {
 
         if (item.itemId == R.id.action_criteria) {
 
+
         } else {
             when (item.itemId) {
                 R.id.action_filter_all -> getEstateList()
