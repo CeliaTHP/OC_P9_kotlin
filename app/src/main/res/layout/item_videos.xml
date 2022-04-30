@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
 
     <com.google.android.exoplayer2.ui.PlayerView
@@ -12,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:controller_layout_id="@layout/exo_player_fullscreen"
-        app:resize_mode="fill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fill"
         tools:visibility="visible" />
 
     <TextView
@@ -33,6 +32,19 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/item_video_player_view"
         tools:text="Nom de la video" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/item_video_fullscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fullscreen"
+        android:visibility="gone"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toStartOf="@id/item_video_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"
+        tools:visibility="visible" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/item_video_delete"

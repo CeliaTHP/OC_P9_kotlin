@@ -31,7 +31,6 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
-import com.google.android.exoplayer2.ExoPlayer
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -272,9 +271,9 @@ class AddEstateActivity : AppCompatActivity() {
 
         videoAdapter = VideoAdapter(
             mutableListOf(),
-            true,
-        )
-        {
+            true
+        ) {
+            //ON DATA UPDATE
             Log.d(TAG, "Videos onDataUpdate")//ON DATA UPDATE
             //verifyPlaceholders()
             if (videoAdapter.videoList.isNullOrEmpty()) {

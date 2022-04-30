@@ -53,7 +53,7 @@ class DetailsFragment : Fragment() {
 
     companion object {
         private const val TAG: String = "DetailsFragment"
-         private var player: ExoPlayer? = null
+        private var player: ExoPlayer? = null
 
         fun getPlayer(): ExoPlayer? {
             return player
@@ -90,7 +90,6 @@ class DetailsFragment : Fragment() {
 
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-
 
         playerFullscreenBinding = ExoPlayerFullscreenBinding.inflate(inflater, container, false)
 
@@ -277,9 +276,6 @@ class DetailsFragment : Fragment() {
  */
 
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -297,9 +293,24 @@ class DetailsFragment : Fragment() {
         }
 
         binding.detailsFullscreen.setOnClickListener {
+            Log.d(TAG, " onClickFullscreen photos")
             estate?.medias?.let {
+                Log.d(TAG, "photos not empty")
                 viewFullscreen(it)
             }
+
+            binding.detailsFullscreenVideo.setOnClickListener {
+                Log.d(TAG, "onClickFullscreen videos")
+                /*
+                estate?.videos?.let {
+                    Log.d(TAG, "videos not empty")
+                    viewFullscreen(it)
+                }
+
+                 */
+            }
+
+
 
 
         }
@@ -401,7 +412,6 @@ class DetailsFragment : Fragment() {
     }
 
 
-
     private fun updateUI(estate: Estate) {
         with(binding) {
 
@@ -462,6 +472,14 @@ class DetailsFragment : Fragment() {
 
     private fun initPics(estate: Estate) {
 
+        if (!estate.videos.isNullOrEmpty()) {
+            estate.videos.let {
+
+                binding.detailsFullscreenVideo.visibility = View.VISIBLE
+
+            }
+
+        }
         if (!estate.medias.isNullOrEmpty()) {
             estate.medias?.let {
                 binding.detailsDefaultPic.visibility = View.GONE
@@ -488,8 +506,6 @@ class DetailsFragment : Fragment() {
         intent.putExtra("medias", list as Serializable)
         startActivity(intent)
     }
-
-
 
 
     override fun onDestroyView() {

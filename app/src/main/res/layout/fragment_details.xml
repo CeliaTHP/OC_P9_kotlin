@@ -73,10 +73,10 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/details_price" />
+                    app:layout_constraintTop_toBottomOf="@id/details_price"
+                    tools:visibility="visible" />
 
 
                 <com.google.android.exoplayer2.ui.PlayerView
@@ -84,13 +84,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="6dp"
-                    app:resize_mode="fill"
                     android:visibility="gone"
                     app:controller_layout_id="@layout/exo_player_fullscreen"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_video_title"
+                    app:resize_mode="fill"
                     tools:visibility="visible" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/details_fullscreen_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fullscreen"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="@id/details_player_view"
+                    app:layout_constraintTop_toTopOf="@id/details_player_view"
+                    tools:visibility="visible" />
+
                 <!--
                                 <ProgressBar
                                     android:id="@+id/progress_bar"

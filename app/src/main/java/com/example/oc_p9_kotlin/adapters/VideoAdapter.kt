@@ -51,7 +51,6 @@ class VideoAdapter(
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
 
-
         val media = videoList[position]
 
         holder.itemVideosBinding.itemVideoTitle.text = media.name
@@ -73,17 +72,11 @@ class VideoAdapter(
             return
 
 
-
         val mediaItem = MediaItem.fromUri(media.uri)
 
         player.addMediaItem(mediaItem)
-
-
         player.prepare()
-
         player.play()
-
-
 
         if (isEditing) {
             Log.d(TAG, "is Editing")
@@ -96,8 +89,8 @@ class VideoAdapter(
         } else {
             Log.d(TAG, "is NOT Editing")
             holder.itemVideosBinding.itemVideoDelete.visibility = View.GONE
-
         }
+
 
 
     }
