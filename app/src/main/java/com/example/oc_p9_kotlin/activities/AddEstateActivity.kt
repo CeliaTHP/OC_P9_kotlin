@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.AddEstateViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
+import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
@@ -30,6 +31,7 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import com.google.android.exoplayer2.ExoPlayer
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -49,6 +51,10 @@ class AddEstateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEstateBinding
     private var estateType: EstateType = EstateType.HOUSE
     private var currency: Currency? = null
+
+    private var videoList = emptyList<Media>()
+
+    private lateinit var videoAdapter: VideoAdapter
 
     private lateinit var imageAdapter: ImageAdapter
 
@@ -77,7 +83,8 @@ class AddEstateActivity : AppCompatActivity() {
 
 
         initListeners()
-        initPics()
+        initPicsRecyclerView()
+        initVideosRecyclerView()
 
 
     }
@@ -200,7 +207,7 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
                 //TODO : handle video addition
-                null,
+                videoList,
                 Date(),
                 null,
                 isAvailable = true,
@@ -242,23 +249,47 @@ class AddEstateActivity : AppCompatActivity() {
         }
     }
 
-    private fun initPics() {
+    private fun initPicsRecyclerView() {
 
         Log.d(TAG, "initPics")
 
         imageAdapter = ImageAdapter(
             mutableListOf(),
             true,
-            { verifyPlaceholder() },
+            { verifyPlaceholders() },
             {
                 viewFullscreen(imageAdapter.imageList)
             }
         )
-
         binding.addEstateRecyclerView.adapter = imageAdapter
 
 
     }
+
+    private fun initVideosRecyclerView() {
+
+        Log.d(TAG, "initVideos")
+
+        videoAdapter = VideoAdapter(
+            mutableListOf(),
+            true,
+        )
+        {
+            Log.d(TAG, "Videos onDataUpdate")//ON DATA UPDATE
+            //verifyPlaceholders()
+            if (videoAdapter.videoList.isNullOrEmpty()) {
+                binding.addEstateVideoRecyclerView.visibility = View.GONE
+
+            } else {
+                binding.addEstateVideoRecyclerView.visibility = View.VISIBLE
+
+            }
+        }
+        binding.addEstateVideoRecyclerView.adapter = videoAdapter
+
+
+    }
+
 
     private fun viewFullscreen(medias: List<Media>) {
         Log.d(TAG, "start Full Screen Activity")
@@ -271,29 +302,13 @@ class AddEstateActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun verifyPlaceholder() {
+    private fun verifyPlaceholders() {
         if (imageAdapter.itemCount > 0) {
             binding.addEstateDefaultPic.visibility = View.GONE
         } else {
             binding.addEstateDefaultPic.visibility = View.VISIBLE
         }
-
     }
-
-/*
-        estate.medias?.let {
-            binding.detailsDefaultPic.visibility = View.GONE
-            imageAdapter = ImageAdapter(
-                it.toMutableList()
-            )
-            binding.detailsPicsRecyclerView.adapter = imageAdapter
-            binding.detailsPicsRecyclerView.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-
-
-        }
-
- */
 
 
     private fun initListeners() {
@@ -383,7 +398,6 @@ class AddEstateActivity : AppCompatActivity() {
                         val uri: Uri = it
                         val file: File = FileUtil.from(this, uri)
 
-
                         var finalUri = file.toURI()
                         Log.d(TAG, "final URI : " + finalUri)
 
@@ -404,8 +418,32 @@ class AddEstateActivity : AppCompatActivity() {
             }
             if (requestCode == PICK_VIDEO) {
 
-                var selectedImageUri = data?.getData();
-                Log.d(TAG, selectedImageUri.toString())
+                if (data == null) {
+                    //error
+                    return
+                }
+
+                try {
+                    data.data?.let {
+                        val uri: Uri = it
+                        val file: File = FileUtil.from(this, uri)
+
+
+                        var finalUri = file.toURI()
+                        Log.d(TAG, "final URI : " + finalUri)
+
+
+                        var newMedia = Media(
+                            (videoAdapter.itemCount + 1).toString(),
+                            finalUri.toString()
+                        )
+
+                        verifyAndAddMedia(newMedia, true)
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
 
 /*
                 // OI FILE Manager
@@ -429,19 +467,36 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
 
-    private fun verifyAndAddMedia(newMedia: Media) {
+    private fun verifyAndAddMedia(newMedia: Media, isVideo: Boolean = false) {
         var canAdd = true
 
-        for (media in imageAdapter.imageList) {
-            if (media.uri == newMedia.uri) {
-                canAdd = false
-                Log.d(TAG, "ALREADY SELECTED")
+        Log.d(TAG, "newMedia : " + newMedia.toString())
 
+
+        if (isVideo) {
+            Log.d(TAG, "isVideo")
+            for (media in videoAdapter.videoList) {
+                if (media.uri == newMedia.uri) {
+                    canAdd = false
+                    Log.d(TAG, "ALREADY SELECTED")
+
+                }
             }
+        } else {
+            Log.d(TAG, "isPhoto")
+
+            for (media in imageAdapter.imageList) {
+                if (media.uri == newMedia.uri) {
+                    canAdd = false
+                    Log.d(TAG, "ALREADY SELECTED")
+
+                }
+            }
+
         }
 
         if (canAdd) {
-            createAddDialog(newMedia)
+            createAddDialog(newMedia, isVideo)
             binding.scrollView.fullScroll(ScrollView.FOCUS_UP)
 
         } else {
@@ -456,7 +511,7 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
-    private fun createAddDialog(newMedia: Media) {
+    private fun createAddDialog(newMedia: Media, isVideo: Boolean) {
 
         var editText = EditText(this)
         val alert: AlertDialog.Builder = AlertDialog.Builder(this).apply {
@@ -473,10 +528,21 @@ class AddEstateActivity : AppCompatActivity() {
             if (!editText.text.isNullOrBlank())
                 newMedia.name = editText.text.toString()
 
-            if (binding.addEstateDefaultPic.visibility == View.VISIBLE)
-                binding.addEstateDefaultPic.visibility = View.GONE
 
-            imageAdapter.addData(newMedia)
+            if (isVideo) {
+                Log.d(TAG, "added Video")
+                videoAdapter.addData(newMedia)
+
+            } else {
+                Log.d(TAG, "added Photo")
+
+                if (binding.addEstateDefaultPic.visibility == View.VISIBLE)
+                    binding.addEstateDefaultPic.visibility = View.GONE
+
+                imageAdapter.addData(newMedia)
+
+            }
+
             Log.d(TAG, "added media :" + newMedia.toString())
 
         }

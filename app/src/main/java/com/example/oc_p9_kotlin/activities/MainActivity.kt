@@ -265,8 +265,6 @@ class MainActivity : CompositeDisposableActivity() {
             onEstateClick(it)
         }
         binding.listRecyclerView.adapter = adapter
-        binding.listRecyclerView.layoutManager = LinearLayoutManager(this)
-
 
     }
 

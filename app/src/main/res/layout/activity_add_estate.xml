@@ -125,6 +125,35 @@
                     app:layout_constraintTop_toBottomOf="@id/add_estate_pic_layout"
                     app:tint="@color/white" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/add_estate_video_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:fadeScrollbars="false"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/add_estate_pic_layout"
+                    app:layout_constraintStart_toStartOf="@id/add_estate_pic_layout"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_default_pic"
+                    tools:listitem="@layout/item_videos"
+                    tools:visibility="visible" />
+
+
+                <!--
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/add_estate_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"
+                    app:controller_layout_id="@layout/exo_player_fullscreen"
+                    app:layout_constraintEnd_toEndOf="@id/add_estate_pic_layout"
+                    app:layout_constraintStart_toStartOf="@id/add_estate_pic_layout"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_default_pic"
+                    tools:visibility="visible" />
+
+-->
                 <ImageView
                     android:id="@+id/add_estate_default_pic"
                     android:layout_width="140dp"
@@ -153,7 +182,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="add_estate_recycler_view,add_estate_default_pic" />
+                    app:constraint_referenced_ids="add_estate_recycler_view,add_estate_default_pic,add_estate_video_recycler_view" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
