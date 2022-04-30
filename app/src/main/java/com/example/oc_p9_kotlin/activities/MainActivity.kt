@@ -117,7 +117,10 @@ class MainActivity : CompositeDisposableActivity() {
             }
 
             override fun onPanelClosed(panel: View) {
+                Log.d(TAG,"onPanelClose")
+
                 initToolbar()
+                stopPlayer()
 
             }
 
@@ -125,9 +128,15 @@ class MainActivity : CompositeDisposableActivity() {
 
         binding.fab.setOnClickListener {
             this.startActivity(Intent(this, AddEstateActivity::class.java))
-
         }
 
+
+    }
+
+    private fun stopPlayer() {
+        Log.d(TAG, "stopPlayer")
+        DetailsFragment.getPlayer()?.playWhenReady = false
+        DetailsFragment.getPlayer()?.stop()
 
     }
 
@@ -209,9 +218,17 @@ class MainActivity : CompositeDisposableActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+
+    }
+
     override fun onStop() {
         super.onStop()
         InternetUtils.unregisterNetworkCallback(this)
+        stopPlayer()
+
     }
 
     override fun onStart() {

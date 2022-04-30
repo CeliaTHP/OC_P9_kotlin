@@ -53,11 +53,16 @@ class DetailsFragment : Fragment() {
 
     companion object {
         private const val TAG: String = "DetailsFragment"
+         private var player: ExoPlayer? = null
+
+        fun getPlayer(): ExoPlayer? {
+            return player
+        }
+
     }
 
     private lateinit var imageAdapter: ImageAdapter
 
-    private var player: ExoPlayer? = null
     private var _binding: FragmentDetailsBinding? = null
 
     private lateinit var playerFullscreenBinding: ExoPlayerFullscreenBinding
@@ -94,6 +99,7 @@ class DetailsFragment : Fragment() {
 
 
     }
+
 
     private fun initExoPlayer(estate: Estate) {
 
@@ -271,34 +277,7 @@ class DetailsFragment : Fragment() {
  */
 
 
-    private fun initExoPlayer2() {
-        val player = ExoPlayer.Builder(binding.root.context).build()
-        var videoUrl = Uri.parse("https://www.youtube.com/watch?v=0sBBdWt8PuE")
 
-        var loadControl = DefaultLoadControl()
-        var bandwidthMeter: BandwidthMeter =
-            DefaultBandwidthMeter.Builder(binding.root.context).build()
-
-        var trackSelector: TrackSelector = DefaultTrackSelector(binding.root.context)
-
-
-        this.player =
-            ExoPlayer.Builder(binding.root.context).setTrackSelector(trackSelector).build()
-        //binding.detailsPlayerView.player = player
-
-        //Initialize data source factory
-        var dataSourceFactory: HttpDataSource.Factory =
-            DefaultHttpDataSource.Factory().setUserAgent("exoplayer_video")
-
-        var mediaItem = MediaItem.fromUri(videoUrl)
-
-        //Initialize extractors factory
-        var mediaSource: MediaSource =
-            ProgressiveMediaSource.Factory(dataSourceFactory, DefaultExtractorsFactory())
-                .createMediaSource(mediaItem)
-
-
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -391,13 +370,36 @@ class DetailsFragment : Fragment() {
         binding.detailsMapView.onPause()
 
         player?.playWhenReady = false
-        player?.playbackState
+        player?.stop()
 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
             Log.d(TAG, "onPause unregister EventBus")
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (!EventBus.getDefault().isRegistered(this)) {
+            Log.d(TAG, "register EventBus")
+            EventBus.getDefault().register(this)
+        }
+
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+            Log.d(TAG, "unregister EventBus")
+        }
+        player?.playWhenReady = false
+        player?.stop()
+
+
+    }
+
 
 
     private fun updateUI(estate: Estate) {
@@ -488,29 +490,12 @@ class DetailsFragment : Fragment() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
-        if (!EventBus.getDefault().isRegistered(this)) {
-            Log.d(TAG, "register EventBus")
-            EventBus.getDefault().register(this)
-        }
 
-
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-            Log.d(TAG, "unregister EventBus")
-        }
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }
 
