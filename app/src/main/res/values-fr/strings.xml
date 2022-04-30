@@ -72,6 +72,7 @@
 
 
     <string name="add_estate_dialog_title">Nouvelle photo </string>
+    <string name="add_estate_dialog_video">Nouvelle vidéo</string>
     <string name="add_estate_dialog_text">Choisissez un nom</string>
     <string name="add_estate_dialog_confirm">Confirmer</string>
     <string name="add_estate_dialog_no">Non</string>

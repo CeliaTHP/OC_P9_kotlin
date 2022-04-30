@@ -82,6 +82,7 @@
     <string name="add_estate_success">Your estate has been saved.</string>
 
     <string name="add_estate_dialog_title">New photo</string>
+    <string name="add_estate_dialog_video">New video</string>
     <string name="add_estate_dialog_text">Select a name</string>
     <string name="add_estate_dialog_confirm">Confirm</string>
     <string name="add_estate_dialog_no">No</string>

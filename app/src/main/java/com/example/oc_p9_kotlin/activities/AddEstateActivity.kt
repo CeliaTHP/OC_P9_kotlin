@@ -520,9 +520,14 @@ class AddEstateActivity : AppCompatActivity() {
     private fun createAddDialog(newMedia: Media, isVideo: Boolean) {
 
         var editText = EditText(this)
+
         val alert: AlertDialog.Builder = AlertDialog.Builder(this).apply {
+            if(isVideo)
+            setTitle(getString(R.string.add_estate_dialog_video))
+            else
             setTitle(getString(R.string.add_estate_dialog_title))
             setMessage(getString(R.string.add_estate_dialog_text))
+
         }
 
         alert.setView(editText)
