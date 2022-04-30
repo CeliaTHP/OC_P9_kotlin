@@ -13,8 +13,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.oc_p9_kotlin.R
+import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
+import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ExoPlayerFullscreenBinding
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
@@ -102,6 +104,7 @@ class DetailsFragment : Fragment() {
         if (estate.videos.isNullOrEmpty())
             return
 
+        binding.detailsVideoTitle.visibility = View.VISIBLE
         binding.detailsPlayerView.visibility = View.VISIBLE
 
         /*
@@ -267,6 +270,7 @@ class DetailsFragment : Fragment() {
 
  */
 
+
     private fun initExoPlayer2() {
         val player = ExoPlayer.Builder(binding.root.context).build()
         var videoUrl = Uri.parse("https://www.youtube.com/watch?v=0sBBdWt8PuE")
@@ -280,7 +284,7 @@ class DetailsFragment : Fragment() {
 
         this.player =
             ExoPlayer.Builder(binding.root.context).setTrackSelector(trackSelector).build()
-        binding.detailsPlayerView.player = player
+        //binding.detailsPlayerView.player = player
 
         //Initialize data source factory
         var dataSourceFactory: HttpDataSource.Factory =
@@ -419,7 +423,7 @@ class DetailsFragment : Fragment() {
                     DateFormat.getDateInstance(DateFormat.SHORT).format(estate.entryDate)
                 )
 
-            
+
 
             if (estate.assignedAgentName != null) {
                 detailsAgent.visibility = View.VISIBLE

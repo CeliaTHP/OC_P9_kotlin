@@ -72,26 +72,9 @@ class VideoAdapter(
         if (videoList.isNullOrEmpty())
             return
 
-        Log.d(TAG, "onBind")
 
-        var env = Environment.getExternalStorageDirectory().absolutePath
 
-        Log.d(TAG, "env : ")
-
-        Log.d(TAG, "path  : ")
-
-        val myFile =
-            File(media.uri)
-
-        Log.d(TAG, "path : ")
-        Log.d(TAG, myFile.path)
-
-        var uri = Uri.fromFile(myFile)
-
-        Log.d(TAG, "uri : ")
-        Log.d(TAG, uri.toString())
-
-        val mediaItem = MediaItem.fromUri(uri)
+        val mediaItem = MediaItem.fromUri(media.uri)
 
         player.addMediaItem(mediaItem)
 
@@ -134,6 +117,8 @@ class VideoAdapter(
         Log.d(TAG, "old list : " + videoList.size)
         this.videoList = newList
         notifyDataSetChanged()
+        onDataUpdate()
+
         Log.d(TAG, "new list : " + newList.size)
 
     }

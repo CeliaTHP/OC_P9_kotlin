@@ -125,18 +125,35 @@
                     app:layout_constraintTop_toBottomOf="@id/add_estate_pic_layout"
                     app:tint="@color/white" />
 
+
+                <TextView
+                    android:id="@+id/add_estate_video_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details_videos"
+                    android:textColor="@color/main_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier"
+                    tools:visibility="visible" />
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_estate_video_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fadeScrollbars="false"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical"
                     android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@id/add_estate_pic_layout"
                     app:layout_constraintStart_toStartOf="@id/add_estate_pic_layout"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_default_pic"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_video_title"
                     tools:listitem="@layout/item_videos"
                     tools:visibility="visible" />
 
@@ -162,7 +179,22 @@
                     android:src="@drawable/ic_house_purple"
                     app:layout_constraintEnd_toEndOf="@id/add_estate_pic_layout"
                     app:layout_constraintStart_toStartOf="@id/add_estate_pic_layout"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_add_video" />
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_photo_title" />
+
+
+                <TextView
+                    android:id="@+id/add_estate_photo_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details_photos"
+                    android:textColor="@color/main_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_add_video"
+                    tools:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_estate_recycler_view"
@@ -175,15 +207,22 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_add_video" />
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_photo_title" />
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/barrier"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="add_estate_recycler_view,add_estate_default_pic,add_estate_video_recycler_view" />
+                    app:constraint_referenced_ids="add_estate_recycler_view,add_estate_default_pic" />
 
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="add_estate_video_recycler_view" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/add_estate_city_input"
@@ -192,7 +231,7 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/add_estate_city"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrier">
+                    app:layout_constraintTop_toBottomOf="@id/barrier2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

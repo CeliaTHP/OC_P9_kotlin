@@ -207,7 +207,7 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
                 //TODO : handle video addition
-                videoList,
+                videoAdapter.videoList,
                 Date(),
                 null,
                 isAvailable = true,
@@ -278,9 +278,11 @@ class AddEstateActivity : AppCompatActivity() {
             Log.d(TAG, "Videos onDataUpdate")//ON DATA UPDATE
             //verifyPlaceholders()
             if (videoAdapter.videoList.isNullOrEmpty()) {
+                binding.addEstateVideoTitle.visibility = View.GONE
                 binding.addEstateVideoRecyclerView.visibility = View.GONE
 
             } else {
+                binding.addEstateVideoTitle.visibility = View.VISIBLE
                 binding.addEstateVideoRecyclerView.visibility = View.VISIBLE
 
             }
@@ -305,8 +307,12 @@ class AddEstateActivity : AppCompatActivity() {
     private fun verifyPlaceholders() {
         if (imageAdapter.itemCount > 0) {
             binding.addEstateDefaultPic.visibility = View.GONE
+            binding.addEstatePhotoTitle.visibility = View.VISIBLE
+
         } else {
             binding.addEstateDefaultPic.visibility = View.VISIBLE
+            binding.addEstatePhotoTitle.visibility = View.GONE
+
         }
     }
 

@@ -29,6 +29,8 @@
     <!--Details-->
     <string name="details_type">Type</string>
     <string name="details_media">Médias</string>
+    <string name="details_photos">Photos</string>
+    <string name="details_videos">Videos</string>
     <string name="details_description">Description</string>
 
     <!--Specs-->
