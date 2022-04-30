@@ -33,6 +33,9 @@
             android:name=".activities.FullScreenPictureActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.FiltersActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddEstateActivity"
             android:exported="false"
             android:label="@string/add_estate_title"

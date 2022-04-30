@@ -1,128 +1,382 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/filters_type_title"
+            android:id="@+id/filters_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_type"
+            android:text="@string/filters_title"
             android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/second_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_title">
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/vertical_buttons_barrier"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:barrierDirection="end"
+                app:barrierMargin="20dp"
+                app:constraint_referenced_ids="filters_type_title,filters_price_title,
+                 filters_surface_title,filters_rooms_title,filters_bathrooms_title" />
+
+            <TextView
+                android:id="@+id/filters_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_type"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/filters_type_button"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/filters_type_button" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/filters_type_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_estate_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/filters_min_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/filters_min"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_type_button" />
+
+            <TextView
+                android:id="@+id/filters_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_price"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_min_title" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_price"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="1000000"
+                android:progress="500000"
+                app:layout_constraintBottom_toBottomOf="@id/filters_price_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_price_title" />
+
+            <TextView
+                android:id="@+id/filters_surface_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_surface"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_price" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_surface"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_surface_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_surface_title" />
+
+            <TextView
+                android:id="@+id/filters_rooms_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_rooms"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_surface" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_rooms"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_rooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_rooms_title" />
+
+            <TextView
+                android:id="@+id/filters_bathrooms_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_bathrooms"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_rooms" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_bathrooms"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_bathrooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_bathrooms_title" />
+
+
+            <TextView
+                android:id="@+id/filters_bedrooms_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/add_estate_bedrooms"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_bathrooms" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_bedrooms"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_bedrooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_bedrooms_title" />
+
+            <TextView
+                android:id="@+id/filters_photos_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/details_photos"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_bedrooms" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_photos"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_photos_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_photos_title" />
+
+
+            <TextView
+                android:id="@+id/filters_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/filters_dates"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_photos" />
+
+
+            <TextView
+                android:id="@+id/filters_entry_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/filters_entry_date"
+                android:textColor="@color/main_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_date_title"
+
+                />
+
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_entry"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_entry_date_title"
+                app:layout_constraintEnd_toStartOf="@id/filter_entry_weeks"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_entry_date_title" />
+
+            <TextView
+                android:id="@+id/filter_entry_weeks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filters_weeks"
+                android:textColor="@color/main_text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/filters_seekbar_entry"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/filters_seekbar_entry"
+                app:layout_constraintTop_toTopOf="@id/filters_seekbar_entry" />
+
+            <TextView
+                android:id="@+id/filters_sale_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/filters_entry_date"
+                android:textColor="@color/main_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@id/vertical_buttons_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_entry" />
+
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/filters_seekbar_sale"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="10"
+                app:layout_constraintBottom_toBottomOf="@id/filters_sale_date_title"
+                app:layout_constraintEnd_toStartOf="@id/filter_sale_weeks"
+                app:layout_constraintStart_toEndOf="@id/vertical_buttons_barrier"
+                app:layout_constraintTop_toTopOf="@id/filters_sale_date_title" />
+
+            <TextView
+                android:id="@+id/filter_sale_weeks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filters_weeks"
+                android:textColor="@color/main_text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/filters_seekbar_sale"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/filters_seekbar_sale"
+                app:layout_constraintTop_toTopOf="@id/filters_seekbar_sale" />
+
+            <TextView
+                android:id="@+id/filters_location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/filters_dates"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filters_seekbar_photos" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/filters_type_button"
+            android:id="@+id/filters_confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_type" />
+            android:layout_marginTop="20dp"
+            android:text="@string/add_estate_dialog_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/second_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <TextView
-            android:id="@+id/filters_surface_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_price"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/filters_seekbar_price"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="1000000"
-            android:progress="500000"
- />
-
-        <TextView
-            android:id="@+id/filters_surface_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_surface"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/filters_seekbar_surface"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="100"
-            android:progress="10"/>
-
-        <TextView
-            android:id="@+id/filters_surface_rooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_rooms"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/filters_seekbar_rooms"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="100"
-            android:progress="10"
- />
-
-        <TextView
-            android:id="@+id/filters_surface_bathrooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_bathrooms"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/filters_seekbar_bathrooms"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="100"
-            android:progress="10"
-          />
-
-
-        <TextView
-            android:id="@+id/filters_surface_bedhrooms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_estate_bedrooms"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/filters_seekbar_bedrooms"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="100"
-            android:progress="10" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-</com.google.android.material.card.MaterialCardView>
+</ScrollView>

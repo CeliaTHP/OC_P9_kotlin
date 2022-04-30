@@ -29,8 +29,8 @@
     <!--Details-->
     <string name="details_type">Type</string>
     <string name="details_media">Medias</string>
-    <string name="details_photos">Photos</string>
-    <string name="details_videos">Videos</string>
+    <string name="details_photos">Photo(s)</string>
+    <string name="details_videos">Video(s)</string>
     <string name="details_description">Description</string>
     <string name="details_description_text" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
@@ -52,6 +52,17 @@
     <string name="item_estate_sale_date">sale date : %1$s</string>
     <string name="item_estate_agent">Agent in charge : %1$s</string>
     <string name="item_estate_sold">Sold</string>
+
+    <!--Filters-->
+    <string name="filters_title">Add filters</string>
+    <string name="filters_min">Minimum count of…</string>
+    <string name="filters_dates">Dates</string>
+    <string name="filters_entry_date">On the market since</string>
+    <string name="filters_sale_date">Sold since </string>
+    <string name="filters_weeks">week(s)</string>
+    <string name="filters_location">Location</string>
+
+
 
     <!--Add Estate-->
     <string name="add_estate_title">Add an estate</string>

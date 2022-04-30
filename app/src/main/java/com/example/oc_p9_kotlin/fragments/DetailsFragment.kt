@@ -2,6 +2,9 @@ package com.example.oc_p9_kotlin.fragments
 
 import android.R.attr.bitmap
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -402,9 +405,8 @@ class DetailsFragment : Fragment() {
                     poiMarker.position = poi.mLocation
                     poiMarker.icon = poiIcon
                     if (poi.mThumbnail != null) {
-                        val d: Drawable = BitmapDrawable(binding.root.resources, poi.thumbnail)
 
-                        poiMarker.image = d
+                        poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail)
 
                     }
 

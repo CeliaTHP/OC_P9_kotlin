@@ -29,8 +29,8 @@
     <!--Details-->
     <string name="details_type">Type</string>
     <string name="details_media">Médias</string>
-    <string name="details_photos">Photos</string>
-    <string name="details_videos">Videos</string>
+    <string name="details_photos">Photo(s)</string>
+    <string name="details_videos">Vidéo(s)</string>
     <string name="details_description">Description</string>
 
     <!--Specs-->
@@ -49,6 +49,17 @@
     <string name="item_estate_sale_date">date de vente : %1$s</string>
     <string name="item_estate_agent">Agent en charge : %1$s</string>
     <string name="item_estate_sold">Vendu</string>
+
+    <!--Filters-->
+    <string name="filters_title">Ajouter des filtres</string>
+    <string name="filters_min">Nombre minimum de …</string>
+    <string name="filters_dates">Dates</string>
+    <string name="filters_entry_date">Sur le marché depuis</string>
+    <string name="filters_sale_date">Vendu depuis</string>
+    <string name="filters_weeks">semaine(s)</string>
+    <string name="filters_location">Location</string>
+
+
 
     <!--Add Estate-->
     <string name="add_estate_title">Ajouter un bien</string>

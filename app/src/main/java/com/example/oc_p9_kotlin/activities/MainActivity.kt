@@ -21,6 +21,7 @@ import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
+import com.example.oc_p9_kotlin.dialogs.FiltersDialog
 import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
@@ -30,6 +31,7 @@ import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
+import java.io.Serializable
 
 
 class MainActivity : CompositeDisposableActivity() {
@@ -117,7 +119,7 @@ class MainActivity : CompositeDisposableActivity() {
             }
 
             override fun onPanelClosed(panel: View) {
-                Log.d(TAG,"onPanelClose")
+                Log.d(TAG, "onPanelClose")
 
                 initToolbar()
                 stopPlayer()
@@ -392,6 +394,17 @@ class MainActivity : CompositeDisposableActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         if (item.itemId == R.id.action_criteria) {
+            Log.d(TAG, "criterias")
+
+            val intent =
+                Intent(binding.root.context, FiltersActivity::class.java)
+            startActivity(intent)
+
+            /*
+            FiltersDialog.showDialog(this){
+
+            }.show()
+        */
 
 
         } else {
