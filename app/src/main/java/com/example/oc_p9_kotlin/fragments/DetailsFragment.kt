@@ -1,22 +1,22 @@
 package com.example.oc_p9_kotlin.fragments
 
+import android.R.attr.bitmap
 import android.content.Intent
-import android.net.Uri
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
-import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ExoPlayerFullscreenBinding
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
@@ -24,23 +24,17 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
-import com.google.android.exoplayer2.DefaultLoadControl
+import com.example.oc_p9_kotlin.view_models.DetailsViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelector
-import com.google.android.exoplayer2.upstream.BandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.upstream.HttpDataSource
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.osmdroid.bonuspack.location.NominatimPOIProvider
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
 import java.io.Serializable
 import java.text.DateFormat
@@ -63,12 +57,11 @@ class DetailsFragment : Fragment() {
 
     private lateinit var imageAdapter: ImageAdapter
 
+    private var mapView: MapView? = null
+    private lateinit var viewModel: DetailsViewModel
     private var _binding: FragmentDetailsBinding? = null
 
     private lateinit var playerFullscreenBinding: ExoPlayerFullscreenBinding
-
-
-    private var fullscreenFlag = false
 
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
@@ -99,6 +92,21 @@ class DetailsFragment : Fragment() {
 
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initViewModels()
+        initListeners()
+
+    }
+
+    private fun initViewModels() {
+
+        viewModel =
+            ViewModelProvider(this).get(DetailsViewModel::class.java)
+
+    }
 
     private fun initExoPlayer(estate: Estate) {
 
@@ -276,13 +284,6 @@ class DetailsFragment : Fragment() {
  */
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initListeners()
-
-    }
-
     private fun initListeners() {
 
         binding.detailsRefreshButton.setOnClickListener {
@@ -311,8 +312,6 @@ class DetailsFragment : Fragment() {
             }
 
 
-
-
         }
     }
 
@@ -331,6 +330,10 @@ class DetailsFragment : Fragment() {
 
     private fun initMap(estate: Estate) {
 
+
+        mapView = binding.detailsMapView
+
+
         if (InternetUtils.isNetworkAvailable(activity)) {
             Log.d(TAG, "internet is Available")
             binding.detailsMapView.visibility = View.VISIBLE
@@ -344,19 +347,76 @@ class DetailsFragment : Fragment() {
 
         }
 
-        binding.detailsMapView.setTileSource(TileSourceFactory.MAPNIK)
-        binding.detailsMapView.controller.setZoom(16.0)
+        mapView?.setTileSource(TileSourceFactory.MAPNIK)
+        mapView?.controller?.setZoom(16.0)
         val startPoint = GeoPoint(estate.location.latitude, estate.location.longitude)
 
-        val startMarker = Marker(binding.detailsMapView)
+        val startMarker = Marker(mapView)
         startMarker.setInfoWindow(null)
         startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         startMarker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
 
         //add nearby places marker
-        binding.detailsMapView.overlays.add(startMarker)
-        binding.detailsMapView.controller.setCenter(startPoint)
+        mapView?.overlays?.add(startMarker)
+        mapView?.controller?.setCenter(startPoint)
+
+
+    }
+
+    private fun initPois() {
+        val thread = Thread {
+            try {
+
+                if (estate?.location?.latitude == null || estate?.location?.longitude == null)
+                    return@Thread
+                val geoPoint = GeoPoint(estate?.location?.latitude!!, estate?.location?.longitude!!)
+
+                if (mapView?.repository == null)
+                    return@Thread
+
+                val poiProvider = NominatimPOIProvider("OSMBonusPackTutoUserAgent")
+
+                val pois = poiProvider.getPOICloseTo(
+                    GeoPoint(
+                        geoPoint
+                    ), "cinema", 5, 0.1
+                )
+
+                val poiMarkers = FolderOverlay()
+
+                mapView?.overlays?.add(poiMarkers)
+
+                Log.d(TAG, pois.toString())
+
+                val poiIcon = AppCompatResources.getDrawable(
+                    binding.root.context,
+                    R.drawable.ic_location_green
+                )
+                for (poi in pois) {
+                    val poiMarker = Marker(mapView)
+                    poiMarker.title = poi.mType
+                    if (poi.mDescription != null)
+                        poiMarker.snippet = poi.mDescription
+
+                    poiMarker.position = poi.mLocation
+                    poiMarker.icon = poiIcon
+                    if (poi.mThumbnail != null) {
+                        val d: Drawable = BitmapDrawable(binding.root.resources, poi.thumbnail)
+
+                        poiMarker.image = d
+
+                    }
+
+                    poiMarkers.add(poiMarker)
+                }
+                mapView?.invalidate()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        thread.start()
 
 
     }
@@ -364,7 +424,7 @@ class DetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.detailsMapView.onResume()
+        mapView?.onResume()
 
         player?.playWhenReady = true
         player?.playbackState
@@ -378,7 +438,7 @@ class DetailsFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        binding.detailsMapView.onPause()
+        mapView?.onPause()
 
         player?.playWhenReady = false
         player?.stop()
@@ -466,6 +526,7 @@ class DetailsFragment : Fragment() {
         initExoPlayer(estate)
         initPics(estate)
         initMap(estate)
+        initPois()
 
 
     }
