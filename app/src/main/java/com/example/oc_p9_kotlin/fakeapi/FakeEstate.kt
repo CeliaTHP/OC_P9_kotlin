@@ -189,7 +189,7 @@ object FakeEstateApi {
             "4",
             EstateType.APARTMENT,
             "Paris",
-            60000,
+            20000,
             28,
             2,
             1,

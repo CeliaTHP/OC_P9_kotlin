@@ -1,12 +1,8 @@
 package com.example.oc_p9_kotlin.fragments
 
-import android.R.attr.bitmap
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -17,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
@@ -406,8 +403,21 @@ class DetailsFragment : Fragment() {
                     poiMarker.icon = poiIcon
                     if (poi.mThumbnail != null) {
 
-                        poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail)
 
+                        val bitmap: Bitmap = Glide
+                            .with(binding.root.context)
+                            .asBitmap()
+                            .load(poi.mThumbnailPath)
+                            .submit(100, 100)
+                            .get()
+
+
+                        poiMarker.image = BitmapDrawable(binding.root.resources, bitmap)
+
+                        //poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail).
+
+                    } else {
+                        poiMarker.image = null
                     }
 
                     poiMarkers.add(poiMarker)

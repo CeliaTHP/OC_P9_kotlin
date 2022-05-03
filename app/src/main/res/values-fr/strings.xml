@@ -58,6 +58,13 @@
     <string name="filters_sale_date">Vendu depuis</string>
     <string name="filters_weeks">semaine(s)</string>
     <string name="filters_location">Location</string>
+    <string name="filters_near">À proximité</string>
+    <string name="filters_near_school">École</string>
+    <string name="filters_near_shop">Commerce</string>
+    <string name="filters_near_gas">Station service</string>
+    <string name="filters_near_pub">Pub</string>
+
+
 
 
 
@@ -87,6 +94,9 @@
     <string name="add_estate_dialog_text">Choisissez un nom</string>
     <string name="add_estate_dialog_confirm">Confirmer</string>
     <string name="add_estate_dialog_no">Non</string>
+
+    <string name="type_price_custom">Entrez votre prix limite</string>
+
 
 
     <string name="type_house">Maison</string>

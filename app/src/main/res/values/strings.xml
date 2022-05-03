@@ -61,7 +61,11 @@
     <string name="filters_sale_date">Sold since </string>
     <string name="filters_weeks">week(s)</string>
     <string name="filters_location">Location</string>
-
+    <string name="filters_near">Nearby</string>
+    <string name="filters_near_school">School</string>
+    <string name="filters_near_shop">Shop</string>
+    <string name="filters_near_gas">Gas station</string>
+    <string name="filters_near_pub">Bar</string>
 
 
     <!--Add Estate-->
@@ -108,6 +112,35 @@
     <string name="type_mansion">Mansion</string>
     <string name="type_site">Site</string>
     <string name="type_other">Other</string>
+
+    <string name="type_price_lowest" translatable="false"> &lt; 100 000</string>
+    <string name="type_price_low" translatable="false"> &lt; 300 000</string>
+    <string name="type_price_mid" translatable="false"> &lt; 500 000</string>
+
+    <string name="type_price_mid_high" translatable="false"> &lt; 800 000</string>
+    <string name="type_price_high" translatable="false"> &lt; 1 000 000</string>
+    <string name="type_price_highest" translatable="false"> &gt; 1 000 000</string>
+
+    <string name="type_price_custom">Enter your limit price</string>
+
+
+    <string-array name="price_array">
+        <item>0</item>
+        <item>10 000</item>
+        <item>20 000</item>
+        <item>50 000</item>
+        <item>100 000</item>
+        <item>200 000</item>
+        <item>300 000</item>
+        <item>400 000</item>
+        <item>500 000</item>
+        <item>600 000</item>
+        <item>700 000</item>
+        <item>800 000</item>
+        <item>900 000</item>
+        <item>1 000 000</item>
+        <item>&gt;1 000 000</item>
+    </string-array>
 
 
     <string-array name="estate_type_array">

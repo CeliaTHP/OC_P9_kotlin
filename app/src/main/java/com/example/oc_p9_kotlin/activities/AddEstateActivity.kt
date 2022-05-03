@@ -388,7 +388,6 @@ class AddEstateActivity : AppCompatActivity() {
 
             if (requestCode == PICK_IMAGE) {
 
-
                 Log.d(TAG, "pick image : " + data?.data?.path)
                 Log.d(TAG, " " + data?.data?.toString())
                 Log.d(TAG, " " + data?.data?.encodedPath)
