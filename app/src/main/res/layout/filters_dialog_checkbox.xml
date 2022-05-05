@@ -6,7 +6,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
 
         <TextView
@@ -35,7 +36,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -130,19 +132,6 @@
 
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/filters_price_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:text="@string/add_estate_price"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_price_title" />
-
         <!--
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/filters_slider_price"
@@ -155,24 +144,279 @@
                     app:haloColor="@color/main_purple"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/filters_price_title"
+                    app:layout_constraintTop_toBottomOf="@ id/filters_price_title"
 
                     />
 
                     -->
 
+        <TextView
+            android:id="@+id/filters_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_estate_price"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_radio_type_group1" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_price"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:stepSize="100000.0"
-            android:valueFrom="0.0"
-            android:valueTo="2000000.0"
+            android:stepSize="100000"
+            android:valueFrom="0"
+            android:valueTo="2000000"
             app:haloColor="@android:color/holo_orange_light"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/filters_price_title"
-            app:layout_constraintTop_toBottomOf="@id/filters_radio_type_group1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_price_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+        <TextView
+            android:id="@+id/filters_surface_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_estate_surface"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_price" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_surface"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="5"
+            android:valueFrom="0"
+            android:valueTo="100"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_surface_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+        <TextView
+            android:id="@+id/filters_rooms_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_estate_rooms"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_surface" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_rooms"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="20"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_rooms_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+        <TextView
+            android:id="@+id/filters_bathrooms_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_estate_bathrooms"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_rooms" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_bathrooms"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="20"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_bathrooms_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+        <TextView
+            android:id="@+id/filters_bedrooms_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_estate_bedrooms"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_bathrooms" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_bedrooms"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="20"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_bedrooms_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+        <TextView
+            android:id="@+id/filters_photos_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/details_photos"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_bedrooms" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_photos"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="20"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_photos_title"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+
+        <TextView
+            android:id="@+id/filters_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/filters_dates"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_photos" />
+
+
+        <TextView
+            android:id="@+id/filters_date_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/filters_entry_date"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_title" />
+
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_entry_date"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="60"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_entry"
+            app:thumbColor="@color/darker_purple"
+            app:tickColor="@color/dark_purple"
+            app:trackColor="@color/light_purple" />
+
+
+        <TextView
+            android:id="@+id/filters_date_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/filters_sale_date"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_entry_date" />
+
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/filters_slider_sale_date"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="60"
+            app:haloColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_sale"
             app:thumbColor="@color/darker_purple"
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />
@@ -361,9 +605,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/add_estate_dialog_confirm"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_slider_price" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

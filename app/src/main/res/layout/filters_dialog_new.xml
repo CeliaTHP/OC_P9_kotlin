@@ -318,7 +318,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="@string/filters_entry_date"
+                android:text="@string/filters_sale_date"
                 android:textColor="@color/main_text"
                 android:textSize="16sp"
                 android:textStyle="bold"

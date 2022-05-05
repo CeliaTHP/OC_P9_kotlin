@@ -38,19 +38,46 @@ class FiltersActivity : AppCompatActivity() {
     }
 
     private fun initRangeSliders() {
-        binding.filtersSliderPrice.labelBehavior = LabelFormatter.LABEL_FLOATING
+
+        //TODO : handle currency converter
         binding.filtersSliderPrice.setValues(0f,500000f)
 
-        binding.filtersSliderPrice.setLabelFormatter(object: LabelFormatter{
-            override fun getFormattedValue(value: Float): String {
-                val formatter: NumberFormat = DecimalFormat("#,###")
+        Utils().initSlider(binding.filtersSliderPrice,"$")
 
-                return formatter.format(value) + " $"
-            }
 
-        })
+        binding.filtersSliderSurface.setValues(10f,20f)
 
-        binding.filtersSliderPrice.addOnChangeListener { slider, value, fromUser ->  }
+        Utils().initSlider(binding.filtersSliderSurface,"m²")
+
+
+        binding.filtersSliderRooms.setValues(3f,6f)
+        Utils().initSlider(binding.filtersSliderRooms)
+
+
+        binding.filtersSliderBathrooms.setValues(2f,4f)
+        Utils().initSlider(binding.filtersSliderBathrooms)
+
+
+        binding.filtersSliderBedrooms.setValues(2f,6f)
+        Utils().initSlider(binding.filtersSliderBedrooms)
+
+        binding.filtersSliderPhotos.setValues(3f,5f)
+        Utils().initSlider(binding.filtersSliderPhotos)
+
+        binding.filtersSliderEntryDate.setValues(0f,10f)
+        Utils().initSlider(binding.filtersSliderEntryDate)
+
+        binding.filtersSliderSaleDate.setValues(0f,10f)
+        Utils().initSlider(binding.filtersSliderSaleDate)
+
+
+
+
+
+
+
+
+       // binding.filtersSliderPrice.addOnChangeListener { slider, value, fromUser ->  }
 
     }
 

@@ -54,8 +54,8 @@
     <string name="filters_title">Ajouter des filtres</string>
     <string name="filters_min">Nombre minimum de …</string>
     <string name="filters_dates">Dates</string>
-    <string name="filters_entry_date">Sur le marché depuis</string>
-    <string name="filters_sale_date">Vendu depuis</string>
+    <string name="filters_entry_date">Sur le marché depuis… (en semaines)</string>
+    <string name="filters_sale_date">Vendu depuis… (en semaines)</string>
     <string name="filters_weeks">semaine(s)</string>
     <string name="filters_location">Location</string>
     <string name="filters_near">À proximité</string>

@@ -11,6 +11,8 @@ import android.net.wifi.WifiManager
 import android.provider.MediaStore.Images
 import android.util.Log
 import com.example.oc_p9_kotlin.models.Estate
+import com.google.android.material.slider.LabelFormatter
+import com.google.android.material.slider.RangeSlider
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -115,6 +117,25 @@ class Utils {
         val column_index = cursor?.getColumnIndexOrThrow(Images.Media.DATA)
         cursor?.moveToFirst()
         return column_index?.let { cursor?.getString(it) }
+    }
+
+    fun initSlider(slider: RangeSlider, symbol: String? = null) {
+
+        slider.setLabelFormatter(object : LabelFormatter {
+            override fun getFormattedValue(value: Float): String {
+                val formatter: NumberFormat = DecimalFormat("#,###")
+                var finalValue = formatter.format(value)
+
+                if (value == slider.valueTo)
+                    finalValue = "+ $finalValue"
+                symbol?.let {
+                    finalValue = "$finalValue $symbol"
+                }
+
+                return finalValue
+            }
+
+        })
     }
 
     fun drawableToBitmap(drawable: Drawable): Bitmap? {
