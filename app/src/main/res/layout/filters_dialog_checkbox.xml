@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -52,18 +53,21 @@
                         android:id="@+id/filters_type_house"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_house"
                         android:text="@string/type_house" />
 
                     <RadioButton
                         android:id="@+id/filters_type_apartment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_apartment"
                         android:text="@string/type_apartment" />
 
                     <RadioButton
                         android:id="@+id/filters_type_building"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_building"
                         android:text="@string/type_building" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -82,18 +86,21 @@
                         android:id="@+id/filters_type_loft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_loft"
                         android:text="@string/type_loft" />
 
                     <RadioButton
                         android:id="@+id/filters_type_apartment_castle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_castle"
                         android:text="@string/type_castle" />
 
                     <RadioButton
                         android:id="@+id/filters_type_boat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_boat"
                         android:text="@string/type_boat" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,18 +118,21 @@
                         android:id="@+id/filters_type_mansion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_mansion"
                         android:text="@string/type_mansion" />
 
                     <RadioButton
                         android:id="@+id/filters_type_site"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_site"
                         android:text="@string/type_site" />
 
                     <RadioButton
                         android:id="@+id/filters_type_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="@string/type_other"
                         android:text="@string/type_other" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -155,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:text="@string/add_estate_price"
             android:textColor="@color/main_text"
@@ -166,13 +176,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_radio_type_group1" />
 
+        <TextView
+            android:id="@+id/filters_price_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_price_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_price_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_price_title"
+            tools:text="500000$" />
+
+        <TextView
+            android:id="@+id/filters_price_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_price_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_price_title"
+            app:layout_constraintTop_toTopOf="@id/filters_price_title"
+            tools:text="2000000$" />
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_price"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:stepSize="100000"
             android:valueFrom="0"
-            android:valueTo="2000000"
+            android:valueTo="1000000"
             app:haloColor="@android:color/holo_orange_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -196,6 +230,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_price" />
+
+        <TextView
+            android:id="@+id/filters_surface_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_surface_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_surface_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_surface_title"
+            tools:text="20 m²" />
+
+        <TextView
+            android:id="@+id/filters_surface_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_surface_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_surface_title"
+            app:layout_constraintTop_toTopOf="@id/filters_surface_title"
+            tools:text="50 m ²" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_surface"
@@ -228,6 +286,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_surface" />
 
+        <TextView
+            android:id="@+id/filters_rooms_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_rooms_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_rooms_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_rooms_title"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/filters_rooms_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_rooms_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_rooms_title"
+            app:layout_constraintTop_toTopOf="@id/filters_rooms_title"
+            tools:text="6" />
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_rooms"
             android:layout_width="300dp"
@@ -258,6 +340,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_rooms" />
+
+        <TextView
+            android:id="@+id/filters_bathrooms_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_bathrooms_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_bathrooms_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_bathrooms_title"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/filters_bathrooms_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_bathrooms_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_bathrooms_title"
+            app:layout_constraintTop_toTopOf="@id/filters_bathrooms_title"
+            tools:text="3" />
+
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_bathrooms"
@@ -290,6 +397,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_bathrooms" />
 
+        <TextView
+            android:id="@+id/filters_bedrooms_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_bedrooms_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_bedrooms_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_bedrooms_title"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/filters_bedrooms_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_bedrooms_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_bedrooms_title"
+            app:layout_constraintTop_toTopOf="@id/filters_bedrooms_title"
+            tools:text="4" />
+
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_bedrooms"
             android:layout_width="300dp"
@@ -304,6 +436,31 @@
             app:thumbColor="@color/darker_purple"
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />
+
+
+        <TextView
+            android:id="@+id/filters_photos_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_photos_title"
+            app:layout_constraintEnd_toStartOf="@id/filters_photos_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_photos_title"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/filters_photos_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_photos_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_photos_title"
+            app:layout_constraintTop_toTopOf="@id/filters_photos_title"
+            tools:text="10" />
 
         <TextView
             android:id="@+id/filters_photos_title"
@@ -370,6 +527,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_date_title" />
 
+        <TextView
+            android:id="@+id/filters_entry_date_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_date_entry"
+            app:layout_constraintEnd_toStartOf="@id/filters_date_entry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_date_entry"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/filters_entry_date_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_date_entry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_date_entry"
+            app:layout_constraintTop_toTopOf="@id/filters_date_entry"
+            tools:text="2" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_entry_date"
@@ -404,6 +584,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_entry_date" />
 
+
+        <TextView
+            android:id="@+id/filters_sale_date_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_date_sale"
+            app:layout_constraintEnd_toStartOf="@id/filters_date_sale"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/filters_date_sale"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/filters_sale_date_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/filters_date_sale"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filters_date_sale"
+            app:layout_constraintTop_toTopOf="@id/filters_date_sale"
+            tools:text="3" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/filters_slider_sale_date"
@@ -605,10 +809,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/add_estate_dialog_confirm"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_sale_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

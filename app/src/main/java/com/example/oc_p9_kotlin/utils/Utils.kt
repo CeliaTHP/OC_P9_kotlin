@@ -126,8 +126,8 @@ class Utils {
                 val formatter: NumberFormat = DecimalFormat("#,###")
                 var finalValue = formatter.format(value)
 
-                if (value == slider.valueTo)
-                    finalValue = "+ $finalValue"
+               // if (value == slider.valueTo)
+                 //   finalValue = "+ $finalValue"
                 symbol?.let {
                     finalValue = "$finalValue $symbol"
                 }
@@ -136,6 +136,8 @@ class Utils {
             }
 
         })
+
+
     }
 
     fun drawableToBitmap(drawable: Drawable): Bitmap? {
