@@ -4,14 +4,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.example.oc_p9_kotlin.FiltersViewModelFactory
+import com.example.oc_p9_kotlin.MainViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FiltersDialogCheckboxBinding
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.utils.Utils
+import com.example.oc_p9_kotlin.view_models.FiltersViewModel
+import com.example.oc_p9_kotlin.view_models.MainViewModel
+import io.reactivex.rxjava3.kotlin.addTo
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class FiltersActivity : AppCompatActivity() {
+class FiltersActivity : CompositeDisposableActivity() {
 
     companion object {
         private const val TAG = "FiltersActivity"
@@ -19,17 +26,18 @@ class FiltersActivity : AppCompatActivity() {
 
     private lateinit var binding: FiltersDialogCheckboxBinding
 
-    private var filterType: String? = null
+    private lateinit var viewModel: FiltersViewModel
 
-    private var filterPriceMin: Float? = null
-    private var filterPriceMax: Float? = null
+    private lateinit var filterType: String
 
-    private var filterSurfaceMin: Float? = null
-    private var filterSurfaceMax: Float? = null
+    private var filterPriceMin: Int = 0
+    private var filterPriceMax: Int = 0
+
+    private var filterSurfaceMin: Int = 0
+    private var filterSurfaceMax: Int = 0
 
     private var filterRoomsMin: Int? = null
     private var filterRoomsMax: Int? = null
-
 
     private var filterBathroomsMin: Int? = null
     private var filterBathroomsMax: Int? = null
@@ -39,7 +47,6 @@ class FiltersActivity : AppCompatActivity() {
 
     private var filterPhotosMin: Int? = null
     private var filterPhotosMax: Int? = null
-
 
     private var filterEntryDateMin: Int? = null
     private var filterEntryDateMax: Int? = null
@@ -53,26 +60,77 @@ class FiltersActivity : AppCompatActivity() {
 
         binding = FiltersDialogCheckboxBinding.inflate(layoutInflater)
 
+        //Default filter checked
+        binding.filtersTypeHouse.isChecked = true
+        filterType = binding.filtersTypeHouse.tag.toString()
+
+
+        initViewModels()
         initRangeSliders()
         initListeners()
         setContentView(binding.root)
 
     }
 
+    private fun initViewModels() {
+
+        viewModel =
+            ViewModelProvider(this, FiltersViewModelFactory(this)).get(FiltersViewModel::class.java)
+
+    }
+
+    private fun getFilteredList(
+        estateType: String,
+        priceMin: Int,
+        priceMax: Int,
+        surfaceMin: Int,
+        surfaceMax: Int
+    ) {
+
+        bag.clear()
+
+        viewModel.getWithFilters(estateType, priceMin, priceMax, surfaceMin, surfaceMax)
+            .subscribe(
+                {
+                    if (!it.isNullOrEmpty()) {
+                        Log.d(TAG, "list received : " + it.toString())
+
+
+                    } else {
+                        Log.d(TAG, "emptyList")
+                    }
+                }, {
+                    Log.d(TAG, "error getFilteredList " + it.message)
+                    Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
+
+                }).addTo(bag)
+    }
+
+
     private fun updateSliderValues() {
         val formatter: NumberFormat = DecimalFormat("#,###")
 
-        binding.filtersPriceMin.text = getString(R.string.filters_price_dollars,formatter.format(binding.filtersSliderPrice.values[0]))
-        binding.filtersPriceMax.text = getString(R.string.filters_price_dollars,formatter.format(binding.filtersSliderPrice.values[1]))
+        binding.filtersPriceMin.text = getString(
+            R.string.filters_price_dollars,
+            formatter.format(binding.filtersSliderPrice.values[0])
+        )
+        binding.filtersPriceMax.text = getString(
+            R.string.filters_price_dollars,
+            formatter.format(binding.filtersSliderPrice.values[1])
+        )
 
-        binding.filtersSurfaceMin.text = getString(R.string.filters_surface,binding.filtersSliderSurface.values[0].toInt())
-       binding.filtersSurfaceMax.text = getString(R.string.filters_surface,binding.filtersSliderSurface.values[1].toInt())
+        binding.filtersSurfaceMin.text =
+            getString(R.string.filters_surface, binding.filtersSliderSurface.values[0].toInt())
+        binding.filtersSurfaceMax.text =
+            getString(R.string.filters_surface, binding.filtersSliderSurface.values[1].toInt())
 
         binding.filtersRoomsMin.text = binding.filtersSliderRooms.values[0].toInt().toString()
         binding.filtersRoomsMax.text = binding.filtersSliderRooms.values[1].toInt().toString()
 
-        binding.filtersBathroomsMin.text = binding.filtersSliderBathrooms.values[0].toInt().toString()
-        binding.filtersBathroomsMax.text = binding.filtersSliderBathrooms.values[1].toInt().toString()
+        binding.filtersBathroomsMin.text =
+            binding.filtersSliderBathrooms.values[0].toInt().toString()
+        binding.filtersBathroomsMax.text =
+            binding.filtersSliderBathrooms.values[1].toInt().toString()
 
         binding.filtersBedroomsMin.text = binding.filtersSliderBedrooms.values[0].toInt().toString()
         binding.filtersBedroomsMax.text = binding.filtersSliderBedrooms.values[1].toInt().toString()
@@ -80,17 +138,13 @@ class FiltersActivity : AppCompatActivity() {
         binding.filtersPhotosMin.text = binding.filtersSliderPhotos.values[0].toInt().toString()
         binding.filtersPhotosMax.text = binding.filtersSliderPhotos.values[1].toInt().toString()
 
-        binding.filtersEntryDateMin.text = binding.filtersSliderEntryDate.values[0].toInt().toString()
-        binding.filtersEntryDateMax.text = binding.filtersSliderEntryDate.values[1].toInt().toString()
+        binding.filtersEntryDateMin.text =
+            binding.filtersSliderEntryDate.values[0].toInt().toString()
+        binding.filtersEntryDateMax.text =
+            binding.filtersSliderEntryDate.values[1].toInt().toString()
 
         binding.filtersSaleDateMin.text = binding.filtersSliderSaleDate.values[0].toInt().toString()
         binding.filtersSaleDateMax.text = binding.filtersSliderSaleDate.values[1].toInt().toString()
-
-
-
-
-
-
 
 
     }
@@ -166,7 +220,7 @@ class FiltersActivity : AppCompatActivity() {
             }
         }
 
-        for(rangeSlider in rangeSliders) {
+        for (rangeSlider in rangeSliders) {
             rangeSlider.addOnChangeListener { slider, value, fromUser ->
                 updateSliderValues()
             }
@@ -182,10 +236,45 @@ class FiltersActivity : AppCompatActivity() {
     }
 
     private fun verifyFields() {
-        filterPriceMin = binding.filtersSliderPrice.values[0]
-        filterPriceMax = binding.filtersSliderPrice.values[1]
 
-        Log.d(TAG, "$filterPriceMin to $filterPriceMax")
+        filterPriceMin = binding.filtersSliderPrice.values[0].toInt()
+        filterPriceMax = binding.filtersSliderPrice.values[1].toInt()
+
+        filterSurfaceMin = binding.filtersSliderSurface.values[0].toInt()
+        filterSurfaceMax = binding.filtersSliderSurface.values[1].toInt()
+
+        filterRoomsMin = binding.filtersSliderRooms.values[0].toInt()
+        filterRoomsMax = binding.filtersSliderRooms.values[1].toInt()
+
+        filterBathroomsMin = binding.filtersSliderBathrooms.values[0].toInt()
+        filterBathroomsMax = binding.filtersSliderBathrooms.values[1].toInt()
+
+        filterBedroomsMin = binding.filtersSliderBedrooms.values[0].toInt()
+        filterBedroomsMax = binding.filtersSliderBedrooms.values[1].toInt()
+
+        filterPhotosMin = binding.filtersSliderPhotos.values[0].toInt()
+        filterPhotosMax = binding.filtersSliderPhotos.values[1].toInt()
+
+        filterEntryDateMin = binding.filtersSliderEntryDate.values[0].toInt()
+        filterEntryDateMax = binding.filtersSliderEntryDate.values[1].toInt()
+
+        filterSaleDateMin = binding.filtersSliderSaleDate.values[0].toInt()
+        filterSaleDateMax = binding.filtersSliderSaleDate.values[1].toInt()
+
+
+        Log.d(
+            TAG,
+            "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin $filterSurfaceMax"
+        )
+
+        getFilteredList(
+            filterType,
+            filterPriceMin,
+            filterPriceMax,
+            filterSurfaceMin,
+            filterSurfaceMax
+        )
+
 
 
     }

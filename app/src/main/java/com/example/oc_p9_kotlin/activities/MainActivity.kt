@@ -39,6 +39,7 @@ class MainActivity : CompositeDisposableActivity() {
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
         private const val TAG: String = "MainActivity"
+
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -195,14 +196,13 @@ class MainActivity : CompositeDisposableActivity() {
 
 
     private fun updateEstateList(estateList: MutableList<Estate>) {
-
         //Updating our list with retrieved data
         this.estateList = estateList
         adapter.updateData(estateList)
         updateDefaultEstate(estateList)
 
-
     }
+
 
     private fun updateDefaultEstate(estateList: MutableList<Estate>) {
         //Setting our first item as default selected estate

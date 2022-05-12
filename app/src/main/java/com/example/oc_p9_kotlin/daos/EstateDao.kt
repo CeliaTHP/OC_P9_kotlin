@@ -35,5 +35,17 @@ interface EstateDao {
     @Delete
     fun delete(estate: Estate)
 
+    @Query(
+        " SELECT* FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
+                "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax "
+    )
+    fun getWithFilters(
+        estateType: String,
+        priceMin: Int,
+        priceMax: Int,
+        surfaceMin: Int,
+        surfaceMax: Int
+    ): Observable<MutableList<Estate>>
+
 
 }

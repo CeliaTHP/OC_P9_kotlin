@@ -108,6 +108,15 @@
     <string name="add_estate_dialog_confirm">Confirm</string>
     <string name="add_estate_dialog_no">No</string>
 
+    <string name="type_house_raw" translatable="false">HOUSE</string>
+    <string name="type_apartment_raw" translatable="false">APARTMENT</string>
+    <string name="type_building_raw" translatable="false">BUILDING</string>
+    <string name="type_loft_raw" translatable="false">LOFT</string>
+    <string name="type_castle_raw" translatable="false">CASTLE</string>
+    <string name="type_boat_raw" translatable="false">BOAT</string>
+    <string name="type_mansion_raw" translatable="false">MANSION</string>
+    <string name="type_site_raw" translatable="false">SITE</string>
+    <string name="type_other_raw" translatable="false">OTHER</string>
 
     <string name="type_house">House</string>
     <string name="type_apartment">Apartment</string>

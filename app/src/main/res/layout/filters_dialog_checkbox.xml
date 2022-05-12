@@ -53,21 +53,21 @@
                         android:id="@+id/filters_type_house"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_house"
+                        android:tag="@string/type_house_raw"
                         android:text="@string/type_house" />
 
                     <RadioButton
                         android:id="@+id/filters_type_apartment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_apartment"
+                        android:tag="@string/type_apartment_raw"
                         android:text="@string/type_apartment" />
 
                     <RadioButton
                         android:id="@+id/filters_type_building"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_building"
+                        android:tag="@string/type_building_raw"
                         android:text="@string/type_building" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -86,21 +86,21 @@
                         android:id="@+id/filters_type_loft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_loft"
+                        android:tag="@string/type_loft_raw"
                         android:text="@string/type_loft" />
 
                     <RadioButton
                         android:id="@+id/filters_type_apartment_castle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_castle"
+                        android:tag="@string/type_castle_raw"
                         android:text="@string/type_castle" />
 
                     <RadioButton
                         android:id="@+id/filters_type_boat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_boat"
+                        android:tag="@string/type_boat_raw"
                         android:text="@string/type_boat" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -118,21 +118,21 @@
                         android:id="@+id/filters_type_mansion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_mansion"
+                        android:tag="@string/type_mansion_raw"
                         android:text="@string/type_mansion" />
 
                     <RadioButton
                         android:id="@+id/filters_type_site"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_site"
+                        android:tag="@string/type_site_raw"
                         android:text="@string/type_site" />
 
                     <RadioButton
                         android:id="@+id/filters_type_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:tag="@string/type_other"
+                        android:tag="@string/type_other_raw"
                         android:text="@string/type_other" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
