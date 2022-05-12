@@ -35,23 +35,23 @@ class FiltersActivity : CompositeDisposableActivity() {
     private var filterSurfaceMin: Int = 0
     private var filterSurfaceMax: Int = 0
 
-    private var filterRoomsMin: Int? = null
-    private var filterRoomsMax: Int? = null
+    private var filterRoomsMin: Int = 0
+    private var filterRoomsMax: Int = 0
 
-    private var filterBathroomsMin: Int? = null
-    private var filterBathroomsMax: Int? = null
+    private var filterBathroomsMin: Int = 0
+    private var filterBathroomsMax: Int = 0
 
-    private var filterBedroomsMin: Int? = null
-    private var filterBedroomsMax: Int? = null
+    private var filterBedroomsMin: Int = 0
+    private var filterBedroomsMax: Int = 0
 
-    private var filterPhotosMin: Int? = null
-    private var filterPhotosMax: Int? = null
+    private var filterPhotosMin: Int = 0
+    private var filterPhotosMax: Int = 0
 
-    private var filterEntryDateMin: Int? = null
-    private var filterEntryDateMax: Int? = null
+    private var filterEntryDateMin: Int = 0
+    private var filterEntryDateMax: Int = 0
 
-    private var filterSaleDateMin: Int? = null
-    private var filterSaleDateMax: Int? = null
+    private var filterSaleDateMin: Int = 0
+    private var filterSaleDateMax: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,25 +83,47 @@ class FiltersActivity : CompositeDisposableActivity() {
         priceMin: Int,
         priceMax: Int,
         surfaceMin: Int,
-        surfaceMax: Int
+        surfaceMax: Int,
+        roomsMin: Int,
+        roomsMax: Int,
+        bathroomsMin: Int,
+        bathroomsMax: Int,
+        bedroomsMin: Int,
+        bedroomsMax: Int,
+        photosMin: Int,
+        photosMax: Int
     ) {
 
         bag.clear()
 
-        viewModel.getWithFilters(estateType, priceMin, priceMax, surfaceMin, surfaceMax)
+        viewModel.getWithFilters(
+            estateType,
+            priceMin,
+            priceMax,
+            surfaceMin,
+            surfaceMax,
+            roomsMin,
+            roomsMax,
+            bathroomsMin,
+            bathroomsMax,
+            bedroomsMin,
+            bedroomsMax,
+            photosMin,
+            photosMax
+        )
             .subscribe(
                 {
-                    if (!it.isNullOrEmpty()) {
-                        Log.d(TAG, "list received : " + it.toString())
-
-                        //Send eventBus with our new list
-                        onUpdateListEvent.setFilteredEstateList(it)
-                        EventBus.getDefault().postSticky(onUpdateListEvent)
-
-
-                    } else {
+                    if (it.isNullOrEmpty()) {
+                        Toast.makeText(this, R.string.filters_empty, Toast.LENGTH_LONG).show()
                         Log.d(TAG, "emptyList")
                     }
+
+                    Log.d(TAG, "list received : " + it.toString())
+
+                    //Send eventBus with our new list
+                    onUpdateListEvent.setFilteredEstateList(it)
+                    EventBus.getDefault().postSticky(onUpdateListEvent)
+
                 }, {
                     Log.d(TAG, "error getFilteredList " + it.message)
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
@@ -160,19 +182,19 @@ class FiltersActivity : CompositeDisposableActivity() {
         Utils().initSlider(binding.filtersSliderPrice, "$")
 
 
-        binding.filtersSliderSurface.setValues(10f, 20f)
+        binding.filtersSliderSurface.setValues(20f, 50f)
         Utils().initSlider(binding.filtersSliderSurface, "m²")
 
 
-        binding.filtersSliderRooms.setValues(3f, 6f)
+        binding.filtersSliderRooms.setValues(2f, 4f)
         Utils().initSlider(binding.filtersSliderRooms)
 
 
-        binding.filtersSliderBathrooms.setValues(2f, 4f)
+        binding.filtersSliderBathrooms.setValues(0f, 1f)
         Utils().initSlider(binding.filtersSliderBathrooms)
 
 
-        binding.filtersSliderBedrooms.setValues(2f, 6f)
+        binding.filtersSliderBedrooms.setValues(1f, 2f)
         Utils().initSlider(binding.filtersSliderBedrooms)
 
         binding.filtersSliderPhotos.setValues(3f, 5f)
@@ -267,7 +289,9 @@ class FiltersActivity : CompositeDisposableActivity() {
 
         Log.d(
             TAG,
-            "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin $filterSurfaceMax"
+            "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin" +
+                    " $filterSurfaceMax $filterRoomsMin $filterRoomsMax $filterBathroomsMin " +
+                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax"
         )
 
         getFilteredList(
@@ -275,7 +299,15 @@ class FiltersActivity : CompositeDisposableActivity() {
             filterPriceMin,
             filterPriceMax,
             filterSurfaceMin,
-            filterSurfaceMax
+            filterSurfaceMax,
+            filterRoomsMin,
+            filterRoomsMax,
+            filterBathroomsMin,
+            filterBathroomsMax,
+            filterBedroomsMin,
+            filterBedroomsMax,
+            filterPhotosMin,
+            filterPhotosMax
         )
 
 

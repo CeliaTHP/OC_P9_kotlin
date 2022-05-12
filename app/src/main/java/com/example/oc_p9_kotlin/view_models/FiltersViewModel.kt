@@ -17,8 +17,6 @@ import kotlinx.coroutines.launch
 
 class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
 
-    private var executor: Executor = Executors.newSingleThreadExecutor()
-
     companion object {
         private const val TAG = "FiltersViewModel"
     }
@@ -29,9 +27,30 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         priceMax: Int,
         surfaceMin: Int,
         surfaceMax: Int,
-        /*rooms:Int,bathrooms: Int,bedrooms:Int,photos: Int*/
+        roomsMin: Int,
+        roomsMax: Int,
+        bathroomsMin: Int,
+        bathroomsMax: Int,
+        bedroomsMin: Int,
+        bedroomsMax: Int,
+        photosMin: Int,
+        photosMax: Int
     ): Observable<MutableList<Estate>> =
-        estateDao.getWithFilters(estateType, priceMin, priceMax, surfaceMin, surfaceMax)
+        estateDao.getWithFilters(
+            estateType,
+            priceMin,
+            priceMax,
+            surfaceMin,
+            surfaceMax,
+            roomsMin,
+            roomsMax,
+            bathroomsMin,
+            bathroomsMax,
+            bedroomsMin,
+            bedroomsMax,
+          //  photosMin,
+            //photosMax
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

@@ -64,6 +64,7 @@
     <string name="filters_near_gas">Station service</string>
     <string name="filters_near_pub">Pub</string>
 
+    <string name="filters_empty">Aucun de nos bien ne correspond à votre demande</string>
 
 
 

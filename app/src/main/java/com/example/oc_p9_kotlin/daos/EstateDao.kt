@@ -37,14 +37,24 @@ interface EstateDao {
 
     @Query(
         " SELECT* FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
-                "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax "
+                "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
+                "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax"
     )
     fun getWithFilters(
         estateType: String,
         priceMin: Int,
         priceMax: Int,
         surfaceMin: Int,
-        surfaceMax: Int
+        surfaceMax: Int,
+        roomsMin: Int,
+        roomsMax: Int,
+        bathroomsMin: Int,
+        bathroomsMax: Int,
+        bedroomsMin: Int,
+        bedroomsMax: Int,
+       // photosMin: Int,
+        //photosMax: Int
+
     ): Observable<MutableList<Estate>>
 
 

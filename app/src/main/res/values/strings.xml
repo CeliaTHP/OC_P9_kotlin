@@ -61,7 +61,6 @@
     <string name="filters_surface" translatable="false">%1$d m²</string>
 
 
-
     <string name="filters_dates">Dates</string>
     <string name="filters_entry_date">On the market since… (in weeks)</string>
     <string name="filters_sale_date">Sold since… (in weeks)</string>
@@ -72,6 +71,10 @@
     <string name="filters_near_shop">Shop</string>
     <string name="filters_near_gas">Gas station</string>
     <string name="filters_near_pub">Bar</string>
+
+    <string name="filters_empty">None of our estate matches your request</string>
+
+
 
 
     <!--Add Estate-->

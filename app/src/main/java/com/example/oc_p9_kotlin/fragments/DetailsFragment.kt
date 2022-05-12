@@ -463,20 +463,27 @@ class DetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        /*
         if (!EventBus.getDefault().isRegistered(this)) {
             Log.d(TAG, "register EventBus")
             EventBus.getDefault().register(this)
         }
+
+         */
 
     }
 
 
     override fun onStop() {
         super.onStop()
+
+        /*
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
             Log.d(TAG, "unregister EventBus")
         }
+
+         */
         player?.playWhenReady = false
         player?.stop()
 
