@@ -4,13 +4,13 @@ import com.example.oc_p9_kotlin.models.Estate
 
 class OnUpdateListEvent {
 
-    private lateinit var estateList: List<Estate>
+    private lateinit var estateList: MutableList<Estate>
 
-    fun setEstateList(estateList: List<Estate>){
+    fun setFilteredEstateList(estateList: MutableList<Estate>){
         this.estateList = estateList
     }
 
-    fun getSelectedEstate(): List<Estate> {
+    fun getFilteredEstateList(): MutableList<Estate> {
         return estateList
     }
 }

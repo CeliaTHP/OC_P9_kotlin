@@ -16,13 +16,12 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.oc_p9_kotlin.*
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
-import com.example.oc_p9_kotlin.dialogs.FiltersDialog
 import com.example.oc_p9_kotlin.events.OnEstateEvent
+import com.example.oc_p9_kotlin.events.OnUpdateListEvent
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
@@ -31,7 +30,7 @@ import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
-import java.io.Serializable
+import org.greenrobot.eventbus.Subscribe
 
 
 class MainActivity : CompositeDisposableActivity() {
@@ -48,7 +47,7 @@ class MainActivity : CompositeDisposableActivity() {
     private var listBag = CompositeDisposable()
 
     private var estateList = mutableListOf<Estate>()
-    private var filteredList = mutableListOf<Estate>()
+    //private var filteredList = mutableListOf<Estate>()
 
     private var isOverflowIconEnabled = false
 
@@ -88,6 +87,15 @@ class MainActivity : CompositeDisposableActivity() {
 
 
         Log.d(TAG, "onCreate")
+
+    }
+    @Subscribe(sticky = true)
+     fun onUpdateListEvent(onUpdateListEvent: OnUpdateListEvent) {
+   //     filteredList.clear()
+       var  filteredList = onUpdateListEvent.getFilteredEstateList()
+        Log.d(TAG, "onUpdateList Event $filteredList")
+
+        updateEstateList(filteredList)
 
     }
 
@@ -220,11 +228,7 @@ class MainActivity : CompositeDisposableActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
 
-    }
 
     override fun onStop() {
         super.onStop()
@@ -434,6 +438,27 @@ class MainActivity : CompositeDisposableActivity() {
 
 
     }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            Log.d(TAG, "register EventBus")
+            EventBus.getDefault().register(this)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+            Log.d(TAG, "onPause unregister EventBus")
+        }
+    }
+
 
 /*
     override fun onSupportNavigateUp(): Boolean {

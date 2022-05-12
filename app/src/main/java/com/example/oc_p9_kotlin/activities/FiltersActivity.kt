@@ -1,20 +1,18 @@
 package com.example.oc_p9_kotlin.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.FiltersViewModelFactory
-import com.example.oc_p9_kotlin.MainViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FiltersDialogCheckboxBinding
-import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.events.OnUpdateListEvent
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.FiltersViewModel
-import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.kotlin.addTo
+import org.greenrobot.eventbus.EventBus
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -24,6 +22,7 @@ class FiltersActivity : CompositeDisposableActivity() {
         private const val TAG = "FiltersActivity"
     }
 
+    private var onUpdateListEvent = OnUpdateListEvent()
     private lateinit var binding: FiltersDialogCheckboxBinding
 
     private lateinit var viewModel: FiltersViewModel
@@ -94,6 +93,10 @@ class FiltersActivity : CompositeDisposableActivity() {
                 {
                     if (!it.isNullOrEmpty()) {
                         Log.d(TAG, "list received : " + it.toString())
+
+                        //Send eventBus with our new list
+                        onUpdateListEvent.setFilteredEstateList(it)
+                        EventBus.getDefault().postSticky(onUpdateListEvent)
 
 
                     } else {
@@ -274,7 +277,6 @@ class FiltersActivity : CompositeDisposableActivity() {
             filterSurfaceMin,
             filterSurfaceMax
         )
-
 
 
     }
