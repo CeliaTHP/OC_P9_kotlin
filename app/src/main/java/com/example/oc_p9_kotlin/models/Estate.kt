@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 import com.example.oc_p9_kotlin.R
 import java.util.Date
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Parcelize
 @Entity
@@ -39,7 +40,7 @@ data class Estate(
     @ColumnInfo(name = "assigned_agent_id")
     var assignedAgentName: String?
 
-) : Parcelable
+) : Parcelable, Serializable
 
 
 enum class EstateType(val stringValue: Int) {

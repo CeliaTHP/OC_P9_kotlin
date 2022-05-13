@@ -93,7 +93,7 @@
                     tools:visibility="visible" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/details_fullscreen_video"
+                    android:id="@+id/details_videos_fullscreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fullscreen"
@@ -146,7 +146,7 @@
                     app:layout_constraintTop_toBottomOf="@id/details_photo_title" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/details_fullscreen"
+                    android:id="@+id/details_photos_fullscreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fullscreen"
@@ -498,6 +498,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_refresh_button" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/details_map_fullscreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fullscreen"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="@id/details_map_view"
+                    app:layout_constraintTop_toTopOf="@id/details_map_view"
+                    tools:visibility="visible" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

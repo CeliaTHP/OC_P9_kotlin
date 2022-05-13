@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
+import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.ExoPlayerFullscreenBinding
@@ -293,14 +295,14 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        binding.detailsFullscreen.setOnClickListener {
+        binding.detailsPhotosFullscreen.setOnClickListener {
             Log.d(TAG, " onClickFullscreen photos")
             estate?.medias?.let {
                 Log.d(TAG, "photos not empty")
-                viewFullscreen(it)
+                viewFullscreenPhotos(it)
             }
 
-            binding.detailsFullscreenVideo.setOnClickListener {
+            binding.detailsVideosFullscreen.setOnClickListener {
                 Log.d(TAG, "onClickFullscreen videos")
                 /*
                 estate?.videos?.let {
@@ -309,6 +311,13 @@ class DetailsFragment : Fragment() {
                 }
 
                  */
+            }
+
+            binding.detailsMapFullscreen.setOnClickListener {
+                Log.d(TAG, " onClickFullscreen map")
+                estate?.let {
+                        estate -> viewFullscreenMap(estate)
+                }
             }
 
 
@@ -337,10 +346,12 @@ class DetailsFragment : Fragment() {
         if (InternetUtils.isNetworkAvailable(activity)) {
             Log.d(TAG, "internet is Available")
             binding.detailsMapView.visibility = View.VISIBLE
+            binding.detailsMapFullscreen.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
             binding.detailsRefreshButton.visibility = View.GONE
         } else {
             binding.detailsMapView.visibility = View.GONE
+            binding.detailsMapFullscreen.visibility = View.GONE
             binding.detailsRefreshButton.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.VISIBLE
             Log.d(TAG, "internet is not Available")
@@ -361,6 +372,7 @@ class DetailsFragment : Fragment() {
         mapView?.overlays?.add(startMarker)
         mapView?.controller?.setCenter(startPoint)
 
+        initPois()
 
     }
 
@@ -545,7 +557,6 @@ class DetailsFragment : Fragment() {
         initExoPlayer(estate)
         initPics(estate)
         initMap(estate)
-        initPois()
 
 
     }
@@ -555,7 +566,7 @@ class DetailsFragment : Fragment() {
         if (!estate.videos.isNullOrEmpty()) {
             estate.videos.let {
 
-                binding.detailsFullscreenVideo.visibility = View.VISIBLE
+                binding.detailsVideosFullscreen.visibility = View.VISIBLE
 
             }
 
@@ -563,12 +574,12 @@ class DetailsFragment : Fragment() {
         if (!estate.medias.isNullOrEmpty()) {
             estate.medias?.let {
                 binding.detailsDefaultPic.visibility = View.GONE
-                binding.detailsFullscreen.visibility = View.VISIBLE
+                binding.detailsPhotosFullscreen.visibility = View.VISIBLE
 
                 imageAdapter = ImageAdapter(
                     it.toMutableList(),
                     false, {}) {
-                    viewFullscreen(it)
+                    viewFullscreenPhotos(it)
                 }
                 binding.detailsPicsRecyclerView.adapter = imageAdapter
 
@@ -578,12 +589,19 @@ class DetailsFragment : Fragment() {
 
     }
 
-    private fun viewFullscreen(medias: List<Media>) {
+    private fun viewFullscreenPhotos(medias: List<Media>) {
         Log.d(TAG, "start Full Screen Activity")
-        val list: List<Media> = medias
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)
-        intent.putExtra("medias", list as Serializable)
+        intent.putExtra("medias", medias as Serializable)
+        startActivity(intent)
+    }
+
+    private fun viewFullscreenMap(selectedEstate: Estate) {
+        Log.d(TAG, "start Full Screen Activity")
+        val intent =
+            Intent(binding.root.context, FullScreenMapActivity::class.java)
+        intent.putExtra("estate", selectedEstate as Serializable)
         startActivity(intent)
     }
 

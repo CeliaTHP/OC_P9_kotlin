@@ -36,9 +36,10 @@ interface EstateDao {
     fun delete(estate: Estate)
 
     @Query(
-        " SELECT* FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
+        " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
                 "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
-                "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax"
+                "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax"
     )
     fun getWithFilters(
         estateType: String,
@@ -52,7 +53,7 @@ interface EstateDao {
         bathroomsMax: Int,
         bedroomsMin: Int,
         bedroomsMax: Int,
-       // photosMin: Int,
+        // photosMin: Int,
         //photosMax: Int
 
     ): Observable<MutableList<Estate>>
