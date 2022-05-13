@@ -13,6 +13,8 @@ import android.util.Log
 import com.example.oc_p9_kotlin.models.Estate
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
+import org.osmdroid.bonuspack.location.NominatimPOIProvider
+import org.osmdroid.util.GeoPoint
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -100,6 +102,8 @@ class Utils {
     }
 
 
+
+
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -126,8 +130,8 @@ class Utils {
                 val formatter: NumberFormat = DecimalFormat("#,###")
                 var finalValue = formatter.format(value)
 
-               // if (value == slider.valueTo)
-                 //   finalValue = "+ $finalValue"
+                // if (value == slider.valueTo)
+                //   finalValue = "+ $finalValue"
                 symbol?.let {
                     finalValue = "$finalValue $symbol"
                 }

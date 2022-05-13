@@ -1,34 +1,26 @@
 package com.example.oc_p9_kotlin.activities
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.adapters.ImageAdapter
-import com.example.oc_p9_kotlin.adapters.ImageFullScreenAdapter
-import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenMapBinding
-import com.example.oc_p9_kotlin.databinding.ActivityFullScreenPictureBinding
-import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
-import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.InternetUtils
+import org.osmdroid.bonuspack.location.GeoNamesPOIProvider
 import org.osmdroid.bonuspack.location.NominatimPOIProvider
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
-import java.io.Serializable
+
 
 class FullScreenMapActivity : AppCompatActivity() {
 
@@ -62,7 +54,6 @@ class FullScreenMapActivity : AppCompatActivity() {
         }
 
     }
-
 
 
     private fun initListeners() {
@@ -129,17 +120,21 @@ class FullScreenMapActivity : AppCompatActivity() {
 
                 val poiProvider = NominatimPOIProvider("OSMBonusPackTutoUserAgent")
 
+
                 val pois = poiProvider.getPOICloseTo(
                     GeoPoint(
                         geoPoint
-                    ), "cinema", 5, 0.1
+                    ), " ", 10, 0.1
                 )
+
+                // GeoNamesProvider only give street names
+                //val poiProvider = GeoNamesPOIProvider("oc_celia")
+                //val pois = poiProvider.getPOICloseTo(geoPoint,50,0.5)
 
                 val poiMarkers = FolderOverlay()
 
                 mapView?.overlays?.add(poiMarkers)
 
-                Log.d(TAG, pois.toString())
 
                 val poiIcon = AppCompatResources.getDrawable(
                     this,
