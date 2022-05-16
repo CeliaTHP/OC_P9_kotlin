@@ -30,13 +30,16 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".activities.FullScreenPictureActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.FiltersActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.FullScreenPictureActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.FullScreenMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FullScreenVideoActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AddEstateActivity"

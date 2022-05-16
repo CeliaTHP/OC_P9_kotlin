@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
+import com.example.oc_p9_kotlin.activities.FullScreenVideoActivity
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.databinding.ExoPlayerFullscreenBinding
 import com.example.oc_p9_kotlin.databinding.FragmentDetailsBinding
@@ -145,10 +146,7 @@ class DetailsFragment : Fragment() {
 
         }
 
-        playerFullscreenBinding.exoFullscreen.setOnClickListener {
-            Log.d(TAG, "onClick FullScreenIcon")
 
-        }
 
 /*
         playerFullscreenBinding.exoFullscreenIcon.setOnClickListener {
@@ -304,13 +302,13 @@ class DetailsFragment : Fragment() {
 
             binding.detailsVideosFullscreen.setOnClickListener {
                 Log.d(TAG, "onClickFullscreen videos")
-                /*
+
                 estate?.videos?.let {
                     Log.d(TAG, "videos not empty")
-                    viewFullscreen(it)
+                    viewFullscreenVideos(it)
                 }
 
-                 */
+
             }
 
             binding.detailsMapFullscreen.setOnClickListener {
@@ -590,9 +588,17 @@ class DetailsFragment : Fragment() {
     }
 
     private fun viewFullscreenPhotos(medias: List<Media>) {
-        Log.d(TAG, "start Full Screen Activity")
+        Log.d(TAG, "start Full Screen Photos Activity")
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)
+        intent.putExtra("medias", medias as Serializable)
+        startActivity(intent)
+    }
+
+    private fun viewFullscreenVideos(medias: List<Media>) {
+        Log.d(TAG, "start Full Screen Video Activity")
+        val intent =
+            Intent(binding.root.context, FullScreenVideoActivity::class.java)
         intent.putExtra("medias", medias as Serializable)
         startActivity(intent)
     }

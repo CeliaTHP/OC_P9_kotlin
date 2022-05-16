@@ -87,13 +87,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/exo_fullscreen"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_fullscreen"
-                app:tint="@color/white" />
-
         </LinearLayout>
     </LinearLayout>
 
