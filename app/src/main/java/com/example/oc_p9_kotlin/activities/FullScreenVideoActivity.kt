@@ -87,15 +87,7 @@ class FullScreenVideoActivity : AppCompatActivity() {
             return
 
         requestedOrientation = (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
-
         binding.fullscreenPlayerView.visibility = View.VISIBLE
-
-        /*
-        var videoUri =
-            Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")
-
-         */
-
 
         for (video in medias) {
             val mediaItem = MediaItem.fromUri(video.uri)
@@ -106,26 +98,6 @@ class FullScreenVideoActivity : AppCompatActivity() {
         player?.prepare()
 
         player?.play()
-
-
-    }
-
-    private fun initVideos(medias: List<Media>) {
-
-        Log.d(TAG, "initVideos")
-        if (!medias.isNullOrEmpty()) {
-
-/*
-            binding.fullScreenDefaultPic.visibility = View.GONE
-            binding.fullScreenRecyclerView.visibility = View.VISIBLE
-
-            imageAdapter = ImageFullScreenAdapter(
-                medias,
-            )
-            binding.fullScreenRecyclerView.adapter = imageAdapter
-
- */
-        }
 
     }
 

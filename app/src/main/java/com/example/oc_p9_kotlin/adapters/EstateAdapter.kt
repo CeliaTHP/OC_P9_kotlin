@@ -57,7 +57,7 @@ class EstateAdapter(
         holder.itemEstateLayoutBinding.itemEstateCity.text = estate.city
 
         holder.itemEstateLayoutBinding.itemEstatePrice.text =
-            Utils().getPrice(estate)
+            Utils.getPrice(estate)
 
 
 

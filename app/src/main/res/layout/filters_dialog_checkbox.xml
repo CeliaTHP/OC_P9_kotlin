@@ -160,21 +160,39 @@
 
                     -->
 
-        <TextView
-            android:id="@+id/filters_price_title"
+        <LinearLayout
+            android:id="@+id/filters_price_title_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:text="@string/add_estate_price"
-            android:textColor="@color/main_text"
-            android:textSize="20sp"
-            android:textStyle="bold"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_radio_type_group1" />
+            app:layout_constraintTop_toBottomOf="@id/filters_radio_type_group1">
+
+            <ImageButton
+                android:id="@+id/filters_price_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_dollar"
+                app:tint="@color/main_text" />
+
+            <TextView
+                android:id="@+id/filters_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/add_estate_price"
+                android:textColor="@color/main_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+
+                />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/filters_price_min"
@@ -182,10 +200,10 @@
             android:layout_height="wrap_content"
             android:textColor="@color/main_text"
             android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/filters_price_title"
-            app:layout_constraintEnd_toStartOf="@id/filters_price_title"
+            app:layout_constraintBottom_toBottomOf="@id/filters_price_title_layout"
+            app:layout_constraintEnd_toStartOf="@id/filters_price_title_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/filters_price_title"
+            app:layout_constraintTop_toTopOf="@id/filters_price_title_layout"
             tools:text="500000$" />
 
         <TextView
@@ -194,10 +212,10 @@
             android:layout_height="wrap_content"
             android:textColor="@color/main_text"
             android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/filters_price_title"
+            app:layout_constraintBottom_toBottomOf="@id/filters_price_title_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/filters_price_title"
-            app:layout_constraintTop_toTopOf="@id/filters_price_title"
+            app:layout_constraintStart_toEndOf="@id/filters_price_title_layout"
+            app:layout_constraintTop_toTopOf="@id/filters_price_title_layout"
             tools:text="2000000$" />
 
         <com.google.android.material.slider.RangeSlider
@@ -210,7 +228,7 @@
             app:haloColor="@android:color/holo_orange_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_price_title"
+            app:layout_constraintTop_toBottomOf="@id/filters_price_title_layout"
             app:thumbColor="@color/darker_purple"
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />

@@ -31,15 +31,19 @@
 
         <activity
             android:name=".activities.FiltersActivity"
+            android:label="@string/filters_title"
             android:exported="false" />
         <activity
             android:name=".activities.FullScreenPictureActivity"
+            android:label="@string/details_photos"
             android:exported="false" />
         <activity
             android:name=".activities.FullScreenMapActivity"
+            android:label="@string/details_map"
             android:exported="false" />
         <activity
             android:name=".activities.FullScreenVideoActivity"
+            android:label="@string/details_videos"
             android:exported="false" />
         <activity
             android:name=".activities.AddEstateActivity"

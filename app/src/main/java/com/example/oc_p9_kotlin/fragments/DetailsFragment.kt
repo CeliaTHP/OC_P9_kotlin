@@ -285,6 +285,7 @@ class DetailsFragment : Fragment() {
 
 
     private fun initListeners() {
+        Log.d(TAG, "initListener")
 
         binding.detailsRefreshButton.setOnClickListener {
             estate?.let {
@@ -302,7 +303,6 @@ class DetailsFragment : Fragment() {
 
             binding.detailsVideosFullscreen.setOnClickListener {
                 Log.d(TAG, "onClickFullscreen videos")
-
                 estate?.videos?.let {
                     Log.d(TAG, "videos not empty")
                     viewFullscreenVideos(it)
@@ -507,7 +507,7 @@ class DetailsFragment : Fragment() {
             detailsType.text =
                 getString(estate.type.stringValue)
 
-            detailsPrice.text = Utils().getPrice(estate)
+            detailsPrice.text = Utils.getPrice(estate)
             detailsCity.text = estate.city
             detailsDescriptionText.text = estate.description
             detailsSurface.text =

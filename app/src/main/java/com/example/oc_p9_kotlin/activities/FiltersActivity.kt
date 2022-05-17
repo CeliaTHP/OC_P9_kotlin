@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.FiltersViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FiltersDialogCheckboxBinding
 import com.example.oc_p9_kotlin.events.OnUpdateListEvent
+import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.FiltersViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.Locale
 
 class FiltersActivity : CompositeDisposableActivity() {
 
@@ -22,12 +25,15 @@ class FiltersActivity : CompositeDisposableActivity() {
         private const val TAG = "FiltersActivity"
     }
 
+
     private var onUpdateListEvent = OnUpdateListEvent()
     private lateinit var binding: FiltersDialogCheckboxBinding
 
     private lateinit var viewModel: FiltersViewModel
 
     private lateinit var filterType: String
+    private var currency: Currency? = null
+
 
     private var filterPriceMin: Int = 0
     private var filterPriceMax: Int = 0
@@ -75,6 +81,52 @@ class FiltersActivity : CompositeDisposableActivity() {
 
         viewModel =
             ViewModelProvider(this, FiltersViewModelFactory(this)).get(FiltersViewModel::class.java)
+
+    }
+
+    private fun initCurrency(currency: Currency? = null) {
+        when (currency) {
+            Currency.DOLLAR -> setCurrencyInDollars()
+            Currency.EURO -> setCurrencyInEuros()
+            null -> setCurrencyFromLocale()
+        }
+    }
+
+    private fun setCurrencyFromLocale() {
+        Log.d(TAG, "no option, default currency used")
+        if (Locale.getDefault().language == Locale.FRENCH.language) {
+            setCurrencyInEuros()
+        } else {
+            setCurrencyInDollars()
+        }
+
+    }
+
+    private fun setCurrencyInDollars() {
+        Log.d(TAG, "should be Dollars")
+        binding.filtersPriceSymbol.setImageDrawable(
+            AppCompatResources
+                .getDrawable(this, R.drawable.ic_dollar)
+        )
+
+        binding.filtersSliderPrice.setValues(0f, 500000f)
+        Utils.initSlider(binding.filtersSliderPrice, "$")
+
+        this.currency = Currency.DOLLAR
+
+    }
+
+    private fun setCurrencyInEuros() {
+        Log.d(TAG, "should be Euros")
+        binding.filtersPriceSymbol.setImageDrawable(
+            AppCompatResources
+                .getDrawable(this, R.drawable.ic_euro)
+        )
+
+        binding.filtersSliderPrice.setValues(0f, 500000f)
+        Utils.initSlider(binding.filtersSliderPrice, "€")
+
+        this.currency = Currency.EURO
 
     }
 
@@ -132,17 +184,37 @@ class FiltersActivity : CompositeDisposableActivity() {
     }
 
 
-    private fun updateSliderValues() {
+    private fun updateCurrency() {
+
         val formatter: NumberFormat = DecimalFormat("#,###")
 
-        binding.filtersPriceMin.text = getString(
-            R.string.filters_price_dollars,
-            formatter.format(binding.filtersSliderPrice.values[0])
-        )
-        binding.filtersPriceMax.text = getString(
-            R.string.filters_price_dollars,
-            formatter.format(binding.filtersSliderPrice.values[1])
-        )
+        if (currency == Currency.DOLLAR) {
+
+            binding.filtersPriceMin.text = getString(
+                R.string.filters_price_dollars,
+                formatter.format(binding.filtersSliderPrice.values[0])
+            )
+            binding.filtersPriceMax.text = getString(
+                R.string.filters_price_dollars,
+                formatter.format(binding.filtersSliderPrice.values[1])
+            )
+        } else {
+            binding.filtersPriceMin.text = getString(
+                R.string.filters_price_euros,
+                formatter.format(binding.filtersSliderPrice.values[0])
+            )
+            binding.filtersPriceMax.text = getString(
+                R.string.filters_price_euros,
+                formatter.format(binding.filtersSliderPrice.values[1])
+            )
+
+        }
+    }
+    private fun updateSliderValues() {
+
+        //TODO:  handle dollars
+        updateCurrency()
+
 
         binding.filtersSurfaceMin.text =
             getString(R.string.filters_surface, binding.filtersSliderSurface.values[0].toInt())
@@ -178,33 +250,35 @@ class FiltersActivity : CompositeDisposableActivity() {
 
 
         //TODO : handle currency converter
-        binding.filtersSliderPrice.setValues(0f, 500000f)
-        Utils().initSlider(binding.filtersSliderPrice, "$")
+
+        initCurrency()
+        //binding.filtersSliderPrice.setValues(0f, 500000f)
+        //Utils.initSlider(binding.filtersSliderPrice, "$")
 
 
         binding.filtersSliderSurface.setValues(20f, 50f)
-        Utils().initSlider(binding.filtersSliderSurface, "m²")
+        Utils.initSlider(binding.filtersSliderSurface, "m²")
 
 
         binding.filtersSliderRooms.setValues(2f, 4f)
-        Utils().initSlider(binding.filtersSliderRooms)
+        Utils.initSlider(binding.filtersSliderRooms)
 
 
         binding.filtersSliderBathrooms.setValues(0f, 1f)
-        Utils().initSlider(binding.filtersSliderBathrooms)
+        Utils.initSlider(binding.filtersSliderBathrooms)
 
 
         binding.filtersSliderBedrooms.setValues(1f, 2f)
-        Utils().initSlider(binding.filtersSliderBedrooms)
+        Utils.initSlider(binding.filtersSliderBedrooms)
 
         binding.filtersSliderPhotos.setValues(3f, 5f)
-        Utils().initSlider(binding.filtersSliderPhotos)
+        Utils.initSlider(binding.filtersSliderPhotos)
 
         binding.filtersSliderEntryDate.setValues(0f, 10f)
-        Utils().initSlider(binding.filtersSliderEntryDate)
+        Utils.initSlider(binding.filtersSliderEntryDate)
 
         binding.filtersSliderSaleDate.setValues(0f, 10f)
-        Utils().initSlider(binding.filtersSliderSaleDate)
+        Utils.initSlider(binding.filtersSliderSaleDate)
 
         updateSliderValues()
 
@@ -257,13 +331,41 @@ class FiltersActivity : CompositeDisposableActivity() {
             finish()
         }
 
+        binding.filtersPriceSymbol.setOnClickListener {
+            if (currency == Currency.DOLLAR) {
+                Log.d(TAG, "wasDollars")
+                initCurrency(Currency.EURO)
+
+            } else {
+                Log.d(TAG, "wasEuro")
+                initCurrency(Currency.DOLLAR)
+
+            }
+            updateCurrency()
+
+        }
+
 
     }
 
     private fun verifyFields() {
 
-        filterPriceMin = binding.filtersSliderPrice.values[0].toInt()
-        filterPriceMax = binding.filtersSliderPrice.values[1].toInt()
+        if (currency == Currency.DOLLAR) {
+            filterPriceMin =
+                Utils.convertDollarToEuro(binding.filtersSliderPrice.values[0].toInt())
+            filterPriceMax =
+                Utils.convertDollarToEuro(binding.filtersSliderPrice.values[1].toInt())
+            Log.d(TAG, "verifyFields is InDollars : $filterPriceMin - $filterPriceMax")
+
+
+        } else {
+
+            filterPriceMin = binding.filtersSliderPrice.values[0].toInt()
+            filterPriceMax = binding.filtersSliderPrice.values[1].toInt()
+            Log.d(TAG, "verifyFields is InEuros : $filterPriceMin - $filterPriceMax")
+
+
+        }
 
         filterSurfaceMin = binding.filtersSliderSurface.values[0].toInt()
         filterSurfaceMax = binding.filtersSliderSurface.values[1].toInt()

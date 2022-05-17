@@ -185,7 +185,7 @@ class AddEstateActivity : AppCompatActivity() {
 
             // Convert in Euros if price entered in dollars
             val priceInEuros = if (currency == Currency.DOLLAR) {
-                Utils().convertDollarToEuro(addEstatePriceInput.editText?.text.toString().toInt())
+                Utils.convertDollarToEuro(addEstatePriceInput.editText?.text.toString().toInt())
             } else {
                 addEstatePriceInput.editText?.text.toString().toInt()
             }
@@ -373,7 +373,7 @@ class AddEstateActivity : AppCompatActivity() {
                 Log.d(TAG, "imageBitmap : " + imageBitmap.toString())
 
 
-                var uri = Utils().getImageUri(this, imageBitmap).toString()
+                var uri = Utils.getImageUri(this, imageBitmap).toString()
 
                 Log.d(TAG, "imageURI : " + uri)
 
