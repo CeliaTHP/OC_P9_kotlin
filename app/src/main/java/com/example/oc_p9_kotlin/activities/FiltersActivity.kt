@@ -17,6 +17,7 @@ import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.Date
 import java.util.Locale
 
 class FiltersActivity : CompositeDisposableActivity() {
@@ -53,11 +54,9 @@ class FiltersActivity : CompositeDisposableActivity() {
     private var filterPhotosMin: Int = 0
     private var filterPhotosMax: Int = 0
 
-    private var filterEntryDateMin: Int = 0
-    private var filterEntryDateMax: Int = 0
+    private var filterEntryDateMin: Date = Date()
 
-    private var filterSaleDateMin: Int = 0
-    private var filterSaleDateMax: Int = 0
+    private var filterSaleDateMin:  Date = Date()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +108,6 @@ class FiltersActivity : CompositeDisposableActivity() {
                 .getDrawable(this, R.drawable.ic_dollar)
         )
 
-        binding.filtersSliderPrice.setValues(0f, 500000f)
         Utils.initSlider(binding.filtersSliderPrice, "$")
 
         this.currency = Currency.DOLLAR
@@ -123,7 +121,6 @@ class FiltersActivity : CompositeDisposableActivity() {
                 .getDrawable(this, R.drawable.ic_euro)
         )
 
-        binding.filtersSliderPrice.setValues(0f, 500000f)
         Utils.initSlider(binding.filtersSliderPrice, "€")
 
         this.currency = Currency.EURO
@@ -210,11 +207,10 @@ class FiltersActivity : CompositeDisposableActivity() {
 
         }
     }
+
     private fun updateSliderValues() {
 
-        //TODO:  handle dollars
         updateCurrency()
-
 
         binding.filtersSurfaceMin.text =
             getString(R.string.filters_surface, binding.filtersSliderSurface.values[0].toInt())
@@ -235,6 +231,7 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersPhotosMin.text = binding.filtersSliderPhotos.values[0].toInt().toString()
         binding.filtersPhotosMax.text = binding.filtersSliderPhotos.values[1].toInt().toString()
 
+        /*
         binding.filtersEntryDateMin.text =
             binding.filtersSliderEntryDate.values[0].toInt().toString()
         binding.filtersEntryDateMax.text =
@@ -243,6 +240,8 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersSaleDateMin.text = binding.filtersSliderSaleDate.values[0].toInt().toString()
         binding.filtersSaleDateMax.text = binding.filtersSliderSaleDate.values[1].toInt().toString()
 
+         */
+
 
     }
 
@@ -250,9 +249,8 @@ class FiltersActivity : CompositeDisposableActivity() {
 
 
         //TODO : handle currency converter
-
+        binding.filtersSliderPrice.setValues(0f, 500000f)
         initCurrency()
-        //binding.filtersSliderPrice.setValues(0f, 500000f)
         //Utils.initSlider(binding.filtersSliderPrice, "$")
 
 
@@ -274,11 +272,14 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersSliderPhotos.setValues(3f, 5f)
         Utils.initSlider(binding.filtersSliderPhotos)
 
+/*
         binding.filtersSliderEntryDate.setValues(0f, 10f)
         Utils.initSlider(binding.filtersSliderEntryDate)
 
         binding.filtersSliderSaleDate.setValues(0f, 10f)
         Utils.initSlider(binding.filtersSliderSaleDate)
+
+ */
 
         updateSliderValues()
 
@@ -306,10 +307,12 @@ class FiltersActivity : CompositeDisposableActivity() {
             binding.filtersSliderBathrooms,
             binding.filtersSliderBedrooms,
             binding.filtersSliderPhotos,
+            /*
             binding.filtersSliderEntryDate,
             binding.filtersSliderSaleDate
-        )
 
+             */
+        )
 
 
         for (radioButton in radioButtons) {
@@ -324,6 +327,8 @@ class FiltersActivity : CompositeDisposableActivity() {
                 updateSliderValues()
             }
         }
+
+        //binding.filtersDateEntryPicker.setOnDateChangedListener { datePicker, i, i2, i3 ->  }
 
         binding.filtersConfirmButton.setOnClickListener {
             verifyFields()
@@ -382,18 +387,20 @@ class FiltersActivity : CompositeDisposableActivity() {
         filterPhotosMin = binding.filtersSliderPhotos.values[0].toInt()
         filterPhotosMax = binding.filtersSliderPhotos.values[1].toInt()
 
+        /*
         filterEntryDateMin = binding.filtersSliderEntryDate.values[0].toInt()
         filterEntryDateMax = binding.filtersSliderEntryDate.values[1].toInt()
 
         filterSaleDateMin = binding.filtersSliderSaleDate.values[0].toInt()
         filterSaleDateMax = binding.filtersSliderSaleDate.values[1].toInt()
 
+         */
 
         Log.d(
             TAG,
             "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin" +
                     " $filterSurfaceMax $filterRoomsMin $filterRoomsMax $filterBathroomsMin " +
-                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax"
+                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax $filterPhotosMin $filterPhotosMax"
         )
 
         getFilteredList(

@@ -29,7 +29,10 @@ data class Estate(
     //var nearbyPlaces : List<NearbyPlaces>
     var location: Location,
     var description: String,
+
     var medias: List<Media>?,
+    var mediaCount: Int,
+
     var videos: List<Media>?,
     @ColumnInfo(name = "entry_date")
     var entryDate: Date,
@@ -41,6 +44,8 @@ data class Estate(
     var assignedAgentName: String?
 
 ) : Parcelable, Serializable
+
+
 
 
 enum class EstateType(val stringValue: Int) {

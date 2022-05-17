@@ -94,6 +94,7 @@ object FakeEstateApi {
                 Media("fourth pic", "https://imgur.com/PAVM3nU.png")
 
             ),
+            4,
             null,
             getEntryDate(),
             null,
@@ -120,6 +121,7 @@ object FakeEstateApi {
                 Media("third pic", "https://imgur.com/tRsPwQl.png")
 
             ),
+            2,
             listOf(
                 Media(
                     "first video",
@@ -155,6 +157,7 @@ object FakeEstateApi {
                 Media("sixth pic", "https://imgur.com/RzVDiWH.png"),
                 Media("seventh pic", "https://imgur.com/WntjHmD.png")
             ),
+            7,
             null,
             getEntryDate(),
             null,
@@ -178,6 +181,7 @@ object FakeEstateApi {
             listOf(
                 Media("first pic", "https://imgur.com/jVwBWXf.png"),
             ),
+            1,
             null,
             getEntryDate(),
             Date(),
@@ -199,6 +203,7 @@ object FakeEstateApi {
             "From the outside this house looks impressive. It has been built with tan bricks and has oak wooden decorations. Short, wide windows allow enough light to enter the home and have been added to the house in a fairly asymmetrical pattern." +
                     " The house is equipped with a modern kitchen and one modern bathroom, it also has a large living room, three bedrooms, a large dining room and a small garage.",
             null,
+            0,
             null,
             getEntryDate(),
             null,
@@ -224,6 +229,7 @@ object FakeEstateApi {
                 Media("second pic", "https://imgur.com/NFAZ5ht.png"),
                 Media("third pic", "https://imgur.com/YLA8Q0X.png"),
             ),
+            2,
             null,
             getEntryDate(),
             null,
@@ -246,6 +252,7 @@ object FakeEstateApi {
             listOf(
                 Media("first pic", "https://imgur.com/2cG7sb4.png"),
             ),
+            1,
             listOf(
                 Media(
                     "first video",
@@ -281,6 +288,7 @@ object FakeEstateApi {
             "The roof is flat and is covered with seagrass. One small chimney pokes out the center of the roof. Large, skylight windows let in plenty of light to the rooms below the roof." +
                     "The house itself is surrounded by paved ground, with various party spots, like a fancy barbeque and a firepit.",
             null,
+            0,
             null,
             getEntryDate(),
             Date(),
@@ -306,6 +314,7 @@ object FakeEstateApi {
                 Media("second pic", "https://imgur.com/u9FY0Dc.png"),
                 Media("third pic", "https://imgur.com/RRWOGrY.png"),
             ),
+            3,
             null,
             getEntryDate(),
             null,
@@ -335,6 +344,7 @@ object FakeEstateApi {
                 Media("sixth pic", "https://imgur.com/TqCmgAN.png"),
 
                 ),
+            6,
             null,
             getEntryDate(),
             Date(),

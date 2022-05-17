@@ -205,7 +205,7 @@ class AddEstateActivity : AppCompatActivity() {
                 location,
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
-                //TODO : handle video addition
+                imageAdapter.imageList.size,
                 videoAdapter.videoList,
                 Date(),
                 null,

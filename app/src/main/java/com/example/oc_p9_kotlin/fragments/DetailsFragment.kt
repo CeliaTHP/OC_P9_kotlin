@@ -285,8 +285,8 @@ class DetailsFragment : Fragment() {
 
 
     private fun initListeners() {
-        Log.d(TAG, "initListener")
 
+        Log.d(TAG, "initListener")
         binding.detailsRefreshButton.setOnClickListener {
             estate?.let {
                 Log.d(TAG, "refresh button click listener")
@@ -300,6 +300,7 @@ class DetailsFragment : Fragment() {
                 Log.d(TAG, "photos not empty")
                 viewFullscreenPhotos(it)
             }
+        }
 
             binding.detailsVideosFullscreen.setOnClickListener {
                 Log.d(TAG, "onClickFullscreen videos")
@@ -319,7 +320,7 @@ class DetailsFragment : Fragment() {
             }
 
 
-        }
+
     }
 
 

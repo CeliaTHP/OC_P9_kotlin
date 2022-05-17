@@ -48,8 +48,8 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
             bathroomsMax,
             bedroomsMin,
             bedroomsMax,
-            //photosMin,
-            //photosMax
+            photosMin,
+            photosMax
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

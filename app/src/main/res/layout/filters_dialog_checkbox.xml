@@ -530,7 +530,7 @@
 
 
         <TextView
-            android:id="@+id/filters_date_entry"
+            android:id="@+id/filters_date_entry_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -544,6 +544,56 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_date_title" />
+
+        <DatePicker
+            android:id="@+id/filters_date_entry_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_entry_title" />
+
+        <TextView
+            android:id="@+id/filters_date_sale_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/filters_entry_date"
+            android:textColor="@color/main_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_entry_picker" />
+
+        <DatePicker
+            android:id="@+id/filters_date_sale_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_sale_title" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filters_confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/add_estate_dialog_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_date_sale_picker" />
+
+
+        <!--
 
         <TextView
             android:id="@+id/filters_entry_date_min"
@@ -643,182 +693,6 @@
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />
 
-        <!--
-
-          <RadioGroup
-              android:id="@+id/filters_radio_group_price"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_margin="10dp"
-              android:orientation="horizontal"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@id/filters_price_title">
-
-
-                  <RadioButton
-                      android:id="@+id/filters_price_lowest"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_lowest" />
-
-                  <RadioButton
-                      android:id="@+id/filters_price_low"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_low" />
-
-                  <RadioButton
-                      android:id="@+id/filters_price_mid"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_mid" />
-
-              </RadioGroup>
-
-              <RadioGroup
-                  android:id="@+id/filters_radio_group_price2"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_margin="10dp"
-                  android:orientation="horizontal"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/filters_radio_group_price">
-
-
-                  <RadioButton
-                      android:id="@+id/filters_price_mid_high"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_mid_high" />
-
-                  <RadioButton
-                      android:id="@+id/filters_price_high"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_high" />
-
-
-                  <RadioButton
-                      android:id="@+id/filters_price_highest"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/type_price_highest" />
-
-
-              </RadioGroup>
-                  -->
-
-
-        <!--
-
-              <com.google.android.material.textfield.TextInputLayout
-                  android:id="@+id/filters_custom_price_layout"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/filters_radio_group_price2">
-
-                  <com.google.android.material.textfield.TextInputEditText
-                      android:id="@+id/filters_custom_price_input"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/type_price_custom"
-                      android:inputType="number" />
-
-              </com.google.android.material.textfield.TextInputLayout>
-        -->
-
-
-        <!--
-        <com.mohammedalaa.seekbar.DoubleValueSeekBarView
-            android:id="@+id/double_range_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_price_title"
-
-            app:r2CurrentMaxValue="10000"
-            app:r2CurrentMinValue="1000"
-
-            app:r2barHeight="15dp"
-            app:r2baseColor="@color/darker_purple"
-            app:r2circleFillColor="@color/dark_purple"
-            app:r2circleRadius="15dp"
-            app:r2circleTextColor="@color/white"
-            app:r2circleTextSize="@dimen/value_bar_circleTextSize"
-            app:r2fillColor="@color/main_purple"
-
-            app:r2maxValue="10000000"
-            app:r2maxValueStep="1000000"
-
-            app:r2minValue="1000"
-            app:r2minValueStep="5" />
-
-    -->
-
-        <!--
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_type_title">
-
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_house"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_house" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_apartment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_apartment" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_building"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_building" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_loft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_loft" />
-
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_apartment_castle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_castle" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_mansion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_mansion" />
-
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/filters_type_boat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/type_boat" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    -->
 
 
         <com.google.android.material.button.MaterialButton
@@ -829,7 +703,10 @@
             android:text="@string/add_estate_dialog_confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_slider_sale_date" />
+
+            -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
