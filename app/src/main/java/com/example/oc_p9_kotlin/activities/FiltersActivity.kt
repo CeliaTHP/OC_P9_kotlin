@@ -2,6 +2,7 @@ package com.example.oc_p9_kotlin.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.Toast
@@ -60,7 +61,7 @@ class FiltersActivity : CompositeDisposableActivity() {
 
     private var filterEntryDateMin: Date = Date()
 
-    private var filterSaleDateMin: Date = Date()
+    private var filterSaleDateMin: Date? = Date()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,7 +147,7 @@ class FiltersActivity : CompositeDisposableActivity() {
         photosMin: Int,
         photosMax: Int,
         entryDate: Date,
-        saleDate: Date
+        saleDate: Date?
     ) {
 
         bag.clear()
@@ -338,6 +339,18 @@ class FiltersActivity : CompositeDisposableActivity() {
 
         initDatePickers()
 
+        binding.filtersAvailableCheckbox.setOnCheckedChangeListener { compoundButton, isChecked ->
+            if (isChecked) {
+                binding.filtersDateSaleTitle.visibility = View.GONE
+                binding.filtersDateSalePicker.visibility = View.GONE
+            } else {
+                binding.filtersDateSaleTitle.visibility = View.VISIBLE
+                binding.filtersDateSalePicker.visibility = View.VISIBLE
+
+            }
+
+        }
+
         binding.filtersConfirmButton.setOnClickListener {
             verifyFields()
             Log.d(TAG, "onConfirm")
@@ -428,13 +441,19 @@ class FiltersActivity : CompositeDisposableActivity() {
         filterPhotosMin = binding.filtersSliderPhotos.values[0].toInt()
         filterPhotosMax = binding.filtersSliderPhotos.values[1].toInt()
 
-
+        if (binding.filtersAvailableCheckbox.isChecked) {
+            Log.d(TAG, "AVAILABLE ")
+            filterSaleDateMin = null
+        }
         Log.d(
             TAG,
             "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin" +
                     " $filterSurfaceMax $filterRoomsMin $filterRoomsMax $filterBathroomsMin " +
                     "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax $filterPhotosMin $filterPhotosMax $filterEntryDateMin $filterSaleDateMin "
         )
+
+
+
 
         getFilteredList(
             filterType,

@@ -37,26 +37,46 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         photosMin: Int,
         photosMax: Int,
         entryDate:Date,
-        saleDate: Date
+        saleDate: Date?
     ): Observable<MutableList<Estate>> =
-        estateDao.getWithFilters(
-            estateType,
-            priceMin,
-            priceMax,
-            surfaceMin,
-            surfaceMax,
-            roomsMin,
-            roomsMax,
-            bathroomsMin,
-            bathroomsMax,
-            bedroomsMin,
-            bedroomsMax,
-            photosMin,
-            photosMax,
-            entryDate,
-            saleDate
+        if(saleDate != null) {
+            estateDao.getWithFiltersWithSaleDate(
+                estateType,
+                priceMin,
+                priceMax,
+                surfaceMin,
+                surfaceMax,
+                roomsMin,
+                roomsMax,
+                bathroomsMin,
+                bathroomsMax,
+                bedroomsMin,
+                bedroomsMax,
+                photosMin,
+                photosMax,
+                entryDate,
+                saleDate
 
-        )
+            )
+        } else {
+            estateDao.getWithFiltersWithoutSaleDate(
+                estateType,
+                priceMin,
+                priceMax,
+                surfaceMin,
+                surfaceMax,
+                roomsMin,
+                roomsMax,
+                bathroomsMin,
+                bathroomsMax,
+                bedroomsMin,
+                bedroomsMax,
+                photosMin,
+                photosMax,
+                entryDate
+            )
+
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

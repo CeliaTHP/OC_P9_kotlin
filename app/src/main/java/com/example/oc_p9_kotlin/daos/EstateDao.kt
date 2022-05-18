@@ -40,9 +40,9 @@ interface EstateDao {
         " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
                 "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
                 "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
-                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND sale_date >= :saleDate"
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND sale_date >= :saleDate "
     )
-    fun getWithFilters(
+    fun getWithFiltersWithSaleDate(
         estateType: String,
         priceMin: Int,
         priceMax: Int,
@@ -59,6 +59,29 @@ interface EstateDao {
         entryDate: Date,
         saleDate: Date
 
+    ): Observable<MutableList<Estate>>
+
+    @Query(
+        " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
+                "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
+                "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate"
+    )
+    fun getWithFiltersWithoutSaleDate(
+        estateType: String,
+        priceMin: Int,
+        priceMax: Int,
+        surfaceMin: Int,
+        surfaceMax: Int,
+        roomsMin: Int,
+        roomsMax: Int,
+        bathroomsMin: Int,
+        bathroomsMax: Int,
+        bedroomsMin: Int,
+        bedroomsMax: Int,
+        photosMin: Int,
+        photosMax: Int,
+        entryDate: Date,
     ): Observable<MutableList<Estate>>
 
 
