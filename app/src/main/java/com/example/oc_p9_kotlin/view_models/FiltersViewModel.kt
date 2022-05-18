@@ -13,6 +13,7 @@ import java.util.concurrent.Executors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.Date
 
 
 class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
@@ -34,7 +35,9 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         bedroomsMin: Int,
         bedroomsMax: Int,
         photosMin: Int,
-        photosMax: Int
+        photosMax: Int,
+        entryDate:Date,
+        saleDate: Date
     ): Observable<MutableList<Estate>> =
         estateDao.getWithFilters(
             estateType,
@@ -49,7 +52,10 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
             bedroomsMin,
             bedroomsMax,
             photosMin,
-            photosMax
+            photosMax,
+            entryDate,
+            saleDate
+
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

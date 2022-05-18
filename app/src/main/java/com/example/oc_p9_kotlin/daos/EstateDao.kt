@@ -10,6 +10,7 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
+import java.util.Date
 
 @Dao
 interface EstateDao {
@@ -39,7 +40,7 @@ interface EstateDao {
         " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
                 "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
                 "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
-                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax"
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND sale_date >= :saleDate"
     )
     fun getWithFilters(
         estateType: String,
@@ -54,7 +55,9 @@ interface EstateDao {
         bedroomsMin: Int,
         bedroomsMax: Int,
         photosMin: Int,
-        photosMax: Int
+        photosMax: Int,
+        entryDate: Date,
+        saleDate: Date
 
     ): Observable<MutableList<Estate>>
 

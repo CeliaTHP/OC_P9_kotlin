@@ -2,6 +2,7 @@ package com.example.oc_p9_kotlin.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -17,8 +18,11 @@ import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.Calendar
 import java.util.Date
+import java.util.GregorianCalendar
 import java.util.Locale
+
 
 class FiltersActivity : CompositeDisposableActivity() {
 
@@ -56,7 +60,7 @@ class FiltersActivity : CompositeDisposableActivity() {
 
     private var filterEntryDateMin: Date = Date()
 
-    private var filterSaleDateMin:  Date = Date()
+    private var filterSaleDateMin: Date = Date()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,7 +144,9 @@ class FiltersActivity : CompositeDisposableActivity() {
         bedroomsMin: Int,
         bedroomsMax: Int,
         photosMin: Int,
-        photosMax: Int
+        photosMax: Int,
+        entryDate: Date,
+        saleDate: Date
     ) {
 
         bag.clear()
@@ -158,7 +164,9 @@ class FiltersActivity : CompositeDisposableActivity() {
             bedroomsMin,
             bedroomsMax,
             photosMin,
-            photosMax
+            photosMax,
+            entryDate,
+            saleDate
         )
             .subscribe(
                 {
@@ -328,7 +336,7 @@ class FiltersActivity : CompositeDisposableActivity() {
             }
         }
 
-        //binding.filtersDateEntryPicker.setOnDateChangedListener { datePicker, i, i2, i3 ->  }
+        initDatePickers()
 
         binding.filtersConfirmButton.setOnClickListener {
             verifyFields()
@@ -350,6 +358,39 @@ class FiltersActivity : CompositeDisposableActivity() {
 
         }
 
+
+    }
+
+    private fun initDatePickers() {
+
+        val entryDateCalendar: Calendar = GregorianCalendar()
+        binding.filtersDateEntryPicker.init(entryDateCalendar.get(Calendar.YEAR),
+            entryDateCalendar.get(Calendar.MONTH),
+            entryDateCalendar.get(Calendar.DAY_OF_MONTH),
+            DatePicker.OnDateChangedListener { datePicker, year, month, day ->
+                entryDateCalendar.set(
+                    datePicker.year,
+                    datePicker.month,
+                    datePicker.dayOfMonth
+                )
+                filterEntryDateMin = entryDateCalendar.time
+                Log.d(TAG, "onDateChangedListener entry date = $filterEntryDateMin")
+            })
+
+        val saleDateCalendar: Calendar = GregorianCalendar()
+
+        binding.filtersDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
+            saleDateCalendar.get(Calendar.MONTH),
+            saleDateCalendar.get(Calendar.DAY_OF_MONTH),
+            DatePicker.OnDateChangedListener { datePicker, year, month, day ->
+                saleDateCalendar.set(
+                    datePicker.year,
+                    datePicker.month,
+                    datePicker.dayOfMonth
+                )
+                filterSaleDateMin = saleDateCalendar.time
+                Log.d(TAG, "onDateChangedListener sale date = $filterSaleDateMin")
+            })
 
     }
 
@@ -387,20 +428,12 @@ class FiltersActivity : CompositeDisposableActivity() {
         filterPhotosMin = binding.filtersSliderPhotos.values[0].toInt()
         filterPhotosMax = binding.filtersSliderPhotos.values[1].toInt()
 
-        /*
-        filterEntryDateMin = binding.filtersSliderEntryDate.values[0].toInt()
-        filterEntryDateMax = binding.filtersSliderEntryDate.values[1].toInt()
-
-        filterSaleDateMin = binding.filtersSliderSaleDate.values[0].toInt()
-        filterSaleDateMax = binding.filtersSliderSaleDate.values[1].toInt()
-
-         */
 
         Log.d(
             TAG,
             "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin" +
                     " $filterSurfaceMax $filterRoomsMin $filterRoomsMax $filterBathroomsMin " +
-                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax $filterPhotosMin $filterPhotosMax"
+                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax $filterPhotosMin $filterPhotosMax $filterEntryDateMin $filterSaleDateMin "
         )
 
         getFilteredList(
@@ -416,7 +449,9 @@ class FiltersActivity : CompositeDisposableActivity() {
             filterBedroomsMin,
             filterBedroomsMax,
             filterPhotosMin,
-            filterPhotosMax
+            filterPhotosMax,
+            filterEntryDateMin,
+            filterSaleDateMin
         )
 
 
