@@ -3,6 +3,7 @@ package com.example.oc_p9_kotlin.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
@@ -24,13 +25,18 @@ class FullScreenMapActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "FullScreenMapAct"
+
+        public var marker: Marker? = null
+
     }
+
 
     private lateinit var binding: ActivityFullScreenMapBinding
     private var mapView: MapView? = null
 
+    private var tempMarker: Marker? = null
+
     private var estate: Estate? = null
-    private var marker: Marker? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,10 +75,17 @@ class FullScreenMapActivity : AppCompatActivity() {
             finish()
         }
 
-
         binding.detailsRefreshButton.setOnClickListener {
-
             initMap()
+        }
+        binding.fullscreenMapConfirm.setOnClickListener {
+            if (tempMarker == null) {
+                Toast.makeText(this, R.string.add_estate_map_no_location, Toast.LENGTH_LONG).show()
+            } else {
+                marker = tempMarker
+                finish()
+            }
+            Log.d(TAG, "marker : " + marker?.position)
 
         }
 
@@ -119,6 +132,7 @@ class FullScreenMapActivity : AppCompatActivity() {
         initMapListeners()
 
     }
+
     private fun initMapWithEstate(estate: Estate?) {
 
         if (estate == null)
@@ -168,22 +182,21 @@ class FullScreenMapActivity : AppCompatActivity() {
         if (geoPoint == null)
             return
 
-        mapView?.overlays?.remove(marker);
+        mapView?.overlays?.remove(tempMarker);
 
-        marker = Marker(mapView)
+        tempMarker = Marker(mapView)
 
-        marker?.setInfoWindow(null)
-        marker?.id = "0"
-        marker?.position = geoPoint
-        marker?.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker?.icon =
+        tempMarker?.setInfoWindow(null)
+        tempMarker?.id = "0"
+        tempMarker?.position = geoPoint
+        tempMarker?.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        tempMarker?.icon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_location_green, null)
 
-        mapView?.overlays?.add(marker)
+        mapView?.overlays?.add(tempMarker)
         mapView?.invalidate()
 
     }
-
 
 
     private fun initPois() {

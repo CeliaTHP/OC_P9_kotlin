@@ -96,14 +96,17 @@
     <string name="add_estate_bathrooms">Bathroom(s)</string>
     <string name="add_estate_bathrooms_hint" translatable="false">4</string>
     <string name="add_estate_bedrooms">Bedroom(s)</string>
-    <string name="add_estate_location" translatable="false">%1$d, %2$d</string>
+    <string name="add_estate_location" translatable="false">%1$s, %2$s</string>
     <string name="add_estate_bedrooms_hint" translatable="false">1</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
 
+    <string name="add_estate_map_no_location">Please, select your estate location</string>
+
     <string name="add_estate_input_error">Cannot be Empty</string>
     <string name="add_estate_pic_already_added">This photo has already been added</string>
     <string name="add_estate_success">Your estate has been saved.</string>
+
 
     <string name="add_estate_dialog_title">New photo</string>
     <string name="add_estate_dialog_video">New video</string>

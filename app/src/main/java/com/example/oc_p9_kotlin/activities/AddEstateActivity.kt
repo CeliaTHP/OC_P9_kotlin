@@ -32,6 +32,7 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import org.osmdroid.views.overlay.Marker
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -51,6 +52,8 @@ class AddEstateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEstateBinding
     private var estateType: EstateType = EstateType.HOUSE
     private var currency: Currency? = null
+
+    private lateinit var location: Location
 
     private var videoList = emptyList<Media>()
 
@@ -160,6 +163,7 @@ class AddEstateActivity : AppCompatActivity() {
             binding.addEstateRoomsInput,
             binding.addEstateBathroomsInput,
             binding.addEstateBedroomsInput,
+            binding.addEstateLocationInput,
             binding.addEstateDescriptionInput
         )
 
@@ -176,11 +180,6 @@ class AddEstateActivity : AppCompatActivity() {
             return
 
         Log.d(TAG, "can create Estate")
-
-        val location = Location("")
-        //TODO: Handle location managment
-        location.latitude = 49.54454396
-        location.longitude = 2.8484848
 
         with(binding) {
 
@@ -202,7 +201,6 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstateBathroomsInput.editText?.text.toString().toInt(),
                 addEstateBedroomsInput.editText?.text.toString().toInt(),
                 addEstateAddressInput.editText?.text.toString(),
-                //TODO : handle location
                 location,
                 //TODO : handle POIS,
                 emptyList<FakePOI>(),
@@ -365,6 +363,26 @@ class AddEstateActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+                if(FullScreenMapActivity.marker != null) {
+                    var latitude = FullScreenMapActivity.marker?.position?.latitude
+                    var longitude = FullScreenMapActivity.marker?.position?.longitude
+
+                    location = Location("0")
+                    if (latitude != null && longitude != null) {
+                        location.latitude = latitude
+                        location.longitude = longitude
+                    }
+                    Log.d(TAG, location.toString())
+                    binding.addEstateLocationEditText.setText(getString(R.string.add_estate_location,latitude?.toString(),longitude?.toString()))
+
+                   // FullScreenMapActivity.marker = null
+
+                }
 
     }
 
