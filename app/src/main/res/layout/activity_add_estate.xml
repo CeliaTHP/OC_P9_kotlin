@@ -344,6 +344,26 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/add_estate_location_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/filters_location"
+                    android:clickable="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_bedrooms_input">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_estate_location_edit_text"
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

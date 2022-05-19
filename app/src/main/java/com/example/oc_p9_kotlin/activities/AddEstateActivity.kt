@@ -358,9 +358,11 @@ class AddEstateActivity : AppCompatActivity() {
             }
         }
 
-        binding.addEstateAddressInput.setOnClickListener {
-
-
+        binding.addEstateLocationEditText.setOnClickListener {
+            Log.d(TAG,"onLocationInputClick")
+            val intent =
+                Intent(this, FullScreenMapActivity::class.java)
+            startActivity(intent)
         }
 
 

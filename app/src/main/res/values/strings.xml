@@ -76,8 +76,6 @@
     <string name="filters_empty">None of our estate matches your request</string>
 
 
-
-
     <!--Add Estate-->
     <string name="add_estate_title">Add an estate</string>
     <string name="add_estate_type">Type</string>
@@ -98,6 +96,7 @@
     <string name="add_estate_bathrooms">Bathroom(s)</string>
     <string name="add_estate_bathrooms_hint" translatable="false">4</string>
     <string name="add_estate_bedrooms">Bedroom(s)</string>
+    <string name="add_estate_location" translatable="false">%1$d, %2$d</string>
     <string name="add_estate_bedrooms_hint" translatable="false">1</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
