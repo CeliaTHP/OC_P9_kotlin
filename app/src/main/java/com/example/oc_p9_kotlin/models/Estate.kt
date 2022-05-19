@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 import com.example.oc_p9_kotlin.R
 import java.util.Date
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import java.io.Serializable
 
 @Parcelize
@@ -26,10 +27,9 @@ data class Estate(
     var bathrooms: Int,
     var bedrooms: Int,
     var address: String,
-    //var nearbyPlaces : List<NearbyPlaces>
     var location: Location,
+    var nearbyPlaces : List<FakePOI>?,
     var description: String,
-
     var medias: List<Media>?,
     var mediaCount: Int,
 

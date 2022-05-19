@@ -27,6 +27,7 @@ import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
@@ -203,6 +204,8 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstateAddressInput.editText?.text.toString(),
                 //TODO : handle location
                 location,
+                //TODO : handle POIS,
+                emptyList<FakePOI>(),
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
                 imageAdapter.imageList.size,

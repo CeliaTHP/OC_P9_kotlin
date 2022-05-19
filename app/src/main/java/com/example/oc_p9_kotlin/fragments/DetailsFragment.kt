@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,8 +32,10 @@ import com.google.android.exoplayer2.MediaItem
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.osmdroid.bonuspack.location.NominatimPOIProvider
+import org.osmdroid.bonuspack.location.OverpassAPIProvider
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
@@ -145,7 +146,6 @@ class DetailsFragment : Fragment() {
             Log.d(TAG, "onClick Play")
 
         }
-
 
 
 /*
@@ -302,23 +302,22 @@ class DetailsFragment : Fragment() {
             }
         }
 
-            binding.detailsVideosFullscreen.setOnClickListener {
-                Log.d(TAG, "onClickFullscreen videos")
-                estate?.videos?.let {
-                    Log.d(TAG, "videos not empty")
-                    viewFullscreenVideos(it)
-                }
-
-
+        binding.detailsVideosFullscreen.setOnClickListener {
+            Log.d(TAG, "onClickFullscreen videos")
+            estate?.videos?.let {
+                Log.d(TAG, "videos not empty")
+                viewFullscreenVideos(it)
             }
 
-            binding.detailsMapFullscreen.setOnClickListener {
-                Log.d(TAG, " onClickFullscreen map")
-                estate?.let {
-                        estate -> viewFullscreenMap(estate)
-                }
-            }
 
+        }
+
+        binding.detailsMapFullscreen.setOnClickListener {
+            Log.d(TAG, " onClickFullscreen map")
+            estate?.let { estate ->
+                viewFullscreenMap(estate)
+            }
+        }
 
 
     }
@@ -362,7 +361,7 @@ class DetailsFragment : Fragment() {
         val startPoint = GeoPoint(estate.location.latitude, estate.location.longitude)
 
         val startMarker = Marker(mapView)
-        startMarker.setInfoWindow(null)
+        startMarker.title = getString(estate.type.stringValue)
         startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         startMarker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
@@ -376,6 +375,8 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initPois() {
+        Log.d(TAG, "initPOIS")
+
         val thread = Thread {
             try {
 
@@ -386,7 +387,18 @@ class DetailsFragment : Fragment() {
                 if (mapView?.repository == null)
                     return@Thread
 
+/*
                 val poiProvider = NominatimPOIProvider("OSMBonusPackTutoUserAgent")
+
+                val overpassProvider = OverpassAPIProvider()
+
+                var boundingBox = BoundingBox(geoPoint.getLatitude() + 0.25, geoPoint.getLongitude() + 0.25,
+                    geoPoint.getLatitude() - 0.25, geoPoint.getLongitude() - 0.25)
+
+                val oUrl: String = overpassProvider.urlForPOISearch("tourism",
+                    boundingBox, 100, 5)
+
+                val pois = OverpassAPIProvider().getPOIsFromUrl(oUrl)
 
                 val pois = poiProvider.getPOICloseTo(
                     GeoPoint(
@@ -394,44 +406,54 @@ class DetailsFragment : Fragment() {
                     ), "cinema", 5, 0.1
                 )
 
-                val poiMarkers = FolderOverlay()
+ */
 
+                val pois = estate?.nearbyPlaces
+
+                val poiMarkers = FolderOverlay()
                 mapView?.overlays?.add(poiMarkers)
 
-                Log.d(TAG, pois.toString())
 
                 val poiIcon = AppCompatResources.getDrawable(
                     binding.root.context,
                     R.drawable.ic_location_green
                 )
-                for (poi in pois) {
-                    val poiMarker = Marker(mapView)
-                    poiMarker.title = poi.mType
-                    if (poi.mDescription != null)
-                        poiMarker.snippet = poi.mDescription
 
-                    poiMarker.position = poi.mLocation
-                    poiMarker.icon = poiIcon
-                    if (poi.mThumbnail != null) {
+                if (pois != null) {
+                    for (poi in pois) {
+                        Log.d(TAG, " POI : $poi")
+                        val poiMarker = Marker(mapView)
+                        poiMarker.title = poi.name
+                        // if (poi.mDescription != null)
+                        //   poiMarker.snippet = poi.mDescription
+                        poiMarker.snippet = getString(poi.poiType.stringValue)
+                        poiMarker.position = GeoPoint(poi.latitude, poi.longitude)
+                        poiMarker.icon = poiIcon
+                        var icon =  Utils.getIconForPoi(poi.poiType,context)
+                        icon?.setTint(ResourcesCompat.getColor(resources,R.color.black,null))
+                        poiMarker.image = icon
+                        /*
+                                if (poi.mThumbnail != null) {
 
+                                    val bitmap: Bitmap = Glide
+                                        .with(binding.root.context)
+                                        .asBitmap()
+                                        .load(poi.mThumbnailPath)
+                                        .submit(100, 100)
+                                        .get()
 
-                        val bitmap: Bitmap = Glide
-                            .with(binding.root.context)
-                            .asBitmap()
-                            .load(poi.mThumbnailPath)
-                            .submit(100, 100)
-                            .get()
+                                    poiMarker.image = BitmapDrawable(binding.root.resources, bitmap)
 
+                                    //poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail).
 
-                        poiMarker.image = BitmapDrawable(binding.root.resources, bitmap)
+                                } else {
+                                    poiMarker.image = null
+                                }
+                                 */
 
-                        //poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail).
-
-                    } else {
-                        poiMarker.image = null
+                        Log.d(TAG, "marker : " + poiMarker.position.toString())
+                        poiMarkers.add(poiMarker)
                     }
-
-                    poiMarkers.add(poiMarker)
                 }
                 mapView?.invalidate()
             } catch (e: Exception) {
@@ -440,7 +462,6 @@ class DetailsFragment : Fragment() {
         }
 
         thread.start()
-
 
     }
 

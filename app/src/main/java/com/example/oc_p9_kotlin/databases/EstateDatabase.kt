@@ -10,6 +10,7 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -23,7 +24,9 @@ import java.util.Date
     EstateDatabase.LocationConverter::class,
     EstateDatabase.MediaListConverter::class,
     EstateDatabase.UriConverter::class,
-    EstateDatabase.UriListConverter::class
+    EstateDatabase.PoiListConverter::class,
+    //EstateDatabase.UriListConverter::class,
+
 
 )
 abstract class EstateDatabase : RoomDatabase() {
@@ -122,6 +125,32 @@ abstract class EstateDatabase : RoomDatabase() {
         }
     }
 
+    class PoiListConverter {
+        @TypeConverter
+        fun fromPoiList(pois: List<FakePOI?>?): String? {
+            if (pois == null) {
+                return null
+            }
+            val gson = Gson()
+            val type = object :
+                TypeToken<List<FakePOI?>?>() {}.type
+            return gson.toJson(pois, type)
+        }
+
+        @TypeConverter
+        fun toPoiList(pois: String?): List<FakePOI>? {
+            if (pois == null) {
+                return null
+            }
+            val gson = Gson()
+            val type = object :
+                TypeToken<List<FakePOI?>?>() {}.type
+            return gson.fromJson<List<FakePOI>>(pois, type)
+        }
+    }
+
+
+    /*
     object StringListConverter {
         @TypeConverter
         fun fromString(value: String?): ArrayList<String> {
@@ -156,6 +185,8 @@ abstract class EstateDatabase : RoomDatabase() {
         }
     }
 
+
+ */
     class UriConverter {
         @TypeConverter
         fun fromString(value: String?): Uri? {

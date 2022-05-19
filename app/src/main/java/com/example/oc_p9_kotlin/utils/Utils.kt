@@ -10,11 +10,12 @@ import android.net.Uri
 import android.net.wifi.WifiManager
 import android.provider.MediaStore.Images
 import android.util.Log
+import androidx.core.content.res.ResourcesCompat
+import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.models.Estate
+import com.example.oc_p9_kotlin.models.POIType
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
-import org.osmdroid.bonuspack.location.NominatimPOIProvider
-import org.osmdroid.util.GeoPoint
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -167,6 +168,20 @@ object Utils {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight())
         drawable.draw(canvas)
         return bitmap
+    }
+
+    fun getIconForPoi(poiType: POIType, context: Context?): Drawable?{
+        if(context == null)
+            return null
+        return when (poiType){
+            POIType.STATION -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_station, null)
+            POIType.PUB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_bar, null)
+            POIType.HOSTEL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hostel, null)
+            POIType.HOSPITAL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hospital, null)
+            POIType.SCHOOL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_school, null)
+            POIType.PARK -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_park, null)
+            POIType.RESTAURANT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_restaurant, null)
+        }
     }
 
 //Verify if internet is enabled on the device
