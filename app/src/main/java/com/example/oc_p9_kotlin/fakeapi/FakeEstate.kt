@@ -94,7 +94,8 @@ object FakeEstateApi {
                 FakePOIGenerator.pizzeriaParis,
                 FakePOIGenerator.hopitalSaintLouis,
                 FakePOIGenerator.ibisGareDuNord,
-                FakePOIGenerator.barParis
+                FakePOIGenerator.barParis,
+                FakePOIGenerator.conseilPrudhomme
             ),
             "The house itself is surrounded by a tranquil garden, with various flowers, a long pond including a small waterfall and various rock formations.Large, octagon windows brighten up the house and have been added to the house in a fairly symmetrical pattern." +
                     "The house is equipped with a large kitchen and one average bathroom, it also has a large living room, five bedrooms, a cozy dining room," +

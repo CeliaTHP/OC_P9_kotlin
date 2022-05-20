@@ -13,6 +13,7 @@ data class FakePOI(
     @PrimaryKey
     val id: String,
     var name: String,
+    var description: String,
     var poiType: POIType,
     var latitude: Double,
     var longitude: Double
@@ -27,6 +28,8 @@ enum class POIType(val stringValue: Int) {
     HOSPITAL(R.string.poi_type_hospital),
     SCHOOL(R.string.poi_type_school),
     PARK(R.string.poi_type_park),
-    RESTAURANT(R.string.poi_type_restaurant)
+    RESTAURANT(R.string.poi_type_restaurant),
+    OTHER(R.string.poi_type_restaurant)
+
 
 }

@@ -270,7 +270,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@string/details_description_text"
+                    android:text="@string/lorem_ipsum_text"
                     android:textColor="@color/main_text"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"

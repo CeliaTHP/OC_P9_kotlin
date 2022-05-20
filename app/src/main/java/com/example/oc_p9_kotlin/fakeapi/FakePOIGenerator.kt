@@ -12,7 +12,11 @@ object FakePOIGenerator {
         longitude = 2.359231924645815
     }
     var gareDeLest: FakePOI = FakePOI(
-        "0", "Gare de l'est", POIType.STATION, locationGareDeLest.latitude,
+        "0",
+        "Gare de l'est",
+        "Description Gare de l'est Description Gare de l'est Description Gare de l'est",
+        POIType.STATION,
+        locationGareDeLest.latitude,
         locationGareDeLest.longitude
     )
 
@@ -23,7 +27,11 @@ object FakePOIGenerator {
     }
 
     var gareDuNord: FakePOI = FakePOI(
-        "1", "Gare Du Nord", POIType.STATION, locationGareDuNord.latitude,
+        "1",
+        "Gare Du Nord",
+        "Description Gare du Nord Description Gare du Nord Description Gare du Nord",
+        POIType.STATION,
+        locationGareDuNord.latitude,
         locationGareDuNord.longitude
     )
 
@@ -33,7 +41,11 @@ object FakePOIGenerator {
     }
     var buttesChaumont: FakePOI =
         FakePOI(
-            "2", "Parc des buttes Chaumont", POIType.PARK, locationButtesChaumont.latitude,
+            "2",
+            "Parc des Buttes-Chaumont",
+            "Description Buttes-Chaumont Description Buttes-Chaumont Description Buttes-Chaumont",
+            POIType.PARK,
+            locationButtesChaumont.latitude,
             locationButtesChaumont.longitude
         )
 
@@ -45,7 +57,11 @@ object FakePOIGenerator {
 
     var ecoleSacreCoeur: FakePOI =
         FakePOI(
-            "3", "École Sacré Coeur", POIType.SCHOOL, locationEcoleSacreCoeur.latitude,
+            "3",
+            "École Sacré Coeur",
+            "Description Sacré Coeur Description Sacré Coeur Description Sacré Coeur",
+            POIType.SCHOOL,
+            locationEcoleSacreCoeur.latitude,
             locationEcoleSacreCoeur.longitude
         )
 
@@ -55,7 +71,11 @@ object FakePOIGenerator {
     }
 
     var station: FakePOI = FakePOI(
-        "4", "Station Service", POIType.STATION, locationStation.latitude,
+        "4",
+        "Station Service",
+        "Description Station Description Station Description Station",
+        POIType.STATION,
+        locationStation.latitude,
         locationStation.longitude
     )
 
@@ -65,7 +85,11 @@ object FakePOIGenerator {
     }
 
     var pizzeriaParis: FakePOI = FakePOI(
-        "5", "Pizzeria", POIType.RESTAURANT, locationPizzeriaParis.latitude,
+        "5",
+        "Pizzeria",
+        "Description Pizzeria Description Pizzeria Description Pizzeria",
+        POIType.RESTAURANT,
+        locationPizzeriaParis.latitude,
         locationPizzeriaParis.longitude
     )
 
@@ -76,7 +100,11 @@ object FakePOIGenerator {
 
     var hopitalSaintLouis: FakePOI =
         FakePOI(
-            "6", "Hôpital Saint-Louis", POIType.HOSPITAL, locationHopitalSaintLouis.latitude,
+            "6",
+            "Hôpital Saint-Louis",
+            "Description Hôpital Saint-Louis Description Hôpital Saint-Louis Description Hôpital Saint-Louis",
+            POIType.HOSPITAL,
+            locationHopitalSaintLouis.latitude,
             locationHopitalSaintLouis.longitude
         )
 
@@ -88,6 +116,7 @@ object FakePOIGenerator {
         FakePOI(
             "7",
             "Hôtel Ibis Gare Du Nord",
+            "Description Ibis Gare Du Nord Description Ibis Gare Du Nord Description Ibis Gare Du Nord ",
             POIType.HOSTEL,
             locationHotelIbisGareDuNord.latitude,
             locationHotelIbisGareDuNord.longitude
@@ -99,8 +128,26 @@ object FakePOIGenerator {
     }
 
     var barParis: FakePOI = FakePOI(
-        "8", "Bar", POIType.PUB, locationBarParis.latitude,
+        "8",
+        "Bar",
+        "Description bar Paris Description bar Paris Description bar Paris ",
+        POIType.PUB,
+        locationBarParis.latitude,
         locationBarParis.longitude
+    )
+
+    private val locationConseilPrudhomme = Location("9").apply {
+        latitude = 48.88057071999095
+        longitude = 2.3661611594414707
+    }
+
+    var conseilPrudhomme: FakePOI = FakePOI(
+        "9",
+        "Conseil Prud'homme",
+        "Description bar Prudhomme Description Prudhomme Description Prudhomme ",
+        POIType.OTHER,
+        locationConseilPrudhomme.latitude,
+        locationConseilPrudhomme.longitude
     )
 
 

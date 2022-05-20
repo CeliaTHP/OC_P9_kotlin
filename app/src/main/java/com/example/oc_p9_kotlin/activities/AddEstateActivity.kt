@@ -24,6 +24,7 @@ import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
+import com.example.oc_p9_kotlin.dialogs.AddPoiDialog
 import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
@@ -32,7 +33,6 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
-import org.osmdroid.views.overlay.Marker
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -357,10 +357,17 @@ class AddEstateActivity : AppCompatActivity() {
         }
 
         binding.addEstateLocationEditText.setOnClickListener {
-            Log.d(TAG,"onLocationInputClick")
+            Log.d(TAG, "onLocationInputClick")
             val intent =
                 Intent(this, FullScreenMapActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.addEstateAddPoi.setOnClickListener {
+            AddPoiDialog.showDialog(this) {
+                Log.d(TAG, it.toString())
+
+            }
         }
 
 
@@ -368,21 +375,27 @@ class AddEstateActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-                if(FullScreenMapActivity.marker != null) {
-                    var latitude = FullScreenMapActivity.marker?.position?.latitude
-                    var longitude = FullScreenMapActivity.marker?.position?.longitude
+        if (FullScreenMapActivity.marker != null) {
+            var latitude = FullScreenMapActivity.marker?.position?.latitude
+            var longitude = FullScreenMapActivity.marker?.position?.longitude
 
-                    location = Location("0")
-                    if (latitude != null && longitude != null) {
-                        location.latitude = latitude
-                        location.longitude = longitude
-                    }
-                    Log.d(TAG, location.toString())
-                    binding.addEstateLocationEditText.setText(getString(R.string.add_estate_location,latitude?.toString(),longitude?.toString()))
+            location = Location("0")
+            if (latitude != null && longitude != null) {
+                location.latitude = latitude
+                location.longitude = longitude
+            }
+            Log.d(TAG, location.toString())
+            binding.addEstateLocationEditText.setText(
+                getString(
+                    R.string.add_estate_location,
+                    latitude?.toString(),
+                    longitude?.toString()
+                )
+            )
 
-                   // FullScreenMapActivity.marker = null
+            // FullScreenMapActivity.marker = null
 
-                }
+        }
 
     }
 
@@ -543,10 +556,10 @@ class AddEstateActivity : AppCompatActivity() {
         var editText = EditText(this)
 
         val alert: AlertDialog.Builder = AlertDialog.Builder(this).apply {
-            if(isVideo)
-            setTitle(getString(R.string.add_estate_dialog_video))
+            if (isVideo)
+                setTitle(getString(R.string.add_estate_dialog_video))
             else
-            setTitle(getString(R.string.add_estate_dialog_title))
+                setTitle(getString(R.string.add_estate_dialog_title))
             setMessage(getString(R.string.add_estate_dialog_text))
 
         }

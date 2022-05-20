@@ -32,7 +32,7 @@
     <string name="details_photos">Photo(s)</string>
     <string name="details_videos">Video(s)</string>
     <string name="details_description">Description</string>
-    <string name="details_description_text" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <string name="lorem_ipsum_text" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
     <!--Specs-->
@@ -134,6 +134,8 @@
     <string name="type_site">Site</string>
     <string name="type_other">Other</string>
 
+    <string name="poi_title">Point of interest</string>
+    <string name="poi_name">Name</string>
     <string name="poi_type_station">Station</string>
     <string name="poi_type_pub">Pub</string>
     <string name="poi_type_restaurant">Restaurant</string>
@@ -141,6 +143,8 @@
     <string name="poi_type_hospital">Hospital</string>
     <string name="poi_type_school">School</string>
     <string name="poi_type_park">Park</string>
+    <string name="poi_type_other">Other</string>
+
 
 
     <string name="type_price_lowest" translatable="false"> &lt; 100 000</string>
@@ -185,5 +189,15 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="poi_type_array">
+        <item>Station</item>
+        <item>Pub</item>
+        <item>Hostel</item>
+        <item>Hospital</item>
+        <item>School</item>
+        <item>Park</item>
+        <item>Restaurant</item>
+        <item>Other</item>
+    </string-array>
 
 </resources>

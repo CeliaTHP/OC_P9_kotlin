@@ -181,6 +181,8 @@ object Utils {
             POIType.SCHOOL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_school, null)
             POIType.PARK -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_park, null)
             POIType.RESTAURANT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_restaurant, null)
+            POIType.OTHER -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_question_mark, null)
+
         }
     }
 
