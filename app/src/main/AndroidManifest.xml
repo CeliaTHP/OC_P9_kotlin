@@ -28,23 +28,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OC_P9_kotlin"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activities.AddPoiActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.FiltersActivity"
-            android:label="@string/filters_title"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/filters_title" />
         <activity
             android:name=".activities.FullScreenPictureActivity"
-            android:label="@string/details_photos"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/details_photos" />
         <activity
             android:name=".activities.FullScreenMapActivity"
-            android:label="@string/details_map"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/details_map" />
         <activity
             android:name=".activities.FullScreenVideoActivity"
-            android:label="@string/details_videos"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/details_videos" />
         <activity
             android:name=".activities.AddEstateActivity"
             android:exported="false"

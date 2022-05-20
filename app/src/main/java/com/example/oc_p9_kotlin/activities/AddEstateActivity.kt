@@ -24,7 +24,6 @@ import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
-import com.example.oc_p9_kotlin.dialogs.AddPoiDialog
 import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
@@ -45,6 +44,8 @@ class AddEstateActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "AddEstateActivity"
+
+
     }
 
     private lateinit var viewModel: AddEstateViewModel
@@ -364,10 +365,9 @@ class AddEstateActivity : AppCompatActivity() {
         }
 
         binding.addEstateAddPoi.setOnClickListener {
-            AddPoiDialog.showDialog(this) {
-                Log.d(TAG, it.toString())
-
-            }
+            val intent =
+                Intent(this, AddPoiActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -393,7 +393,7 @@ class AddEstateActivity : AppCompatActivity() {
                 )
             )
 
-            // FullScreenMapActivity.marker = null
+             FullScreenMapActivity.marker = null
 
         }
 

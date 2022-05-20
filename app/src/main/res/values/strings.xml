@@ -146,7 +146,6 @@
     <string name="poi_type_other">Other</string>
 
 
-
     <string name="type_price_lowest" translatable="false"> &lt; 100 000</string>
     <string name="type_price_low" translatable="false"> &lt; 300 000</string>
     <string name="type_price_mid" translatable="false"> &lt; 500 000</string>
