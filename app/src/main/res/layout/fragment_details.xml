@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/details_main_card"
             android:layout_width="0dp"
@@ -29,6 +30,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp">
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/details_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_edit"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
+
+
                 <TextView
                     android:id="@+id/details_type"
                     android:layout_width="wrap_content"
@@ -39,6 +52,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/details_edit_button"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -57,11 +71,12 @@
                     android:id="@+id/details_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="@string/item_estate_city"
                     android:textColor="@color/main_text"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/details_price" />
 
 
                 <TextView
@@ -75,7 +90,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/details_price"
+                    app:layout_constraintTop_toBottomOf="@id/details_city"
                     tools:visibility="visible" />
 
 

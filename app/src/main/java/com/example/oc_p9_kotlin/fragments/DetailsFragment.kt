@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
+import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.activities.FullScreenVideoActivity
@@ -319,6 +320,18 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        binding.detailsEditButton.setOnClickListener {
+
+            estate?.let { estate ->
+                val intent =
+                    Intent(binding.root.context, AddEstateActivity::class.java)
+                intent.putExtra("estate", estate as Serializable)
+                this.startActivity(intent)
+            }
+
+
+        }
+
 
     }
 
@@ -429,8 +442,8 @@ class DetailsFragment : Fragment() {
                         poiMarker.snippet = getString(poi.poiType.stringValue)
                         poiMarker.position = GeoPoint(poi.latitude, poi.longitude)
                         poiMarker.icon = poiIcon
-                        var icon =  Utils.getIconForPoi(poi.poiType,context)
-                        icon?.setTint(ResourcesCompat.getColor(resources,R.color.black,null))
+                        var icon = Utils.getIconForPoi(poi.poiType, context)
+                        icon?.setTint(ResourcesCompat.getColor(resources, R.color.black, null))
                         poiMarker.image = icon
                         /*
                                 if (poi.mThumbnail != null) {

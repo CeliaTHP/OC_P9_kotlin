@@ -174,7 +174,7 @@ object Utils {
         if(context == null)
             return null
         return when (poiType){
-            POIType.STATION -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_station, null)
+            POIType.STATION -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_train, null)
             POIType.PUB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_bar, null)
             POIType.HOSTEL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hostel, null)
             POIType.HOSPITAL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hospital, null)

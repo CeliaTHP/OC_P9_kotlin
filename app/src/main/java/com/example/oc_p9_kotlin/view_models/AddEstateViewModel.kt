@@ -23,4 +23,10 @@ class AddEstateViewModel(val estateDao: EstateDao) : ViewModel() {
         }
     }
 
+    fun updateEstate(estate: Estate) {
+        executor.execute {
+            estateDao.updateEstate(estate)
+        }
+    }
+
 }

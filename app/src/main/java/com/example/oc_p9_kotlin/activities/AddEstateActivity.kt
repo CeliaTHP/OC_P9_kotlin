@@ -81,6 +81,9 @@ class AddEstateActivity : AppCompatActivity() {
 
     private lateinit var imageAdapter: ImageAdapter
 
+    private lateinit var estate: Estate
+
+    private var isEditing: Boolean = false
     private val REQUEST_IMAGE_CAPTURE = 1
     private val PICK_IMAGE = 2
     private val PICK_VIDEO = 3
@@ -92,6 +95,7 @@ class AddEstateActivity : AppCompatActivity() {
         //Setting up view with binding
         binding = ActivityAddEstateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         //Default type
         binding.addEstateTypeButton.text = getString(estateType.stringValue)
@@ -110,6 +114,57 @@ class AddEstateActivity : AppCompatActivity() {
         initVideosRecyclerView()
         initPoiRecyclerView()
 
+
+        if (intent?.getSerializableExtra("estate") != null) {
+            Log.d(TAG, "estate Found ")
+            estate = intent?.getSerializableExtra("estate") as Estate
+            initFields(estate)
+
+        }
+
+
+    }
+
+    private fun initFields(estate: Estate?) {
+        if (estate == null)
+            return
+
+        isEditing = true
+
+        estateType = estate.type
+        binding.addEstateTypeButton.text = getString(estate.type.stringValue)
+
+        location = estate.location
+
+        binding.addEstateCityInput.editText?.setText(estate.city)
+        binding.addEstateAddressInput.editText?.setText(estate.address)
+        binding.addEstatePriceInput.editText?.setText(estate.priceInEuros.toString())
+        binding.addEstateSurfaceInput.editText?.setText(estate.surfaceInSquareMeters.toString())
+        binding.addEstateRoomsInput.editText?.setText(estate.rooms.toString())
+        binding.addEstateBathroomsInput.editText?.setText(estate.bathrooms.toString())
+        binding.addEstateBedroomsInput.editText?.setText(estate.bedrooms.toString())
+        binding.addEstateDescriptionInput.editText?.setText(estate.description.toString())
+
+        binding.addEstateLocationInput.editText?.setText(
+            getString(
+                R.string.add_estate_location,
+                estate.location.latitude.toString(),
+                estate.location.longitude.toString()
+            )
+        )
+
+        estate.medias?.let {
+            imageAdapter.updateData(it.toMutableList())
+
+        }
+        estate.videos?.let {
+            videoAdapter.updateData(it.toMutableList())
+        }
+
+        estate.nearbyPlaces?.let {
+            poiAdapter.updateData(it.toMutableList())
+
+        }
 
     }
 
@@ -171,7 +226,7 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
 
-    private fun verifyEstateCreation() {
+    private fun verifyEstateEdition() {
 
         var canCreate = true
 
@@ -211,33 +266,61 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstatePriceInput.editText?.text.toString().toInt()
             }
 
-            // Create our new Estate with our filled fields
-            val estate = Estate(
-                UUID.randomUUID().toString(),
-                estateType,
-                addEstateCityInput.editText?.text.toString(),
-                priceInEuros,
-                addEstateSurfaceInput.editText?.text.toString().toInt(),
-                addEstateRoomsInput.editText?.text.toString().toInt(),
-                addEstateBathroomsInput.editText?.text.toString().toInt(),
-                addEstateBedroomsInput.editText?.text.toString().toInt(),
-                addEstateAddressInput.editText?.text.toString(),
-                location,
-                //TODO : handle POIS,
-                poiList,
-                addEstateDescriptionInput.editText?.text.toString(),
-                imageAdapter.imageList,
-                imageAdapter.imageList.size,
-                videoAdapter.videoList,
-                Date(),
-                null,
-                isAvailable = true,
-                null
-            )
-            viewModel.insertEstate(estate)
-            finish()
+            if (isEditing) {
+                estate.type = estateType
+                estate.city = addEstateCityInput.editText?.text.toString()
+                estate.address = addEstateAddressInput.editText?.text.toString()
+                estate.priceInEuros = priceInEuros
+                estate.surfaceInSquareMeters =
+                    addEstateSurfaceInput.editText?.text.toString().toInt()
+                estate.rooms = addEstateRoomsInput.editText?.text.toString().toInt()
+                estate.bathrooms = addEstateBathroomsInput.editText?.text.toString().toInt()
+                estate.bedrooms = addEstateBedroomsInput.editText?.text.toString().toInt()
 
-            Log.d(TAG, " created : " + estate.toString())
+                estate.description = addEstateDescriptionInput.editText?.text.toString()
+
+                estate.location = location
+                estate.nearbyPlaces = poiList
+                estate.medias = imageAdapter.imageList
+                estate.videos = videoAdapter.videoList
+
+
+                viewModel.updateEstate(estate)
+                Log.d(TAG, " updated : " + estate.toString())
+                finish()
+
+
+
+            } else {
+                // Create our new Estate with our filled fields
+                val estate = Estate(
+                    UUID.randomUUID().toString(),
+                    estateType,
+                    addEstateCityInput.editText?.text.toString(),
+                    priceInEuros,
+                    addEstateSurfaceInput.editText?.text.toString().toInt(),
+                    addEstateRoomsInput.editText?.text.toString().toInt(),
+                    addEstateBathroomsInput.editText?.text.toString().toInt(),
+                    addEstateBedroomsInput.editText?.text.toString().toInt(),
+                    addEstateAddressInput.editText?.text.toString(),
+                    location,
+                    //TODO : handle POIS,
+                    poiList,
+                    addEstateDescriptionInput.editText?.text.toString(),
+                    imageAdapter.imageList,
+                    imageAdapter.imageList.size,
+                    videoAdapter.videoList,
+                    Date(),
+                    null,
+                    isAvailable = true,
+                    null
+                )
+                viewModel.insertEstate(estate)
+                Log.d(TAG, " created : " + estate.toString())
+                finish()
+
+            }
+
 
         }
 
@@ -370,7 +453,7 @@ class AddEstateActivity : AppCompatActivity() {
         }
 
         binding.addEstateConfirm.setOnClickListener {
-            verifyEstateCreation()
+            verifyEstateEdition()
         }
 
         binding.addEstateTypeButton.setOnClickListener {
