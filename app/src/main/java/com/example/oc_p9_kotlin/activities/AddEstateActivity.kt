@@ -46,6 +46,21 @@ class AddEstateActivity : AppCompatActivity() {
         private const val TAG = "AddEstateActivity"
 
 
+        fun addPoi(fakePOI: FakePOI) {
+            if (!poiList.contains(fakePOI)) {
+                poiList.add(fakePOI)
+                Log.d(TAG, "added " + fakePOI)
+                Log.d(TAG, "list is now   " + poiList.size+ "-" + poiList)
+
+
+            } else {
+                Log.d(TAG, "$fakePOI already in the list")
+
+            }
+        }
+
+        private var poiList = mutableListOf<FakePOI>()
+
     }
 
     private lateinit var viewModel: AddEstateViewModel
@@ -204,7 +219,7 @@ class AddEstateActivity : AppCompatActivity() {
                 addEstateAddressInput.editText?.text.toString(),
                 location,
                 //TODO : handle POIS,
-                emptyList<FakePOI>(),
+                poiList,
                 addEstateDescriptionInput.editText?.text.toString(),
                 imageAdapter.imageList,
                 imageAdapter.imageList.size,
@@ -393,7 +408,7 @@ class AddEstateActivity : AppCompatActivity() {
                 )
             )
 
-             FullScreenMapActivity.marker = null
+            FullScreenMapActivity.marker = null
 
         }
 

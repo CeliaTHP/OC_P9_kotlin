@@ -20,12 +20,20 @@ class AddPoiActivity : AppCompatActivity() {
 
     }
 
+    var poi: FakePOI =
+        FakePOI(
+            UUID.randomUUID().toString(),
+            "",
+            "",
+            POIType.STATION,
+            0.0,
+            0.0
+        )
+
+
     private lateinit var binding: AddPoiDialogBinding
 
     private var poiType = POIType.STATION
-
-    private var latitude = 0.0
-    private var longitude = 0.0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +44,7 @@ class AddPoiActivity : AppCompatActivity() {
         //Default type
         binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)
 
-        initListeners() 
+        initListeners()
         setContentView(binding.root)
 
     }
@@ -60,6 +68,7 @@ class AddPoiActivity : AppCompatActivity() {
 
         }
     }
+
     private fun verifyPoiCreation() {
 
         var canCreate = true
@@ -82,18 +91,19 @@ class AddPoiActivity : AppCompatActivity() {
         if (!canCreate)
             return
 
-        Log.d(TAG, "canCreate")
-
-        var poi = FakePOI(
-            UUID.randomUUID().toString(),
-            binding.addPoiDialogNameInput.editText?.text.toString(),
-            binding.addPoiDialogDescriptionInput.editText?.text.toString(),
-            poiType,
-            latitude,
-            longitude
-        )
+        poi.name = binding.addPoiDialogNameInput.editText?.text.toString()
+        poi.description = binding.addPoiDialogDescriptionInput.editText?.text.toString()
+        poi.poiType = poiType
 
 
+        Log.d(TAG, "canCreate $poi")
+
+        AddEstateActivity.addPoi(poi)
+        finish()
+
+
+
+        Log.d(TAG, "can create : $poi")
 
 
     }
@@ -102,84 +112,86 @@ class AddPoiActivity : AppCompatActivity() {
         super.onResume()
 
         if (FullScreenMapActivity.marker != null) {
-            var latitude = FullScreenMapActivity.marker?.position?.latitude
-            var longitude = FullScreenMapActivity.marker?.position?.longitude
 
-          var   location = Location("0")
-            if (latitude != null && longitude != null) {
-                location.latitude = latitude
-                location.longitude = longitude
+            Log.d(TAG, FullScreenMapActivity.marker.toString())
+
+            FullScreenMapActivity.marker?.position?.latitude?.let {
+               poi.latitude = it
             }
-            Log.d(TAG, location.toString())
+            FullScreenMapActivity.marker?.position?.longitude?.let {
+                poi.longitude = it
+            }
+
             binding.addPoiLocationEditText.setText(
                 getString(
                     com.example.oc_p9_kotlin.R.string.add_estate_location,
-                    latitude?.toString(),
-                    longitude?.toString()
+                    poi.latitude.toString(),
+                    poi.longitude.toString()
                 )
             )
 
-            FullScreenMapActivity.marker= null
+            FullScreenMapActivity.marker = null
         }
     }
 
 
-        private fun onPoiTypeButtonClick() {
+    private fun onPoiTypeButtonClick() {
 
-            val listPopupWindow =
-                ListPopupWindow(
-                    this,
-                    null,
-                    R.attr.listPopupWindowStyle
-                )
-
-            listPopupWindow.anchorView = binding.addPoiDialogTypeButton
-
-            val items: Array<String> =
-                resources.getStringArray(com.example.oc_p9_kotlin.R.array.poi_type_array)
-
-            listPopupWindow.setAdapter(
-                ArrayAdapter(
-                    this,
-                    android.R.layout.simple_selectable_list_item,
-                    items
-                )
+        val listPopupWindow =
+            ListPopupWindow(
+                this,
+                null,
+                R.attr.listPopupWindowStyle
             )
 
-            listPopupWindow.setOnItemClickListener { _, _, position: Int, _ ->
+        listPopupWindow.anchorView = binding.addPoiDialogTypeButton
+
+        val items: Array<String> =
+            resources.getStringArray(com.example.oc_p9_kotlin.R.array.poi_type_array)
+
+        listPopupWindow.setAdapter(
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_selectable_list_item,
+                items
+            )
+        )
+
+        listPopupWindow.setOnItemClickListener { _, _, position: Int, _ ->
 
 
-                Log.d(TAG, "was : " + poiType.name)
+            Log.d(TAG, "was : " + poiType.name)
 
-                poiType = when (position) {
+            poiType = when (position) {
 
-                    0 -> POIType.STATION
-                    1 -> POIType.PUB
-                    2 -> POIType.HOSTEL
-                    3 -> POIType.HOSPITAL
-                    4 -> POIType.SCHOOL
-                    5 -> POIType.PARK
-                    6 -> POIType.RESTAURANT
-                    7 -> POIType.OTHER
-                    else -> POIType.OTHER
+                0 -> POIType.STATION
+                1 -> POIType.PUB
+                2 -> POIType.HOSTEL
+                3 -> POIType.HOSPITAL
+                4 -> POIType.SCHOOL
+                5 -> POIType.PARK
+                6 -> POIType.RESTAURANT
+                7 -> POIType.OTHER
+                else -> POIType.OTHER
 
-                }
-
-                Log.d(TAG, "is now : " + poiType.name)
-
-                binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)
-                //setType
-
-                listPopupWindow.dismiss()
             }
 
-            if (!listPopupWindow.isShowing)
-                listPopupWindow.show()
-            else
-                listPopupWindow.dismiss()
 
+            Log.d(TAG, "is now : " + poiType.name)
+
+            binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)
+            //setType
+
+            listPopupWindow.dismiss()
         }
+
+        if (!listPopupWindow.isShowing)
+            listPopupWindow.show()
+        else
+            listPopupWindow.dismiss()
+
     }
+}
     
     
     
