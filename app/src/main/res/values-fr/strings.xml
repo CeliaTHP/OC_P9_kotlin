@@ -138,7 +138,7 @@
 
 
     <string-array name="poi_type_array">
-        <item>Station</item>
+        <item>Gare</item>
         <item>Bar</item>
         <item>Hôtel</item>
         <item>Hôpital</item>

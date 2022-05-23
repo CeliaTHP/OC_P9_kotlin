@@ -98,7 +98,8 @@ class AddPoiActivity : AppCompatActivity() {
 
         Log.d(TAG, "canCreate $poi")
 
-        AddEstateActivity.addPoi(poi)
+        //AddEstateActivity.addPoi(poi)
+        AddEstateActivity.poiAdapter.addData(poi)
         finish()
 
 
@@ -116,7 +117,7 @@ class AddPoiActivity : AppCompatActivity() {
             Log.d(TAG, FullScreenMapActivity.marker.toString())
 
             FullScreenMapActivity.marker?.position?.latitude?.let {
-               poi.latitude = it
+                poi.latitude = it
             }
             FullScreenMapActivity.marker?.position?.longitude?.let {
                 poi.longitude = it

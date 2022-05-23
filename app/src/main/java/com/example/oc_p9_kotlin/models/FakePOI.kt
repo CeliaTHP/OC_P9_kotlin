@@ -29,7 +29,7 @@ enum class POIType(val stringValue: Int) {
     SCHOOL(R.string.poi_type_school),
     PARK(R.string.poi_type_park),
     RESTAURANT(R.string.poi_type_restaurant),
-    OTHER(R.string.poi_type_restaurant)
+    OTHER(R.string.poi_type_other)
 
 
 }

@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.AddEstateViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
+import com.example.oc_p9_kotlin.adapters.PoiAdapter
 import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.models.Currency
@@ -45,19 +46,22 @@ class AddEstateActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "AddEstateActivity"
 
+        /*
+                fun addPoi(fakePOI: FakePOI) {
+                    if (!poiList.contains(fakePOI)) {
 
-        fun addPoi(fakePOI: FakePOI) {
-            if (!poiList.contains(fakePOI)) {
-                poiList.add(fakePOI)
-                Log.d(TAG, "added " + fakePOI)
-                Log.d(TAG, "list is now   " + poiList.size+ "-" + poiList)
+                        Log.d(TAG, "added " + fakePOI)
+                        Log.d(TAG, "list is now   " + poiList.size+ "-" + poiList)
+
+                    } else {
+                        Log.d(TAG, "$fakePOI already in the list")
+
+                    }
+                }
 
 
-            } else {
-                Log.d(TAG, "$fakePOI already in the list")
-
-            }
-        }
+         */
+         lateinit var poiAdapter: PoiAdapter
 
         private var poiList = mutableListOf<FakePOI>()
 
@@ -104,6 +108,7 @@ class AddEstateActivity : AppCompatActivity() {
         initListeners()
         initPicsRecyclerView()
         initVideosRecyclerView()
+        initPoiRecyclerView()
 
 
     }
@@ -263,6 +268,19 @@ class AddEstateActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             // display error state to the user
         }
+    }
+
+    private fun initPoiRecyclerView() {
+        Log.d(TAG, "initPois")
+
+        poiAdapter = PoiAdapter(
+            mutableListOf(),
+            true,
+        ) {
+            // ON DATA UPDATE
+            poiList = poiAdapter.poiList
+        }
+        binding.addEstatePoiRecyclerView.adapter = poiAdapter
     }
 
     private fun initPicsRecyclerView() {
