@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.ListPopupWindow
-import com.example.oc_p9_kotlin.databinding.AddPoiDialogBinding
+import com.example.oc_p9_kotlin.databinding.ActivityAddPoiBinding
 import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.POIType
 import com.google.android.material.R
@@ -31,7 +31,7 @@ class AddPoiActivity : AppCompatActivity() {
         )
 
 
-    private lateinit var binding: AddPoiDialogBinding
+    private lateinit var binding: ActivityAddPoiBinding
 
     private var poiType = POIType.STATION
 
@@ -39,7 +39,7 @@ class AddPoiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = AddPoiDialogBinding.inflate(layoutInflater)
+        binding  = ActivityAddPoiBinding.inflate(layoutInflater)
 
         //Default type
         binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)

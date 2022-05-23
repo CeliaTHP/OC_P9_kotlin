@@ -23,6 +23,13 @@
     <string name="details_fragment_label">Fragment Détails</string>
     <string name="split_fragment_label">Fragment Split</string>
     <string name="connection_error">erreur de connexion : impossible de charger la carte.\nveuillez réessayer</string>
+    <string name="map_enter_location">OU\n Entrez manuellement les informations de localisation</string>
+    <string name="map_location_input_error">Format de données incorrect</string>
+
+    <string name="map_latitude_error">La latitude doit être comprise entre -90 and 90</string>
+    <string name="map_longitude_error">La longitude doit être comprise entre -180 and 180</string>
+
+
     <string name="data_error">erreur lors du chargement des données</string>
 
 
@@ -66,8 +73,6 @@
     <string name="filters_near_pub">Pub</string>
 
     <string name="filters_empty">Aucun de nos bien ne correspond à votre demande</string>
-
-
 
 
     <!--Add Estate-->

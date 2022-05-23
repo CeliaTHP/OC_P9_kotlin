@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.databinding.AddPoiDialogBinding
 import com.example.oc_p9_kotlin.databinding.ItemPoisBinding
 import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media

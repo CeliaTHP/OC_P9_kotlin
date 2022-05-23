@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/full_screen_back"
@@ -32,10 +32,9 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:src="@drawable/ic_refresh"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/details_connection_error_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/grey" />
 
 
@@ -48,9 +47,62 @@
         android:textColor="@color/grey"
         android:textSize="14sp"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/details_connection_enter_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/details_connection_enter_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/map_enter_location"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_refresh_button" />
+        app:layout_constraintTop_toBottomOf="@id/details_connection_error_text" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/full_screen_latitude_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/map_latitude"
+        app:layout_constraintBottom_toTopOf="@id/full_screen_longitude_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_connection_enter_location">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/full_screen_latitude_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/full_screen_longitude_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/map_longitude"
+        app:layout_constraintBottom_toTopOf="@id/fullscreen_map_confirm"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_poi_location_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fullscreen_map_confirm"
@@ -59,12 +111,12 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        tools:visibility="visible"
-        android:visibility="gone"
         android:src="@drawable/ic_check"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

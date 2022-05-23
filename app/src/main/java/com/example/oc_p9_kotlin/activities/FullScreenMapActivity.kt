@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isEmpty
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenMapBinding
 import com.example.oc_p9_kotlin.models.Estate
@@ -37,6 +38,7 @@ class FullScreenMapActivity : AppCompatActivity() {
     private var tempMarker: Marker? = null
 
     private var estate: Estate? = null
+    private var hasInternet = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +81,17 @@ class FullScreenMapActivity : AppCompatActivity() {
             initMap()
         }
         binding.fullscreenMapConfirm.setOnClickListener {
+
             if (tempMarker == null) {
-                Toast.makeText(this, R.string.add_estate_map_no_location, Toast.LENGTH_LONG).show()
+                if (hasInternet) {
+                    Toast.makeText(this, R.string.add_estate_map_no_location, Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    //VerifyFields
+                    verifyLocationFields()
+                    //if(binding.fullScreenLatitudeInput.isEmpty() && binding.fullScreenLongitudeInput.isEmpty())
+
+                }
             } else {
                 marker = tempMarker
                 finish()
@@ -91,6 +102,85 @@ class FullScreenMapActivity : AppCompatActivity() {
 
     }
 
+    private fun verifyLocationFields() {
+        var canCreate = true
+
+        //Check if all required fields are filled
+        val requiredEditTexts = arrayListOf(
+            binding.fullScreenLatitudeInput,
+            binding.fullScreenLongitudeInput,
+        )
+
+
+        for (editText in requiredEditTexts) {
+            if (editText.editText?.text.toString().toDoubleOrNull() == null) {
+                editText.error = getString(R.string.map_location_input_error)
+                canCreate = false
+            } else {
+                editText.error = null
+            }
+        }
+
+        if (!canCreate)
+            return
+
+        if (!(binding.fullScreenLatitudeInput.editText?.text.toString().toDouble() > -90 &&
+                    binding.fullScreenLatitudeInput.editText?.text.toString().toDouble() < 90)
+        ) {
+            canCreate = false
+            binding.fullScreenLatitudeInput.editText?.error = getString(R.string.map_latitude_error)
+        }
+
+        if (!(binding.fullScreenLongitudeInput.editText?.text.toString().toDouble() > -180 &&
+                    binding.fullScreenLongitudeInput.editText?.text.toString().toDouble() < 180)
+        ) {
+            canCreate = false
+            binding.fullScreenLongitudeInput.editText?.error =
+                getString(R.string.map_longitude_error)
+        }
+
+
+        if (!canCreate)
+            return
+
+
+        //TODO : TRY TO AVOID NON NULL ASSERTION
+        var geoPoint = GeoPoint(
+            binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()!!,
+            binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()!!
+        )
+
+        Log.d(TAG, "new GeoPoint = " + geoPoint.latitude + " - " + geoPoint.longitude)
+
+
+        marker = Marker(mapView)
+        marker?.position = geoPoint
+
+        /*
+        marker?.position?.latitude =
+            binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()!!
+
+        marker?.position?.longitude =
+            binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()!!
+
+
+         */
+        Log.d(
+            TAG,
+            " lat  = " + binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()
+        )
+        Log.d(
+            TAG,
+            " long  = " + binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()
+        )
+
+        Log.d(TAG, "can create location " + marker?.position)
+
+        finish()
+
+
+    }
+
     private fun initMap() {
 
         Log.d(TAG, "initMap")
@@ -98,14 +188,24 @@ class FullScreenMapActivity : AppCompatActivity() {
         mapView = binding.detailsMapView
 
         if (InternetUtils.isNetworkAvailable(this)) {
+            hasInternet = true
             Log.d(TAG, "internet is Available")
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
             binding.detailsRefreshButton.visibility = View.GONE
+            binding.detailsConnectionEnterLocation.visibility = View.GONE
+            binding.fullScreenLatitudeInput.visibility = View.GONE
+            binding.fullScreenLongitudeInput.visibility = View.GONE
+
         } else {
+            hasInternet = false
             binding.detailsMapView.visibility = View.GONE
             binding.detailsRefreshButton.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.VISIBLE
+            binding.detailsConnectionEnterLocation.visibility = View.VISIBLE
+            binding.fullScreenLatitudeInput.visibility = View.VISIBLE
+            binding.fullScreenLongitudeInput.visibility = View.VISIBLE
+
             Log.d(TAG, "internet is not Available")
 
         }

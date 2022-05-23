@@ -23,6 +23,16 @@
     <string name="details_fragment_label">Details Fragment</string>
     <string name="split_fragment_label">Split Fragment</string>
     <string name="connection_error">connection error : cannot load map.\nPlease try again</string>
+
+    <string name="map_enter_location">OR\n Manually enter location informations</string>
+    <string name="map_latitude" translatable="false">Latitude</string>
+    <string name="map_longitude" translatable="false">Longitude</string>
+    <string name="map_location_input_error">Wrong data input</string>
+    <string name="map_latitude_error">Latitude must be a number between -90 and 90</string>
+    <string name="map_longitude_error">Longitude must be a number between -180 and 180</string>
+
+
+
     <string name="data_error">error while loading data</string>
 
 
@@ -100,6 +110,7 @@
     <string name="add_estate_bedrooms_hint" translatable="false">1</string>
     <string name="add_estate_description">Description</string>
     <string name="add_estate_description_hint">From the outside this house looks luxurious…</string>
+
 
     <string name="add_estate_map_no_location">Please, select your estate location</string>
 

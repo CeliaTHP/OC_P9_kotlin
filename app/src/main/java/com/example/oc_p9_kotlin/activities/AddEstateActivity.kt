@@ -61,7 +61,7 @@ class AddEstateActivity : AppCompatActivity() {
 
 
          */
-         lateinit var poiAdapter: PoiAdapter
+        lateinit var poiAdapter: PoiAdapter
 
         private var poiList = mutableListOf<FakePOI>()
 
@@ -409,6 +409,7 @@ class AddEstateActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (FullScreenMapActivity.marker != null) {
+            Log.d(TAG, FullScreenMapActivity.marker.toString())
             var latitude = FullScreenMapActivity.marker?.position?.latitude
             var longitude = FullScreenMapActivity.marker?.position?.longitude
 
