@@ -179,6 +179,7 @@ class FiltersActivity : CompositeDisposableActivity() {
                     Log.d(TAG, "list received getWithFilters: " + it.toString())
 
                     //Send eventBus with our new list
+
                     onUpdateListEvent.setFilteredEstateList(it)
                     EventBus.getDefault().postSticky(onUpdateListEvent)
 

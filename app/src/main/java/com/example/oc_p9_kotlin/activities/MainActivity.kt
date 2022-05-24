@@ -27,7 +27,9 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.internal.util.MergerBiFunction
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -45,7 +47,6 @@ class MainActivity : CompositeDisposableActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: EstateAdapter
     private var listBag = CompositeDisposable()
-    private var isFirst = true
 
     private var estateList = mutableListOf<Estate>()
     //private var filteredList = mutableListOf<Estate>()
@@ -90,13 +91,15 @@ class MainActivity : CompositeDisposableActivity() {
         Log.d(TAG, "onCreate")
 
     }
+
     @Subscribe(sticky = true)
-     fun onUpdateListEvent(onUpdateListEvent: OnUpdateListEvent) {
-   //     filteredList.clear()
-       var  filteredList = onUpdateListEvent.getFilteredEstateList()
+    fun onUpdateListEvent(onUpdateListEvent: OnUpdateListEvent) {
+        //     filteredList.clear()
+
+        var filteredList = onUpdateListEvent.getFilteredEstateList()
         Log.d(TAG, "onUpdateList Event $filteredList")
 
-        updateEstateList(filteredList)
+        updateEstateList(filteredList, true)
 
     }
 
@@ -168,49 +171,59 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun fetchAllEstateAndUpdateList() {
         Log.d(TAG, "fetchAllEstate")
-        viewModel.getAll()
-            .subscribe(
-                {
-                    if (!it.isNullOrEmpty()) {
-                        Log.d(TAG, "list received getAll : " + it.toString())
-                        updateEstateList(it)
-                    } else {
-                        updateEstateList(mutableListOf())
-                    }
-                }, {
-                    Log.d(TAG, "error getEstateList getAll" + it.toString())
-                    Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
-
-                }).addTo(listBag)
 
 
+        Observable.merge(
+            viewModel.getAll().take(1).map { Pair(it, true) },
+            viewModel.getAll().skip(1).map { Pair(it, false) }
+        )
+            .subscribe({
+                val estateList = it.first
+                val isFirst = it.second
+                if (!it.first.isNullOrEmpty()) {
+                    Log.d(TAG, "list received getAll : " + it.toString())
+                    updateEstateList(estateList, isFirst)
+                } else {
+                    updateEstateList(mutableListOf(), isFirst)
+                }
+            }, {
+                Log.d(TAG, "error getEstateList getAll" + it.toString())
+                Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
+
+            }).addTo(listBag)
     }
+
 
     private fun fetchEstateOfTypeAndUpdateList(estateType: EstateType) {
         Log.d(TAG, "fetchWithTypeEstate")
-        viewModel.getByType(estateType)
-            .subscribe(
-                {
-                    if (!it.isNullOrEmpty()) {
-                        Log.d(TAG, "list received getByType : " + it.toString())
-                        updateEstateList(it)
-                    } else {
-                        updateEstateList(mutableListOf())
-                    }
-                }, {
-                    Log.d(TAG, "error getEstateList getByType" + it.message)
-                    Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
+        Observable.merge(
+            viewModel.getByType(estateType).take(1).map { Pair(it, true) },
+            viewModel.getByType(estateType).skip(1).map { Pair(it, false) }
+        ).subscribe( {
+            val estateList = it.first
+            val isFirst = it.second
+            if (!estateList.isNullOrEmpty()) {
+                Log.d(TAG, "list received getByType : " + it.toString())
+                updateEstateList(estateList, isFirst)
+            } else {
+                updateEstateList(mutableListOf(), isFirst)
+            }
+        }, {
+            Log.d(TAG, "error getEstateList getByType" + it.message)
+            Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
-                }).addTo(listBag)
+        }).addTo(listBag)
+
 
     }
 
 
-    private fun updateEstateList(estateList: MutableList<Estate>) {
+    private fun updateEstateList(estateList: MutableList<Estate>, isFirst: Boolean) {
         //Updating our list with retrieved data
         this.estateList = estateList
         adapter.updateData(estateList)
-        updateDefaultEstate(estateList)
+        if (isFirst)
+            updateDefaultEstate(estateList)
 
     }
 
@@ -221,14 +234,11 @@ class MainActivity : CompositeDisposableActivity() {
         if (estateList.isNullOrEmpty())
             return
 
-        if(isFirst) {
-            Log.d(TAG, "set default estate " + estateList[0])
-            onEstateEvent.setSelectedEstate(estateList[0])
-            EventBus.getDefault().postSticky(onEstateEvent)
-            isFirst = false
-        }
-
+        Log.d(TAG, "set default estate " + estateList[0])
+        onEstateEvent.setSelectedEstate(estateList[0])
+        EventBus.getDefault().postSticky(onEstateEvent)
     }
+
 
     private fun initViewModels() {
 
@@ -236,7 +246,6 @@ class MainActivity : CompositeDisposableActivity() {
             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
 
     }
-
 
 
     override fun onStop() {
