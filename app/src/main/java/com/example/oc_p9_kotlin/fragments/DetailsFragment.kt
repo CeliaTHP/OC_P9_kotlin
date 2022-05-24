@@ -338,12 +338,14 @@ class DetailsFragment : Fragment() {
 
     @Subscribe(sticky = true)
     fun onEstateEvent(onEstateEvent: OnEstateEvent) {
-        estate = onEstateEvent.getSelectedEstate()
 
-        estate?.let {
+        onEstateEvent.getSelectedEstate().let {
+            estate = it
             Log.d(TAG, "onEstateEvent : " + estate.toString())
             updateUI(it)
+
         }
+
 
     }
 

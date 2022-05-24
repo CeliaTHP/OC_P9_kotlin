@@ -25,6 +25,7 @@ import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.PoiAdapter
 import com.example.oc_p9_kotlin.adapters.VideoAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
+import com.example.oc_p9_kotlin.events.OnEstateEvent
 import com.example.oc_p9_kotlin.models.Currency
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
@@ -33,6 +34,7 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -304,7 +306,6 @@ class AddEstateActivity : AppCompatActivity() {
                     addEstateBedroomsInput.editText?.text.toString().toInt(),
                     addEstateAddressInput.editText?.text.toString(),
                     location,
-                    //TODO : handle POIS,
                     poiList,
                     addEstateDescriptionInput.editText?.text.toString(),
                     imageAdapter.imageList,
@@ -485,6 +486,7 @@ class AddEstateActivity : AppCompatActivity() {
                 Intent(this, AddPoiActivity::class.java)
             startActivity(intent)
         }
+
 
 
     }

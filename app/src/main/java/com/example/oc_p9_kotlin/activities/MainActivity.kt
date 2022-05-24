@@ -45,6 +45,7 @@ class MainActivity : CompositeDisposableActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: EstateAdapter
     private var listBag = CompositeDisposable()
+    private var isFirst = true
 
     private var estateList = mutableListOf<Estate>()
     //private var filteredList = mutableListOf<Estate>()
@@ -154,6 +155,7 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun getEstateList(estateType: EstateType? = null) {
 
+        Log.d(TAG, "getEstateList")
         listBag.clear()
 
         if (estateType == null) {
@@ -170,13 +172,13 @@ class MainActivity : CompositeDisposableActivity() {
             .subscribe(
                 {
                     if (!it.isNullOrEmpty()) {
-                        Log.d(TAG, "list received : " + it.toString())
+                        Log.d(TAG, "list received getAll : " + it.toString())
                         updateEstateList(it)
                     } else {
                         updateEstateList(mutableListOf())
                     }
                 }, {
-                    Log.d(TAG, "error getEstateList All" + it.toString())
+                    Log.d(TAG, "error getEstateList getAll" + it.toString())
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
                 }).addTo(listBag)
@@ -185,17 +187,18 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
     private fun fetchEstateOfTypeAndUpdateList(estateType: EstateType) {
+        Log.d(TAG, "fetchWithTypeEstate")
         viewModel.getByType(estateType)
             .subscribe(
                 {
                     if (!it.isNullOrEmpty()) {
-                        Log.d(TAG, "list received : " + it.toString())
+                        Log.d(TAG, "list received getByType : " + it.toString())
                         updateEstateList(it)
                     } else {
                         updateEstateList(mutableListOf())
                     }
                 }, {
-                    Log.d(TAG, "error getEstateList with Type" + it.message)
+                    Log.d(TAG, "error getEstateList getByType" + it.message)
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
                 }).addTo(listBag)
@@ -214,11 +217,17 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun updateDefaultEstate(estateList: MutableList<Estate>) {
         //Setting our first item as default selected estate
+
         if (estateList.isNullOrEmpty())
             return
-        Log.d(TAG, "set default estate " + estateList[0])
-        onEstateEvent.setSelectedEstate(estateList[0])
-        EventBus.getDefault().postSticky(onEstateEvent)
+
+        if(isFirst) {
+            Log.d(TAG, "set default estate " + estateList[0])
+            onEstateEvent.setSelectedEstate(estateList[0])
+            EventBus.getDefault().postSticky(onEstateEvent)
+            isFirst = false
+        }
+
     }
 
     private fun initViewModels() {

@@ -176,14 +176,14 @@ class FiltersActivity : CompositeDisposableActivity() {
                         Log.d(TAG, "emptyList")
                     }
 
-                    Log.d(TAG, "list received : " + it.toString())
+                    Log.d(TAG, "list received getWithFilters: " + it.toString())
 
                     //Send eventBus with our new list
                     onUpdateListEvent.setFilteredEstateList(it)
                     EventBus.getDefault().postSticky(onUpdateListEvent)
 
                 }, {
-                    Log.d(TAG, "error getFilteredList " + it.message)
+                    Log.d(TAG, "error getWithFilters " + it.message)
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
                 }).addTo(bag)
@@ -257,7 +257,6 @@ class FiltersActivity : CompositeDisposableActivity() {
     private fun initRangeSliders() {
 
 
-        //TODO : handle currency converter
         binding.filtersSliderPrice.setValues(0f, 500000f)
         initCurrency()
         //Utils.initSlider(binding.filtersSliderPrice, "$")
