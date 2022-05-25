@@ -129,6 +129,8 @@ class AddEstateActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun initFields(estate: Estate?) {
         if (estate == null)
             return

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
@@ -99,6 +98,23 @@ class DetailsFragment : Fragment() {
 
 
     private fun initExoPlayer(estate: Estate) {
+
+        if (!estate.videos.isNullOrEmpty()) {
+            Log.d(TAG, "is not null or empty")
+            estate.videos.let {
+                binding.detailsVideosFullscreen.visibility = View.VISIBLE
+                binding.detailsPlayerView.visibility =View.VISIBLE
+            }
+
+        } else {
+            Log.d(TAG, "is null or empty")
+
+            binding.detailsPlayerView.visibility =View.GONE
+            binding.detailsVideosFullscreen.visibility = View.GONE
+
+            player = ExoPlayer.Builder(binding.root.context).build()
+            binding.detailsPlayerView.player = player
+        }
 
         player = ExoPlayer.Builder(binding.root.context).build()
         binding.detailsPlayerView.player = player
@@ -328,6 +344,10 @@ class DetailsFragment : Fragment() {
             estate = it
             Log.d(TAG, "onEstateEvent : " + estate.toString())
             updateUI(it)
+            initMedias(it)
+            initExoPlayer(it)
+            initMap(it)
+            initPois()
 
         }
 
@@ -574,23 +594,21 @@ class DetailsFragment : Fragment() {
 
         }
         initExoPlayer(estate)
-        initPics(estate)
+        initMedias(estate)
         initMap(estate)
 
 
     }
 
-    private fun initPics(estate: Estate) {
+    private fun initMedias(estate: Estate) {
+        Log.d(TAG, "initMedias")
 
-        if (!estate.videos.isNullOrEmpty()) {
-            estate.videos.let {
 
-                binding.detailsVideosFullscreen.visibility = View.VISIBLE
 
-            }
 
-        }
         if (!estate.medias.isNullOrEmpty()) {
+            Log.d(TAG, "is not null or empty")
+
             estate.medias?.let {
                 binding.detailsDefaultPic.visibility = View.GONE
                 binding.detailsPhotosFullscreen.visibility = View.VISIBLE
@@ -603,6 +621,19 @@ class DetailsFragment : Fragment() {
                 binding.detailsPicsRecyclerView.adapter = imageAdapter
 
             }
+        } else {
+            Log.d(TAG, "is null or empty")
+            imageAdapter = ImageAdapter(
+                mutableListOf(),
+                false, {}) {
+            }
+
+            binding.detailsPicsRecyclerView.adapter = imageAdapter
+
+            binding.detailsDefaultPic.visibility = View.VISIBLE
+            binding.detailsPhotosFullscreen.visibility = View.GONE
+
+
         }
 
 
