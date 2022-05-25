@@ -25,6 +25,9 @@
     <string name="split_fragment_label">Split Fragment</string>
     <string name="connection_error">connection error : cannot load map.\nPlease try again</string>
 
+    <string name="map_user_location">Your location</string>
+    <string name="map_user_location_error">Cannot display your location</string>
+
     <string name="map_enter_location">OR\n Manually enter location informations</string>
     <string name="map_latitude" translatable="false">Latitude</string>
     <string name="map_longitude" translatable="false">Longitude</string>

@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(val estateDao: EstateDao) : ViewModel() {
 
+
     private var executor: Executor = Executors.newSingleThreadExecutor()
 
     companion object {

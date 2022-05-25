@@ -106,6 +106,7 @@ class VideoAdapter(
     }
 
 
+
     public fun updateData(newList: MutableList<Media>) {
         Log.d(TAG, "old list : " + videoList.size)
         this.videoList = newList

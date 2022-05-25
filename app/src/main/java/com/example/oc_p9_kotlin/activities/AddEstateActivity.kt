@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.location.Location
+import android.media.metrics.Event
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -64,6 +65,7 @@ class AddEstateActivity : AppCompatActivity() {
 
          */
         lateinit var poiAdapter: PoiAdapter
+        private var onEstateEvent = OnEstateEvent()
 
         private var poiList = mutableListOf<FakePOI>()
 
@@ -289,6 +291,10 @@ class AddEstateActivity : AppCompatActivity() {
 
                 viewModel.updateEstate(estate)
                 Log.d(TAG, " updated : " + estate.toString())
+
+                onEstateEvent.setSelectedEstate(estate)
+                EventBus.getDefault().postSticky(onEstateEvent)
+
                 finish()
 
 
@@ -424,10 +430,12 @@ class AddEstateActivity : AppCompatActivity() {
 
     private fun verifyPlaceholders() {
         if (imageAdapter.itemCount > 0) {
+            Log.d(TAG, "one image atleast")
             binding.addEstateDefaultPic.visibility = View.GONE
             binding.addEstatePhotoTitle.visibility = View.VISIBLE
 
         } else {
+            Log.d(TAG, "less than 1 image")
             binding.addEstateDefaultPic.visibility = View.VISIBLE
             binding.addEstatePhotoTitle.visibility = View.GONE
 
@@ -493,6 +501,9 @@ class AddEstateActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        verifyPlaceholders()
+
         if (FullScreenMapActivity.marker != null) {
             Log.d(TAG, FullScreenMapActivity.marker.toString())
             var latitude = FullScreenMapActivity.marker?.position?.latitude
@@ -765,6 +776,10 @@ class AddEstateActivity : AppCompatActivity() {
         else
             listPopupWindow.dismiss()
 
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
 
