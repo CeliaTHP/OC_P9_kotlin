@@ -29,6 +29,9 @@
         android:theme="@style/Theme.OC_P9_kotlin"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.MapViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddPoiActivity"
             android:exported="false" />
         <activity

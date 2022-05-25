@@ -141,8 +141,12 @@ class MainActivity : CompositeDisposableActivity() {
 
         })
 
-        binding.fab.setOnClickListener {
+        binding.newEstateFab.setOnClickListener {
             this.startActivity(Intent(this, AddEstateActivity::class.java))
+        }
+        binding.mapViewFab.setOnClickListener {
+            this.startActivity(Intent(this, MapViewActivity::class.java))
+
         }
 
 
@@ -199,7 +203,7 @@ class MainActivity : CompositeDisposableActivity() {
         Observable.merge(
             viewModel.getByType(estateType).take(1).map { Pair(it, true) },
             viewModel.getByType(estateType).skip(1).map { Pair(it, false) }
-        ).subscribe( {
+        ).subscribe({
             val estateList = it.first
             val isFirst = it.second
             if (!estateList.isNullOrEmpty()) {
@@ -364,7 +368,6 @@ class MainActivity : CompositeDisposableActivity() {
                     null
 
             } else {
-
                 Log.d(TAG, "shouldNotHideIcon")
                 isOverflowIconEnabled = true
                 binding.toolbar.overflowIcon =
@@ -376,6 +379,7 @@ class MainActivity : CompositeDisposableActivity() {
         }
 
         setSupportActionBar(binding.toolbar)
+
 
 
     }

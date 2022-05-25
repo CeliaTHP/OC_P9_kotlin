@@ -1,8 +1,6 @@
 package com.example.oc_p9_kotlin.fragments
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -13,7 +11,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
@@ -27,16 +24,12 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.utils.Utils
-import com.example.oc_p9_kotlin.view_models.DetailsViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.osmdroid.bonuspack.location.NominatimPOIProvider
-import org.osmdroid.bonuspack.location.OverpassAPIProvider
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
@@ -63,7 +56,6 @@ class DetailsFragment : Fragment() {
     private lateinit var imageAdapter: ImageAdapter
 
     private var mapView: MapView? = null
-    private lateinit var viewModel: DetailsViewModel
     private var _binding: FragmentDetailsBinding? = null
 
     private lateinit var playerFullscreenBinding: ExoPlayerFullscreenBinding
@@ -101,17 +93,10 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViewModels()
         initListeners()
 
     }
 
-    private fun initViewModels() {
-
-        viewModel =
-            ViewModelProvider(this).get(DetailsViewModel::class.java)
-
-    }
 
     private fun initExoPlayer(estate: Estate) {
 

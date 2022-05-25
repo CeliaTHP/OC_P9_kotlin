@@ -4,6 +4,7 @@
     <string name="app_name">Real Estate Manager</string>
 
     <!-- Actions-->
+    <string name="action_map">Vue carte</string>
     <string name="action_filter_all">Voir tout</string>
     <string name="action_filter">Filtres</string>
     <string name="action_filter_house">Voir maisons</string>

@@ -57,7 +57,6 @@ class FullScreenMapActivity : AppCompatActivity() {
         initMap()
 
 
-
         initListeners()
 
 
@@ -226,8 +225,9 @@ class FullScreenMapActivity : AppCompatActivity() {
 
     private fun initMapWithoutEstate() {
 
-        val startPoint = GeoPoint(46.7115817262967, 2.540951984635548)
+        val startPoint = GeoPoint(48.86025403000657, 2.348531258648622)
         mapView?.controller?.setCenter(startPoint)
+
 
         initMapListeners()
 

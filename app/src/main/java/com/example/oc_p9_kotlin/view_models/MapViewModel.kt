@@ -22,14 +22,15 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
 
-class DetailsViewModel() : ViewModel() {
+class MapViewModel(val estateDao: EstateDao) : ViewModel() {
 
     private var executor: Executor = Executors.newSingleThreadExecutor()
     var poisLiveData = MutableLiveData<POI>()
 
     companion object {
-        private const val TAG = "DetailsEstateViewModel"
+        private const val TAG = "MapViewModel"
     }
+
 
 
 
