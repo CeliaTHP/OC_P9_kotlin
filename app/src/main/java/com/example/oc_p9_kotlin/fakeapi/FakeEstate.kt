@@ -72,6 +72,15 @@ object FakeEstateApi {
         return cal.time
     }
 
+    private fun getSaleDate(): Date {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        cal.add(Calendar.DATE, -1)
+        return cal.time
+    }
+
+
+
 
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
@@ -200,7 +209,7 @@ object FakeEstateApi {
             1,
             null,
             getEntryDate(),
-            Date(),
+            getSaleDate(),
             isAvailable = false,
             null
         ),
@@ -311,7 +320,7 @@ object FakeEstateApi {
             0,
             null,
             getEntryDate(),
-            Date(),
+            getSaleDate(),
             isAvailable = false,
             "Victoria Purple"
         ),
@@ -369,7 +378,7 @@ object FakeEstateApi {
             6,
             null,
             getEntryDate(),
-            Date(),
+            getSaleDate(),
             isAvailable = false,
             null
         )

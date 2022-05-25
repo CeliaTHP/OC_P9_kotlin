@@ -4,13 +4,13 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.location.Location
-import android.media.metrics.Event
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
@@ -39,7 +39,9 @@ import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
+import java.util.Calendar
 import java.util.Date
+import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.UUID
 
@@ -68,6 +70,7 @@ class AddEstateActivity : AppCompatActivity() {
         private var onEstateEvent = OnEstateEvent()
 
         private var poiList = mutableListOf<FakePOI>()
+        private lateinit var saleDate: Date
 
     }
 
@@ -130,7 +133,6 @@ class AddEstateActivity : AppCompatActivity() {
     }
 
 
-
     private fun initFields(estate: Estate?) {
         if (estate == null)
             return
@@ -171,6 +173,9 @@ class AddEstateActivity : AppCompatActivity() {
             poiAdapter.updateData(it.toMutableList())
 
         }
+
+        binding.addEstateAvailableCheckbox.isChecked = estate.isAvailable
+
 
     }
 
@@ -290,6 +295,14 @@ class AddEstateActivity : AppCompatActivity() {
                 estate.medias = imageAdapter.imageList
                 estate.videos = videoAdapter.videoList
 
+                if (binding.addEstateAvailableCheckbox.isChecked) {
+                    estate.isAvailable = true
+                    estate.saleDate = null
+                } else {
+                    estate.isAvailable = false
+                    estate.saleDate = saleDate
+                }
+
 
                 viewModel.updateEstate(estate)
                 Log.d(TAG, " updated : " + estate.toString())
@@ -298,7 +311,6 @@ class AddEstateActivity : AppCompatActivity() {
                 EventBus.getDefault().postSticky(onEstateEvent)
 
                 finish()
-
 
 
             } else {
@@ -432,12 +444,10 @@ class AddEstateActivity : AppCompatActivity() {
 
     private fun verifyPlaceholders() {
         if (imageAdapter.itemCount > 0) {
-            Log.d(TAG, "one image atleast")
             binding.addEstateDefaultPic.visibility = View.GONE
             binding.addEstatePhotoTitle.visibility = View.VISIBLE
 
         } else {
-            Log.d(TAG, "less than 1 image")
             binding.addEstateDefaultPic.visibility = View.VISIBLE
             binding.addEstatePhotoTitle.visibility = View.GONE
 
@@ -497,7 +507,39 @@ class AddEstateActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.addEstateAvailableCheckbox.setOnCheckedChangeListener { compoundButton, isChecked ->
+            if (isChecked) {
+                binding.addEstateDateSaleTitle.visibility = View.GONE
+                binding.addEstateDateSalePicker.visibility = View.GONE
+            } else {
+                binding.addEstateDateSaleTitle.visibility = View.VISIBLE
+                binding.addEstateDateSalePicker.visibility = View.VISIBLE
 
+            }
+
+
+            val saleDateCalendar: Calendar = GregorianCalendar()
+            estate.saleDate?.let {
+                Log.d(TAG, "sale date : "+ estate.entryDate)
+                Log.d(TAG, "sale date : "+ estate.saleDate)
+                saleDateCalendar.time = it
+                saleDate = it
+            }
+
+            binding.addEstateDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
+                saleDateCalendar.get(Calendar.MONTH),
+                saleDateCalendar.get(Calendar.DAY_OF_MONTH),
+                DatePicker.OnDateChangedListener { datePicker, year, month, day ->
+                    saleDateCalendar.set(
+                        datePicker.year,
+                        datePicker.month,
+                        datePicker.dayOfMonth
+                    )
+                    saleDate = saleDateCalendar.time
+                    Log.d(TAG, saleDate.toString())
+                })
+
+        }
 
     }
 
