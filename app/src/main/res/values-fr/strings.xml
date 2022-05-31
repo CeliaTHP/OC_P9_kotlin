@@ -33,8 +33,20 @@
     <string name="map_latitude_error">La latitude doit être comprise entre -90 and 90</string>
     <string name="map_longitude_error">La longitude doit être comprise entre -180 and 180</string>
 
-
     <string name="data_error">erreur lors du chargement des données</string>
+
+
+    <!--Auth-->
+    <string name="auth_title">Authentification</string>
+    <string name="auth_identifier">Identifiant</string>
+    <string name="auth_password">Mot de passe</string>
+    <string name="auth_log_in">Se connecter</string>
+    <string name="auth_register">S\'inscrire</string>
+    <string name="auth_reset_password"><u>Réinitialiser le mot de passe</u></string>
+    <string name="auth_already_account"><u>J\'ai déjà un compte</u></string>
+    <string name="auth_create_account"><u>Créer un compte</u></string>
+    <string name="auth_error">Identifiants incorrects</string>
+    <string name="auth_email_sent">Email envoyé</string>
 
 
     <!--Details-->

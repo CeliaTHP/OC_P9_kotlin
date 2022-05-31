@@ -35,8 +35,20 @@
     <string name="map_latitude_error">Latitude must be a number between -90 and 90</string>
     <string name="map_longitude_error">Longitude must be a number between -180 and 180</string>
 
-
     <string name="data_error">error while loading data</string>
+
+    <!--Auth-->
+    <string name="auth_title">Authentication</string>
+    <string name="auth_identifier">Identifier</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_log_in">Log in</string>
+    <string name="auth_register">Register</string>
+    <string name="auth_reset_password"><u>Reset password</u></string>
+    <string name="auth_already_account"><u>I already have an account</u></string>
+    <string name="auth_create_account"><u>Create an account</u></string>
+    <string name="auth_error">Invalid credentials</string>
+    <string name="auth_email_sent">Email sent</string>
+
 
 
     <!--Details-->

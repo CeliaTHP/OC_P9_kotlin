@@ -1,13 +1,12 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -22,12 +21,17 @@ import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import io.reactivex.rxjava3.kotlin.addTo
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
+import org.savecode.eiver.pages.account.parameters.view.dialog.AuthDialog
 
 
 class MapViewActivity : CompositeDisposableActivity(), LocationListener {
@@ -38,6 +42,11 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private lateinit var authDialog: AlertDialog
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private var currentUser: FirebaseUser? = null
 
 
     companion object {
@@ -53,21 +62,118 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         binding = ActivityMapViewBinding.inflate(layoutInflater)
 
 
+        verifyAuth()
         initViewModels()
         initListeners()
-        initMap()
-        initLocationInfo()
+
+
+        //initMap()
+        //initLocationInfo()
 
         setContentView(binding.root)
 
     }
 
+    private fun verifyAuth() {
+
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            Log.d(TAG, "user found : " + currentUser?.displayName.toString())
+            if (authDialog.isShowing)
+                authDialog.dismiss()
+            initMap()
+
+        } else {
+            authDialog =
+                AuthDialog.showDialog(this,
+                    { isCreating, email, password ->
+                        if (isCreating) {
+                            Log.d(TAG, "isCreating : $email $password")
+                            //createFirebaseUser(email, password)
+                        } else {
+                            Log.d(TAG, "isSigningIn : $email $password")
+                            //signInFirebaseUser(email, password)
+
+                        }
+                    }, { email ->
+                        Log.d(TAG, "resetFirebasePassword $email")
+                        //resetFirebasePassword(email)
+
+                    })
+
+            Log.d(TAG, "null User")
+        }
+
+    }
+
+    private fun resetFirebasePassword(email: String) {
+
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    Log.d(TAG, "Email sent.")
+                }
+            }
+    }
+
+
+    private fun createFirebaseUser(email: String, password: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(
+                this
+            ) { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "createUserWithEmail:success")
+                    if (authDialog.isShowing)
+                        authDialog.dismiss()
+                    currentUser = firebaseAuth.currentUser
+                    initMap()
+
+                } else {
+                    //Auth fails
+                    Log.d(TAG, "createUserWithEmail:failure", task.getException())
+                    Toast.makeText(
+                        this@MapViewActivity,
+                        R.string.auth_error,
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+            }
+
+    }
+
+    private fun signInFirebaseUser(email: String, password: String) {
+
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this,
+                OnCompleteListener<AuthResult?> { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        if (authDialog.isShowing)
+                            authDialog.dismiss()
+                        currentUser = firebaseAuth.currentUser
+                        initMap()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        //Auth fails
+                        Log.d(TAG, "signInWithEmail:failure", task.getException())
+                        Toast.makeText(
+                            this@MapViewActivity,
+                            R.string.auth_error,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                })
+
+    }
+
     private fun initLocationInfo() {
-
-
         checkAndRequestPermissions()
-
-
     }
 
     override fun onLocationChanged(location: Location) {
@@ -164,11 +270,13 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         }
 
         binding.mapViewErrorRefresh.setOnClickListener {
-            initMap()
+            //initMap()
         }
     }
 
     fun initMap() {
+
+        initLocationInfo()
 
         mapView = binding.mapViewMap
 
