@@ -8,8 +8,10 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import java.util.Date
 
 @Dao
@@ -19,22 +21,22 @@ interface EstateDao {
     fun getAll(): Observable<MutableList<Estate>>
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
-    fun getById(estateId: String): Observable<Estate>
+    fun getById(estateId: String): Single<Estate>
 
     @Query("SELECT * FROM estate WHERE type LIKE :estateType")
     fun getByType(estateType: EstateType): Observable<MutableList<Estate>>
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertEstate(estate: Estate)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertEstate(estate: Estate): Completable
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertAllEstates(estateList: List<Estate>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllEstates(estateList: List<Estate>) : Completable
 
     @Update
-    fun updateEstate(estate: Estate)
+    fun updateEstate(estate: Estate) : Completable
 
     @Delete
-    fun delete(estate: Estate)
+    fun delete(estate: Estate) : Completable
 
     @Query(
         " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +

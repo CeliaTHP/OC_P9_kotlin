@@ -112,6 +112,8 @@ class MainActivity : CompositeDisposableActivity() {
                     if (it.isNullOrEmpty()) {
                         Log.d(TAG, "generateData")
                         viewModel.generateData()
+                            .subscribe()
+                            .addTo(bag)
                     }
                 }, {
                     Log.d(TAG, "error getEstateList generation" + it.message)

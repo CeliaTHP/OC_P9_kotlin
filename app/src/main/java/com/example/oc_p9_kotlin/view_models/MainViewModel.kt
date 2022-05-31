@@ -6,7 +6,9 @@ import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -17,19 +19,14 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(val estateDao: EstateDao) : ViewModel() {
 
-
-    private var executor: Executor = Executors.newSingleThreadExecutor()
-
     companion object {
         private const val TAG = "MainViewModel"
     }
 
-    fun generateData() {
-        executor.execute {
-            estateDao.insertAllEstates(FakeEstateApi.getFakeEstateList())
-        }
-
-
+    fun generateData(): Completable {
+        return estateDao.insertAllEstates(FakeEstateApi.getFakeEstateList())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getAll(): Observable<MutableList<Estate>> =
@@ -42,7 +39,7 @@ class MainViewModel(val estateDao: EstateDao) : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    fun getById(id: String): Observable<Estate> =
+    fun getById(id: String): Single<Estate> =
         estateDao.getById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

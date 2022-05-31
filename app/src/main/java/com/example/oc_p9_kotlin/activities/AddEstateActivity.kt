@@ -35,6 +35,7 @@ import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
+import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
@@ -46,7 +47,7 @@ import java.util.Locale
 import java.util.UUID
 
 
-class AddEstateActivity : AppCompatActivity() {
+class AddEstateActivity : CompositeDisposableActivity() {
 
     companion object {
         private const val TAG = "AddEstateActivity"
@@ -102,7 +103,6 @@ class AddEstateActivity : AppCompatActivity() {
         //Setting up view with binding
         binding = ActivityAddEstateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         //Default type
         binding.addEstateTypeButton.text = getString(estateType.stringValue)
@@ -304,6 +304,9 @@ class AddEstateActivity : AppCompatActivity() {
                 }
 
                 viewModel.updateEstate(estate)
+                    .subscribe()
+                    .addTo(bag)
+
                 Log.d(TAG, " updated : " + estate.toString())
 
                 onEstateEvent.setSelectedEstate(estate)
@@ -336,6 +339,8 @@ class AddEstateActivity : AppCompatActivity() {
                     null
                 )
                 viewModel.insertEstate(estate)
+                    .subscribe()
+                    .addTo(bag)
                 Log.d(TAG, " created : " + estate.toString())
                 finish()
 
@@ -359,7 +364,6 @@ class AddEstateActivity : AppCompatActivity() {
     private fun selectVideoIntent() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "video/*"
-
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO)
     }
@@ -369,6 +373,7 @@ class AddEstateActivity : AppCompatActivity() {
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         } catch (e: ActivityNotFoundException) {
+            //TODO : handle error
             // display error state to the user
         }
     }
@@ -820,10 +825,6 @@ class AddEstateActivity : AppCompatActivity() {
         else
             listPopupWindow.dismiss()
 
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
 
