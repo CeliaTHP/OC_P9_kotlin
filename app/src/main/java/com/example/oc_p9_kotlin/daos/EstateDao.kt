@@ -30,19 +30,22 @@ interface EstateDao {
     fun insertEstate(estate: Estate): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllEstates(estateList: List<Estate>) : Completable
+    fun insertAllEstates(estateList: List<Estate>): Completable
 
     @Update
-    fun updateEstate(estate: Estate) : Completable
+    fun updateEstate(estate: Estate): Completable
 
     @Delete
-    fun delete(estate: Estate) : Completable
+    fun delete(estate: Estate): Completable
 
     @Query(
         " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
                 "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
                 "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
-                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND sale_date >= :saleDate "
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND media_count BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND sale_date >= :saleDate AND " +
+                "is_near_station LIKE :isNearStation AND is_near_pub LIKE :isNearPub AND is_near_hostel LIKE :isNearHostel " +
+                "AND is_near_hospital LIKE :isNearHospital AND is_near_school LIKE :isNearSchool AND is_near_park LIKE :isNearPark AND " +
+                "is_near_restaurant LIKE :isNearRestaurant ANd is_near_other LIKE :isNearOther"
     )
     fun getWithFiltersWithSaleDate(
         estateType: String,
@@ -59,7 +62,15 @@ interface EstateDao {
         photosMin: Int,
         photosMax: Int,
         entryDate: Date,
-        saleDate: Date
+        saleDate: Date,
+        isNearStation: Boolean,
+        isNearPub: Boolean,
+        isNearHostel: Boolean,
+        isNearHospital: Boolean,
+        isNearSchool: Boolean,
+        isNearPark: Boolean,
+        isNearRestaurant: Boolean,
+        isNearOther: Boolean
 
     ): Observable<MutableList<Estate>>
 
@@ -67,7 +78,10 @@ interface EstateDao {
         " SELECT * FROM estate WHERE type LIKE :estateType AND price_in_euros BETWEEN :priceMin " +
                 "AND :priceMax AND surface_in_square_meters BETWEEN :surfaceMin AND :surfaceMax AND " +
                 "rooms BETWEEN :roomsMin AND :roomsMax AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
-                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND mediaCount BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate"
+                "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax AND media_count BETWEEN :photosMin AND :photosMax AND entry_date >= :entryDate AND " +
+                "is_near_station LIKE :isNearStation AND is_near_pub LIKE :isNearPub AND is_near_hostel LIKE :isNearHostel " +
+                "AND is_near_hospital LIKE :isNearHospital AND is_near_school LIKE :isNearSchool AND is_near_park LIKE :isNearPark AND " +
+                "is_near_restaurant LIKE :isNearRestaurant ANd is_near_other LIKE :isNearOther"
     )
     fun getWithFiltersWithoutSaleDate(
         estateType: String,
@@ -84,6 +98,14 @@ interface EstateDao {
         photosMin: Int,
         photosMax: Int,
         entryDate: Date,
+        isNearStation: Boolean,
+        isNearPub: Boolean,
+        isNearHostel: Boolean,
+        isNearHospital: Boolean,
+        isNearSchool: Boolean,
+        isNearPark: Boolean,
+        isNearRestaurant: Boolean,
+        isNearOther: Boolean
     ): Observable<MutableList<Estate>>
 
 

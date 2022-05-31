@@ -549,7 +549,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_station"
                     android:text="@string/poi_type_station"
                     app:layout_constrainedWidth="true" />
@@ -559,7 +558,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_pub"
                     android:text="@string/poi_type_pub" />
 
@@ -568,7 +566,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_hostel"
                     android:text="@string/poi_type_hostel" />
 
@@ -587,9 +584,7 @@
                     android:id="@+id/filters_near_hospital_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:checked="true"
-                    android:tag="@string/poi_type_hospital"
+                    android:layout_margin="10dp" android:tag="@string/poi_type_hospital"
                     android:text="@string/poi_type_hospital"
                     app:layout_constrainedWidth="true" />
 
@@ -598,7 +593,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_school"
                     android:text="@string/poi_type_school" />
 
@@ -607,7 +601,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_park"
                     android:text="@string/poi_type_park" />
 
@@ -626,7 +619,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_restaurant"
                     android:text="@string/poi_type_restaurant"
                     app:layout_constrainedWidth="true" />
@@ -636,7 +628,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:checked="true"
                     android:tag="@string/poi_type_other"
                     android:text="@string/poi_type_other" />
 

@@ -37,7 +37,15 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         photosMin: Int,
         photosMax: Int,
         entryDate:Date,
-        saleDate: Date?
+        saleDate: Date?,
+        isNearStation : Boolean,
+        isNearPub: Boolean,
+        isNearHostel: Boolean,
+        isNearHospital: Boolean,
+        isNearSchool: Boolean,
+        isNearPark: Boolean,
+        isNearRestaurant: Boolean,
+        isNearOther: Boolean
     ): Observable<MutableList<Estate>> =
         if(saleDate != null) {
             estateDao.getWithFiltersWithSaleDate(
@@ -55,7 +63,15 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
                 photosMin,
                 photosMax,
                 entryDate,
-                saleDate
+                saleDate,
+                isNearStation,
+                isNearPub,
+                isNearHostel,
+                isNearHospital,
+                isNearSchool,
+                isNearPark,
+                isNearRestaurant,
+                isNearOther
 
             )
         } else {
@@ -73,7 +89,15 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
                 bedroomsMax,
                 photosMin,
                 photosMax,
-                entryDate
+                entryDate,
+                isNearStation,
+                isNearPub,
+                isNearHostel,
+                isNearHospital,
+                isNearSchool,
+                isNearPark,
+                isNearRestaurant,
+                isNearOther
             )
 
         }

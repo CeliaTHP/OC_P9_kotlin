@@ -136,8 +136,21 @@ class AddEstateActivity : CompositeDisposableActivity() {
 
 
     private fun initFields(estate: Estate?) {
+
+
+
         if (estate == null)
             return
+
+        val saleDateCalendar: Calendar = GregorianCalendar()
+
+        if (estate.saleDate != null) {
+            Log.d(TAG, "sale date : " + estate.entryDate)
+            Log.d(TAG, "sale date : " + estate.saleDate)
+            saleDate = estate.saleDate
+            saleDateCalendar.time = saleDate
+
+        }
 
         isEditing = true
 
@@ -544,13 +557,7 @@ class AddEstateActivity : CompositeDisposableActivity() {
 
 
             val saleDateCalendar: Calendar = GregorianCalendar()
-            if (estate.saleDate != null) {
-                Log.d(TAG, "sale date : " + estate.entryDate)
-                Log.d(TAG, "sale date : " + estate.saleDate)
-                saleDate = estate.saleDate
-                saleDateCalendar.time = saleDate
 
-            } else {
                 binding.addEstateDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
                     saleDateCalendar.get(Calendar.MONTH),
                     saleDateCalendar.get(Calendar.DAY_OF_MONTH),
@@ -563,7 +570,7 @@ class AddEstateActivity : CompositeDisposableActivity() {
                         saleDate = saleDateCalendar.time
                         Log.d(TAG, saleDate.toString())
                     })
-            }
+
 
         }
 

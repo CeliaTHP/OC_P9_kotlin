@@ -167,8 +167,17 @@ class FiltersActivity : CompositeDisposableActivity() {
             photosMin,
             photosMax,
             entryDate,
-            saleDate
-        )
+            saleDate,
+            binding.filtersNearStationCheckbox.isChecked,
+            binding.filtersNearPubCheckbox.isChecked,
+            binding.filtersNearHostelCheckbox.isChecked,
+            binding.filtersNearHospitalCheckbox.isChecked,
+            binding.filtersNearSchoolCheckbox.isChecked,
+            binding.filtersNearParkCheckbox.isChecked,
+            binding.filtersNearRestaurantCheckbox.isChecked,
+            binding.filtersNearOtherCheckbox.isChecked,
+
+            )
             .subscribe(
                 {
                     if (it.isNullOrEmpty()) {

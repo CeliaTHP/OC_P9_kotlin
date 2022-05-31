@@ -28,19 +28,31 @@ data class Estate(
     var bedrooms: Int,
     var address: String,
     var location: Location,
+
+    @ColumnInfo(name = "nearby_places")
     var nearbyPlaces: List<FakePOI>?,
 
+    @ColumnInfo(name = "is_near_station")
     var isNearStation: Boolean = false,
+    @ColumnInfo(name = "is_near_pub")
     var isNearPub: Boolean = false,
+    @ColumnInfo(name = "is_near_hostel")
     var isNearHostel: Boolean = false,
+    @ColumnInfo(name = "is_near_hospital")
     var isNearHospital: Boolean = false,
+    @ColumnInfo(name = "is_near_school")
     var isNearSchool: Boolean= false,
+    @ColumnInfo(name = "is_near_park")
     var isNearPark: Boolean= false,
+    @ColumnInfo(name = "is_near_restaurant")
     var isNearRestaurant: Boolean = false,
+    @ColumnInfo(name = "is_near_other")
     var isNearOther: Boolean = false,
 
     var description: String,
     var medias: List<Media>?,
+
+    @ColumnInfo(name = "media_count")
     var mediaCount: Int,
     var videos: List<Media>?,
     @ColumnInfo(name = "entry_date")
