@@ -70,7 +70,7 @@ class AddEstateActivity : AppCompatActivity() {
         private var onEstateEvent = OnEstateEvent()
 
         private var poiList = mutableListOf<FakePOI>()
-        private lateinit var saleDate: Date
+        private var saleDate: Date? = Date()
 
     }
 
@@ -303,7 +303,6 @@ class AddEstateActivity : AppCompatActivity() {
                     estate.saleDate = saleDate
                 }
 
-
                 viewModel.updateEstate(estate)
                 Log.d(TAG, " updated : " + estate.toString())
 
@@ -519,25 +518,26 @@ class AddEstateActivity : AppCompatActivity() {
 
 
             val saleDateCalendar: Calendar = GregorianCalendar()
-            estate.saleDate?.let {
-                Log.d(TAG, "sale date : "+ estate.entryDate)
-                Log.d(TAG, "sale date : "+ estate.saleDate)
-                saleDateCalendar.time = it
-                saleDate = it
-            }
+            if (estate.saleDate != null) {
+                Log.d(TAG, "sale date : " + estate.entryDate)
+                Log.d(TAG, "sale date : " + estate.saleDate)
+                saleDate = estate.saleDate
+                saleDateCalendar.time = saleDate
 
-            binding.addEstateDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
-                saleDateCalendar.get(Calendar.MONTH),
-                saleDateCalendar.get(Calendar.DAY_OF_MONTH),
-                DatePicker.OnDateChangedListener { datePicker, year, month, day ->
-                    saleDateCalendar.set(
-                        datePicker.year,
-                        datePicker.month,
-                        datePicker.dayOfMonth
-                    )
-                    saleDate = saleDateCalendar.time
-                    Log.d(TAG, saleDate.toString())
-                })
+            } else {
+                binding.addEstateDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
+                    saleDateCalendar.get(Calendar.MONTH),
+                    saleDateCalendar.get(Calendar.DAY_OF_MONTH),
+                    DatePicker.OnDateChangedListener { datePicker, year, month, day ->
+                        saleDateCalendar.set(
+                            datePicker.year,
+                            datePicker.month,
+                            datePicker.dayOfMonth
+                        )
+                        saleDate = saleDateCalendar.time
+                        Log.d(TAG, saleDate.toString())
+                    })
+            }
 
         }
 

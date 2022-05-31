@@ -415,7 +415,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_location_add"
-                    app:layout_constraintTop_toBottomOf="@id/add_estate_location_input"
+                    app:layout_constraintTop_toBottomOf="@id/add_estate_date_sale_picker"
                     app:tint="@color/white" />
 
 
