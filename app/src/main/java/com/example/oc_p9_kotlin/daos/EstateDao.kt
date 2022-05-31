@@ -19,7 +19,7 @@ interface EstateDao {
     fun getAll(): Observable<MutableList<Estate>>
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
-    fun getById(estateId: String): Estate
+    fun getById(estateId: String): Observable<Estate>
 
     @Query("SELECT * FROM estate WHERE type LIKE :estateType")
     fun getByType(estateType: EstateType): Observable<MutableList<Estate>>

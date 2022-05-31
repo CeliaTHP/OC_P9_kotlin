@@ -7,6 +7,7 @@ import android.location.LocationListener
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -194,6 +195,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
     }
 
     private fun initEstates() {
+        bag.clear()
 
         viewModel.getAll().subscribe({
             if (it.isNullOrEmpty()) {
@@ -210,6 +212,16 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 
     }
 
+    private fun initChosenEstate(id: String) {
+        bag.clear()
+        viewModel.getById(id).subscribe({
+            Log.d(TAG, "chosenEstate = " + it.toString())
+        }, {
+            Log.d(TAG, "Error while searching for estate")
+        })
+            .addTo(bag)
+    }
+
     private fun initMarkers(estateList: MutableList<Estate>) {
 
         val estateMarkers = FolderOverlay()
@@ -219,6 +231,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             val estateMarker = Marker(mapView)
 
             estateMarker.title = getString(estate.type.stringValue)
+            estateMarker.id = estate.id
             // if (poi.mDescription != null)
             //   poiMarker.snippet = poi.mDescription
             estateMarker.snippet = estate.description
@@ -241,7 +254,12 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             image?.setTint(ResourcesCompat.getColor(resources, R.color.black, null))
             estateMarker.image = image
 
-
+            /*
+            estateMarker.setOnMarkerClickListener { marker, mapView ->
+                initChosenEstate(marker.id)
+                true
+            }
+             */
             estateMarkers.add(estateMarker)
 
             mapView?.controller?.setCenter(estateMarker.position)
@@ -257,9 +275,9 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             return
 
         val userMarker = Marker(mapView)
-        var userGeoPoint =GeoPoint(location.latitude, location.longitude)
+        var userGeoPoint = GeoPoint(location.latitude, location.longitude)
         userMarker.title = getString(R.string.map_user_location)
-        userMarker.position =  userGeoPoint
+        userMarker.position = userGeoPoint
         userMarker.icon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
 

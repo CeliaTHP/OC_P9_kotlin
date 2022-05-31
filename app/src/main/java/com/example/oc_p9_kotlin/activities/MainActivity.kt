@@ -145,6 +145,7 @@ class MainActivity : CompositeDisposableActivity() {
             this.startActivity(Intent(this, AddEstateActivity::class.java))
         }
         binding.mapViewFab.setOnClickListener {
+
             this.startActivity(Intent(this, MapViewActivity::class.java))
 
         }

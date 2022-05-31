@@ -42,5 +42,10 @@ class MainViewModel(val estateDao: EstateDao) : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
+    fun getById(id: String): Observable<Estate> =
+        estateDao.getById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
 
 }
