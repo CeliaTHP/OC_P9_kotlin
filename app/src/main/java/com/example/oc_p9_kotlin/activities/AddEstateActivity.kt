@@ -32,11 +32,13 @@ import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media
+import com.example.oc_p9_kotlin.models.POIType
 import com.example.oc_p9_kotlin.utils.FileUtil
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
+import org.osmdroid.bonuspack.location.POI
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -329,6 +331,14 @@ class AddEstateActivity : CompositeDisposableActivity() {
                     addEstateAddressInput.editText?.text.toString(),
                     location,
                     poiList,
+                    isTypeIncluded(poiList, POIType.STATION),
+                    isTypeIncluded(poiList, POIType.PUB),
+                    isTypeIncluded(poiList, POIType.HOSTEL),
+                    isTypeIncluded(poiList, POIType.HOSPITAL),
+                    isTypeIncluded(poiList, POIType.SCHOOL),
+                    isTypeIncluded(poiList, POIType.PARK),
+                    isTypeIncluded(poiList, POIType.RESTAURANT),
+                    isTypeIncluded(poiList, POIType.OTHER),
                     addEstateDescriptionInput.editText?.text.toString(),
                     imageAdapter.imageList,
                     imageAdapter.imageList.size,
@@ -348,6 +358,17 @@ class AddEstateActivity : CompositeDisposableActivity() {
 
 
         }
+
+    }
+
+    private fun isTypeIncluded(poiList: List<FakePOI>, poiType: POIType): Boolean {
+        var isIncluded = false
+        for (fakePoi in poiList) {
+            if (fakePoi.poiType == poiType)
+                isIncluded = true
+        }
+        return isIncluded
+
 
     }
 

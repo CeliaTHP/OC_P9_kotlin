@@ -24,7 +24,7 @@ enum class POIType(val stringValue: Int) {
 
     STATION(R.string.poi_type_station),
     PUB(R.string.poi_type_pub),
-    HOSTEL(R.string.poi_type_hotel),
+    HOSTEL(R.string.poi_type_hostel),
     HOSPITAL(R.string.poi_type_hospital),
     SCHOOL(R.string.poi_type_school),
     PARK(R.string.poi_type_park),

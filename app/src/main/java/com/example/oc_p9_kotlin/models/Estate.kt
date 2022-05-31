@@ -28,11 +28,20 @@ data class Estate(
     var bedrooms: Int,
     var address: String,
     var location: Location,
-    var nearbyPlaces : List<FakePOI>?,
+    var nearbyPlaces: List<FakePOI>?,
+
+    var isNearStation: Boolean = false,
+    var isNearPub: Boolean = false,
+    var isNearHostel: Boolean = false,
+    var isNearHospital: Boolean = false,
+    var isNearSchool: Boolean= false,
+    var isNearPark: Boolean= false,
+    var isNearRestaurant: Boolean = false,
+    var isNearOther: Boolean = false,
+
     var description: String,
     var medias: List<Media>?,
     var mediaCount: Int,
-
     var videos: List<Media>?,
     @ColumnInfo(name = "entry_date")
     var entryDate: Date,
@@ -44,8 +53,6 @@ data class Estate(
     var assignedAgentName: String?
 
 ) : Parcelable, Serializable
-
-
 
 
 enum class EstateType(val stringValue: Int) {

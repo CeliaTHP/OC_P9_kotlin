@@ -7,8 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -511,6 +510,141 @@
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />
 
+        <TextView
+            android:id="@+id/filters_near_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/filters_near"
+            android:textColor="@color/main_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_photos" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filters_near_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_near_title">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/filters_near_layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <CheckBox
+                    android:id="@+id/filters_near_station_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_station"
+                    android:text="@string/poi_type_station"
+                    app:layout_constrainedWidth="true" />
+
+                <CheckBox
+                    android:id="@+id/filters_near_pub_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_pub"
+                    android:text="@string/poi_type_pub" />
+
+                <CheckBox
+                    android:id="@+id/filters_near_hostel_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_hostel"
+                    android:text="@string/poi_type_hostel" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/filters_near_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/filters_near_layout1"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <CheckBox
+                    android:id="@+id/filters_near_hospital_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_hospital"
+                    android:text="@string/poi_type_hospital"
+                    app:layout_constrainedWidth="true" />
+
+                <CheckBox
+                    android:id="@+id/filters_near_school_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_school"
+                    android:text="@string/poi_type_school" />
+
+                <CheckBox
+                    android:id="@+id/filters_near_park_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_park"
+                    android:text="@string/poi_type_park" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/filters_near_layout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/filters_near_layout2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <CheckBox
+                    android:id="@+id/filters_near_restaurant_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_restaurant"
+                    android:text="@string/poi_type_restaurant"
+                    app:layout_constrainedWidth="true" />
+
+                <CheckBox
+                    android:id="@+id/filters_near_other_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:tag="@string/poi_type_other"
+                    android:text="@string/poi_type_other" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/filters_date_title"
@@ -526,7 +660,7 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_slider_photos" />
+            app:layout_constraintTop_toBottomOf="@id/filters_near_layout" />
 
 
         <TextView
@@ -559,8 +693,8 @@
             android:id="@+id/filters_available_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:layout_margin="10dp"
+            android:checked="true"
             android:text="@string/filters_available"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -572,30 +706,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="@string/filters_sale_date"
             android:textColor="@color/main_text"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_available_checkbox" />
+            app:layout_constraintTop_toBottomOf="@id/filters_available_checkbox"
+            tools:visibility="visible" />
 
         <DatePicker
             android:id="@+id/filters_date_sale_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:calendarViewShown="false"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:datePickerMode="spinner"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_date_sale_title" />
+            app:layout_constraintTop_toBottomOf="@id/filters_date_sale_title"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filters_confirm_button"
