@@ -45,10 +45,9 @@
     <string name="auth_reset_password"><u>Réinitialiser le mot de passe</u></string>
     <string name="auth_already_account"><u>J\'ai déjà un compte</u></string>
     <string name="auth_create_account"><u>Créer un compte</u></string>
-    <string name="auth_error">Identifiants incorrects</string>
+    <string name="auth_invalid">Invalid credentials</string>
     <string name="auth_email_sent">Email envoyé</string>
-
-
+    <string name="auth_email_error">Echec de l\'envoi de l\'email</string>
     <!--Details-->
     <string name="details_type">Type</string>
     <string name="details_media">Médias</string>

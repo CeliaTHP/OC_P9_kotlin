@@ -47,6 +47,7 @@ object AuthDialog {
                 val createAccountText = SpannableString(context.getString(R.string.auth_create_account))
                 createAccountText.setSpan(UnderlineSpan(), 0, createAccountText.length, 0)
                 binding.authCreateAccount.text = createAccountText
+
                 binding.authResetPassword.visibility = View.VISIBLE
                 binding.authConfirmButton.text = context.getString(R.string.auth_log_in)
 

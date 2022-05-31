@@ -62,13 +62,12 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         binding = ActivityMapViewBinding.inflate(layoutInflater)
 
 
-        verifyAuth()
+        //verifyAuth()
         initViewModels()
         initListeners()
 
 
-        //initMap()
-        //initLocationInfo()
+        initMap()
 
         setContentView(binding.root)
 
@@ -91,15 +90,15 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                     { isCreating, email, password ->
                         if (isCreating) {
                             Log.d(TAG, "isCreating : $email $password")
-                            //createFirebaseUser(email, password)
+                            createFirebaseUser(email, password)
                         } else {
                             Log.d(TAG, "isSigningIn : $email $password")
-                            //signInFirebaseUser(email, password)
+                            signInFirebaseUser(email, password)
 
                         }
                     }, { email ->
                         Log.d(TAG, "resetFirebasePassword $email")
-                        //resetFirebasePassword(email)
+                        resetFirebasePassword(email)
 
                     })
 
@@ -113,8 +112,20 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         firebaseAuth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    if(authDialog.isShowing)
+                        authDialog.dismiss()
+                    Toast.makeText(
+                        this@MapViewActivity,
+                        R.string.auth_email_sent,
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@MapViewActivity,
+                        R.string.auth_email_error,
+                        Toast.LENGTH_LONG
+                    ).show()
 
-                    Log.d(TAG, "Email sent.")
                 }
             }
     }
@@ -137,7 +148,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                     Log.d(TAG, "createUserWithEmail:failure", task.getException())
                     Toast.makeText(
                         this@MapViewActivity,
-                        R.string.auth_error,
+                        R.string.auth_invalid,
                         Toast.LENGTH_LONG
                     ).show()
 
@@ -164,7 +175,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                         Log.d(TAG, "signInWithEmail:failure", task.getException())
                         Toast.makeText(
                             this@MapViewActivity,
-                            R.string.auth_error,
+                            R.string.auth_invalid,
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -270,7 +281,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         }
 
         binding.mapViewErrorRefresh.setOnClickListener {
-            //initMap()
+            initMap()
         }
     }
 

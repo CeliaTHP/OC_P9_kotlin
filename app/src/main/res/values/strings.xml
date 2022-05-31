@@ -46,8 +46,9 @@
     <string name="auth_reset_password"><u>Reset password</u></string>
     <string name="auth_already_account"><u>I already have an account</u></string>
     <string name="auth_create_account"><u>Create an account</u></string>
-    <string name="auth_error">Invalid credentials</string>
+    <string name="auth_invalid">Invalid credentials</string>
     <string name="auth_email_sent">Email sent</string>
+    <string name="auth_email_error">Failed email</string>
 
 
 
