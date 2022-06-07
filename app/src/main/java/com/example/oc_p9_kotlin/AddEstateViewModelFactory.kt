@@ -5,17 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.databases.EstateDatabase
+import com.example.oc_p9_kotlin.utils.MySchedulers
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import java.lang.IllegalArgumentException
 
-class AddEstateViewModelFactory(context: Context): ViewModelProvider.Factory {
+class AddEstateViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private var estateDao = EstateDatabase.getDatabase(context).estateDao()
+    private var mySchedulers = MySchedulers()
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        if(modelClass.isAssignableFrom(AddEstateViewModel::class.java)) {
-            return AddEstateViewModel(estateDao) as T
+        if (modelClass.isAssignableFrom(AddEstateViewModel::class.java)) {
+            return AddEstateViewModel(estateDao, mySchedulers) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

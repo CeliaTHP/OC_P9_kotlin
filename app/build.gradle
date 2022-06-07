@@ -96,23 +96,14 @@ dependencies {
     //Location
     implementation "com.google.android.gms:play-services-location:15.0.1"
 
-    // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    //Mockito for tests
+    testImplementation "org.mockito:mockito-core:3.11.2"
+    testImplementation "org.mockito:mockito-inline:3.11.2"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:x.x.x"
 
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-
-    // Declare the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics'
-
-    // Declare the dependencies for any other desired Firebase products
-    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
-    implementation 'com.google.firebase:firebase-auth'
-
-   // useless ?
-    //implementation 'com.google.firebase:firebase-firestore'
-
-
-
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0', {
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
 
 
 }

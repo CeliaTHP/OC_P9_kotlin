@@ -5,6 +5,7 @@ import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.fakeapi.FakeEstateApi
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
+import com.example.oc_p9_kotlin.utils.MySchedulers
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -16,7 +17,10 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 
-class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
+class FiltersViewModel(
+    val estateDao: EstateDao,
+    val mySchedulers: MySchedulers
+) : ViewModel() {
 
     companion object {
         private const val TAG = "FiltersViewModel"
@@ -36,9 +40,9 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         bedroomsMax: Int,
         photosMin: Int,
         photosMax: Int,
-        entryDate:Date,
+        entryDate: Date,
         saleDate: Date?,
-        isNearStation : Boolean,
+        isNearStation: Boolean,
         isNearPub: Boolean,
         isNearHostel: Boolean,
         isNearHospital: Boolean,
@@ -47,7 +51,7 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
         isNearRestaurant: Boolean,
         isNearOther: Boolean
     ): Observable<MutableList<Estate>> =
-        if(saleDate != null) {
+        if (saleDate != null) {
             estateDao.getWithFiltersWithSaleDate(
                 estateType,
                 priceMin,
@@ -101,8 +105,8 @@ class FiltersViewModel(val estateDao: EstateDao) : ViewModel() {
             )
 
         }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(mySchedulers.io)
+            .observeOn(mySchedulers.main)
 
     /*
     fun generateData() {
