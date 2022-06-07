@@ -26,59 +26,43 @@ class FullScreenMapActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "FullScreenMapAct"
-
-        public var marker: Marker? = null
-
+        var marker: Marker? = null
     }
 
-
     private lateinit var binding: ActivityFullScreenMapBinding
+
     private var mapView: MapView? = null
-
     private var tempMarker: Marker? = null
-
     private var estate: Estate? = null
-    private var hasInternet = false
 
+    private var hasInternet = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityFullScreenMapBinding.inflate(layoutInflater)
-
-
         setContentView(binding.root)
-
 
         if (intent?.getSerializableExtra("estate") != null)
             estate = intent?.getSerializableExtra("estate") as Estate
 
-
         initMap()
-
-
         initListeners()
-
 
     }
 
 
     private fun initListeners() {
-        if (estate == null) {
-
-            Log.d(TAG, "estate null")
-
-        } else {
-            Log.d(TAG, "estate  : $estate")
-        }
 
         binding.fullScreenBack.setOnClickListener {
             finish()
         }
 
         binding.detailsRefreshButton.setOnClickListener {
+            //Refresh map
             initMap()
         }
+
         binding.fullscreenMapConfirm.setOnClickListener {
 
             if (tempMarker == null) {
@@ -86,19 +70,13 @@ class FullScreenMapActivity : AppCompatActivity() {
                     Toast.makeText(this, R.string.add_estate_map_no_location, Toast.LENGTH_LONG)
                         .show()
                 } else {
-                    //VerifyFields
                     verifyLocationFields()
-                    //if(binding.fullScreenLatitudeInput.isEmpty() && binding.fullScreenLongitudeInput.isEmpty())
-
                 }
             } else {
                 marker = tempMarker
                 finish()
             }
-            Log.d(TAG, "marker : " + marker?.position)
-
         }
-
     }
 
     private fun verifyLocationFields() {
@@ -109,7 +87,6 @@ class FullScreenMapActivity : AppCompatActivity() {
             binding.fullScreenLatitudeInput,
             binding.fullScreenLongitudeInput,
         )
-
 
         for (editText in requiredEditTexts) {
             if (editText.editText?.text.toString().toDoubleOrNull() == null) {
@@ -138,57 +115,26 @@ class FullScreenMapActivity : AppCompatActivity() {
                 getString(R.string.map_longitude_error)
         }
 
-
         if (!canCreate)
             return
 
-
-        //TODO : TRY TO AVOID NON NULL ASSERTION
-        var geoPoint = GeoPoint(
+        val geoPoint = GeoPoint(
             binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()!!,
             binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()!!
         )
-
-        Log.d(TAG, "new GeoPoint = " + geoPoint.latitude + " - " + geoPoint.longitude)
-
-
         marker = Marker(mapView)
         marker?.position = geoPoint
 
-        /*
-        marker?.position?.latitude =
-            binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()!!
-
-        marker?.position?.longitude =
-            binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()!!
-
-
-         */
-        Log.d(
-            TAG,
-            " lat  = " + binding.fullScreenLatitudeInput.editText?.text?.toString()?.toDouble()
-        )
-        Log.d(
-            TAG,
-            " long  = " + binding.fullScreenLongitudeInput.editText?.text?.toString()?.toDouble()
-        )
-
-        Log.d(TAG, "can create location " + marker?.position)
-
         finish()
-
 
     }
 
     private fun initMap() {
 
-        Log.d(TAG, "initMap")
-
         mapView = binding.detailsMapView
 
         if (InternetUtils.isNetworkAvailable(this)) {
             hasInternet = true
-            Log.d(TAG, "internet is Available")
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
             binding.detailsRefreshButton.visibility = View.GONE
@@ -204,16 +150,12 @@ class FullScreenMapActivity : AppCompatActivity() {
             binding.detailsConnectionEnterLocation.visibility = View.VISIBLE
             binding.fullScreenLatitudeInput.visibility = View.VISIBLE
             binding.fullScreenLongitudeInput.visibility = View.VISIBLE
-
-            Log.d(TAG, "internet is not Available")
-
         }
 
         mapView?.setTileSource(TileSourceFactory.MAPNIK)
         mapView?.controller?.setZoom(16.0)
 
         if (estate != null) {
-            Log.d(TAG, estate.toString())
             binding.fullscreenMapConfirm.visibility = View.GONE
             initMapWithEstate(estate)
         } else {
@@ -224,10 +166,8 @@ class FullScreenMapActivity : AppCompatActivity() {
     }
 
     private fun initMapWithoutEstate() {
-
         val startPoint = GeoPoint(48.86025403000657, 2.348531258648622)
         mapView?.controller?.setCenter(startPoint)
-
 
         initMapListeners()
 
@@ -246,7 +186,7 @@ class FullScreenMapActivity : AppCompatActivity() {
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         startMarker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_red, null)
 
-        //add nearby places marker
+        //Add nearby places marker
         mapView?.overlays?.add(startMarker)
         mapView?.controller?.setCenter(startPoint)
 
@@ -254,25 +194,20 @@ class FullScreenMapActivity : AppCompatActivity() {
     }
 
     private fun initMapListeners() {
-
+        //Update marker position on map click
         val eventOverlay = MapEventsOverlay(object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(geoPoint: GeoPoint?): Boolean {
-                Log.d(TAG, "singleTapConfirmed : $geoPoint")
                 updateMarker(geoPoint)
-
                 return true
             }
 
             override fun longPressHelper(geoPoint: GeoPoint?): Boolean {
-                Log.d(TAG, "longPress : $geoPoint")
                 updateMarker(geoPoint)
-
                 return true
             }
 
         })
         mapView?.overlays?.add(eventOverlay)
-
         mapView?.invalidate()
 
     }
@@ -283,29 +218,22 @@ class FullScreenMapActivity : AppCompatActivity() {
             return
 
         mapView?.overlays?.remove(tempMarker);
-
         tempMarker = Marker(mapView)
-
         tempMarker?.setInfoWindow(null)
         tempMarker?.id = "0"
         tempMarker?.position = geoPoint
         tempMarker?.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         tempMarker?.icon =
             ResourcesCompat.getDrawable(resources, R.drawable.ic_location_green, null)
-
         mapView?.overlays?.add(tempMarker)
         mapView?.invalidate()
-
     }
-
 
     private fun initPois() {
         val thread = Thread {
             try {
-
                 if (estate?.location?.latitude == null || estate?.location?.longitude == null)
                     return@Thread
-                val geoPoint = GeoPoint(estate?.location?.latitude!!, estate?.location?.longitude!!)
 
                 if (mapView?.repository == null)
                     return@Thread
@@ -315,7 +243,6 @@ class FullScreenMapActivity : AppCompatActivity() {
                 val poiMarkers = FolderOverlay()
                 mapView?.overlays?.add(poiMarkers)
 
-
                 val poiIcon = AppCompatResources.getDrawable(
                     binding.root.context,
                     R.drawable.ic_location_green
@@ -323,37 +250,14 @@ class FullScreenMapActivity : AppCompatActivity() {
 
                 if (pois != null) {
                     for (poi in pois) {
-                        Log.d(TAG, " POI : $poi")
                         val poiMarker = Marker(mapView)
                         poiMarker.title = poi.name
-                        // if (poi.mDescription != null)
-                        //   poiMarker.snippet = poi.mDescription
                         poiMarker.snippet = getString(poi.poiType.stringValue)
                         poiMarker.position = GeoPoint(poi.latitude, poi.longitude)
                         poiMarker.icon = poiIcon
-                        var icon = Utils.getIconForPoi(poi.poiType, this)
+                        val icon = Utils.getIconForPoi(poi.poiType, this)
                         icon?.setTint(ResourcesCompat.getColor(resources, R.color.black, null))
                         poiMarker.image = icon
-                        /*
-                                if (poi.mThumbnail != null) {
-
-                                    val bitmap: Bitmap = Glide
-                                        .with(binding.root.context)
-                                        .asBitmap()
-                                        .load(poi.mThumbnailPath)
-                                        .submit(100, 100)
-                                        .get()
-
-                                    poiMarker.image = BitmapDrawable(binding.root.resources, bitmap)
-
-                                    //poiMarker.image = BitmapDrawable(binding.root.resources, poi.thumbnail).
-
-                                } else {
-                                    poiMarker.image = null
-                                }
-                                 */
-
-                        Log.d(TAG, "marker : " + poiMarker.position.toString())
                         poiMarkers.add(poiMarker)
                     }
                 }
@@ -362,9 +266,6 @@ class FullScreenMapActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
         thread.start()
-
-
     }
 }
