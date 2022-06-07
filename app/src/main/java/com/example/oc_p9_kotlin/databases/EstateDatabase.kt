@@ -23,11 +23,7 @@ import java.util.Date
     EstateDatabase.DateConverter::class,
     EstateDatabase.LocationConverter::class,
     EstateDatabase.MediaListConverter::class,
-    EstateDatabase.UriConverter::class,
     EstateDatabase.PoiListConverter::class,
-    //EstateDatabase.UriListConverter::class,
-
-
 )
 abstract class EstateDatabase : RoomDatabase() {
 
@@ -55,15 +51,12 @@ abstract class EstateDatabase : RoomDatabase() {
                         EstateDatabase::class.java,
                         DATABASE_NAME
                     )
-                        //.addCallback(prepopulateDatabase())
                         .build()
                 INSTANCE = instance
                 return instance
             }
         }
-
     }
-
 
     internal class DateConverter {
         @TypeConverter
@@ -148,56 +141,5 @@ abstract class EstateDatabase : RoomDatabase() {
             return gson.fromJson<List<FakePOI>>(pois, type)
         }
     }
-
-
-    /*
-    object StringListConverter {
-        @TypeConverter
-        fun fromString(value: String?): ArrayList<String> {
-            val listType = object : TypeToken<ArrayList<String?>?>() {}.type
-            return Gson().fromJson(value, listType)
-        }
-
-        @TypeConverter
-        fun fromArrayList(list: ArrayList<String?>?): String {
-            val gson = Gson()
-            return gson.toJson(list)
-        }
-    }
-
-    class UriListConverter {
-        @TypeConverter
-        fun fromUriList(uris: List<Uri?>?): String? {
-            if (uris == null) {
-                return null
-            }
-            val type: Type = object : TypeToken<List<Uri?>?>() {}.type
-            return Gson().toJson(uris, type)
-        }
-
-        @TypeConverter
-        fun toUriList(uris: String?): List<Uri>? {
-            if (uris == null) {
-                return null
-            }
-            val type: Type = object : TypeToken<List<Uri?>?>() {}.type
-            return Gson().fromJson<List<Uri>>(uris, type)
-        }
-    }
-
-
- */
-    class UriConverter {
-        @TypeConverter
-        fun fromString(value: String?): Uri? {
-            return if (value == null) null else Uri.parse(value)
-        }
-
-        @TypeConverter
-        fun toString(uri: Uri?): String? {
-            return uri?.toString()
-        }
-    }
-
 
 }

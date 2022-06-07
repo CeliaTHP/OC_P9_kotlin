@@ -28,8 +28,6 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
-import org.savecode.eiver.pages.account.parameters.view.dialog.AuthDialog
-
 
 class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 

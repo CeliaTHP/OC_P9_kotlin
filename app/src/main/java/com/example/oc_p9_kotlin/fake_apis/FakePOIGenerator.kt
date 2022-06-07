@@ -1,11 +1,10 @@
-package com.example.oc_p9_kotlin.fakeapi
+package com.example.oc_p9_kotlin.fake_apis
 
 import android.location.Location
 import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.POIType
 
 object FakePOIGenerator {
-
 
     private val locationGareDeLest = Location("0").apply {
         latitude = 48.87677974011204
@@ -149,6 +148,5 @@ object FakePOIGenerator {
         locationConseilPrudhomme.latitude,
         locationConseilPrudhomme.longitude
     )
-
 
 }

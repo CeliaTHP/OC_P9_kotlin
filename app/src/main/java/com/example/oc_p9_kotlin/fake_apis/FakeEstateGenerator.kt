@@ -1,18 +1,16 @@
-package com.example.oc_p9_kotlin.fakeapi
+package com.example.oc_p9_kotlin.fake_apis
 
 import android.location.Location
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
-import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media
 import java.util.*
 
 object FakeEstateApi {
 
-    public fun getFakeEstateList(): List<Estate> {
+    fun getFakeEstateList(): List<Estate> {
         return DUMMY_ESTATES
     }
-
 
     private val location0 = Location("0").apply {
         latitude = 48.87868213644286
@@ -78,9 +76,6 @@ object FakeEstateApi {
         cal.add(Calendar.DATE, -1)
         return cal.time
     }
-
-
-
 
     private val DUMMY_ESTATES: List<Estate> = listOf(
         Estate(
@@ -465,8 +460,6 @@ object FakeEstateApi {
             assignedAgentName = null
         )
 
-
     )
-
 
 }
