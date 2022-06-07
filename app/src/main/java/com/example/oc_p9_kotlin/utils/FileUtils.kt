@@ -12,9 +12,12 @@ import java.io.InputStream
 import java.io.OutputStream
 
 
-object FileUtil {
+object FileUtils {
+
     private const val EOF = -1
     private const val DEFAULT_BUFFER_SIZE = 1024 * 4
+
+    //Find file in device with url
     @Throws(IOException::class)
     fun from(context: Context, uri: Uri): File {
         val inputStream = context.contentResolver.openInputStream(uri)
@@ -48,7 +51,7 @@ object FileUtil {
         return arrayOf(name, extension)
     }
 
-    private fun getFileName(context: Context, uri: Uri): String? {
+    private fun getFileName(context: Context, uri: Uri): String {
         var result: String? = null
         if (uri.scheme == "content") {
             val cursor = context.contentResolver.query(uri, null, null, null, null)

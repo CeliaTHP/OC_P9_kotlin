@@ -15,7 +15,6 @@ import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
@@ -33,12 +32,11 @@ import com.example.oc_p9_kotlin.models.EstateType
 import com.example.oc_p9_kotlin.models.FakePOI
 import com.example.oc_p9_kotlin.models.Media
 import com.example.oc_p9_kotlin.models.POIType
-import com.example.oc_p9_kotlin.utils.FileUtil
+import com.example.oc_p9_kotlin.utils.FileUtils
 import com.example.oc_p9_kotlin.utils.Utils
 import com.example.oc_p9_kotlin.view_models.AddEstateViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
-import org.osmdroid.bonuspack.location.POI
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -642,7 +640,7 @@ class AddEstateActivity : CompositeDisposableActivity() {
                 try {
                     data.data?.let {
                         val uri: Uri = it
-                        val file: File = FileUtil.from(this, uri)
+                        val file: File = FileUtils.from(this, uri)
 
                         var finalUri = file.toURI()
                         Log.d(TAG, "final URI : " + finalUri)
@@ -672,7 +670,7 @@ class AddEstateActivity : CompositeDisposableActivity() {
                 try {
                     data.data?.let {
                         val uri: Uri = it
-                        val file: File = FileUtil.from(this, uri)
+                        val file: File = FileUtils.from(this, uri)
 
 
                         var finalUri = file.toURI()

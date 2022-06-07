@@ -257,14 +257,12 @@ class MainActivity : CompositeDisposableActivity() {
 
     override fun onStop() {
         super.onStop()
-        InternetUtils.unregisterNetworkCallback(this)
         stopPlayer()
 
     }
 
     override fun onStart() {
         super.onStart()
-        InternetUtils.registerNetworkCallback(this)
     }
 
 
