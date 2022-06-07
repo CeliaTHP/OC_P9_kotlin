@@ -42,8 +42,7 @@ class FiltersViewModel(
         isNearRestaurant: Boolean,
         isNearOther: Boolean
     ): Observable<MutableList<Estate>> =
-        if (saleDate != null) {
-            estateDao.getWithFiltersWithSaleDate(
+            estateDao.getWithFilters(
                 estateType,
                 priceMin,
                 priceMax,
@@ -69,33 +68,6 @@ class FiltersViewModel(
                 isNearOther
 
             )
-        } else {
-            estateDao.getWithFiltersWithoutSaleDate(
-                estateType,
-                priceMin,
-                priceMax,
-                surfaceMin,
-                surfaceMax,
-                roomsMin,
-                roomsMax,
-                bathroomsMin,
-                bathroomsMax,
-                bedroomsMin,
-                bedroomsMax,
-                photosMin,
-                photosMax,
-                entryDate,
-                isNearStation,
-                isNearPub,
-                isNearHostel,
-                isNearHospital,
-                isNearSchool,
-                isNearPark,
-                isNearRestaurant,
-                isNearOther
-            )
-
-        }
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 

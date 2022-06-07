@@ -99,7 +99,6 @@ dependencies {
     //Mockito for tests
     testImplementation "org.mockito:mockito-core:3.11.2"
     testImplementation "org.mockito:mockito-inline:3.11.2"
-    testImplementation "org.mockito.kotlin:mockito-kotlin:x.x.x"
 
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0', {
         exclude group: 'org.mockito', module: 'mockito-core'

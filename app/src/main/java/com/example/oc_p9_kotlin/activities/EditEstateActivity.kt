@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
@@ -336,16 +337,14 @@ class EditEstateActivity : CompositeDisposableActivity() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Picture"),
-            PICK_IMAGE
-        )
+
     }
 
     private fun selectVideoIntent() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "video/*"
         intent.action = Intent.ACTION_GET_CONTENT
+
         startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO)
     }
 
