@@ -31,10 +31,8 @@ class VideoAdapter(
     var videoList: MutableList<Media>,
     private var isEditing: Boolean = false,
     private var onDataUpdate: () -> Unit,
-    // private var onLongClick: () -> Unit
 
-) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
-
+    ) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
     companion object {
         var TAG = "VideoAdapter"
     }
@@ -57,7 +55,7 @@ class VideoAdapter(
 
         val defaultDataSourceFactory = DefaultDataSource.Factory(holder.itemView.context)
 
-        var mediaSource = ProgressiveMediaSource.Factory(
+        val mediaSource = ProgressiveMediaSource.Factory(
             defaultDataSourceFactory,
             DefaultExtractorsFactory()
         )
@@ -71,7 +69,6 @@ class VideoAdapter(
         if (videoList.isNullOrEmpty())
             return
 
-
         val mediaItem = MediaItem.fromUri(media.uri)
 
         player.addMediaItem(mediaItem)
@@ -79,60 +76,36 @@ class VideoAdapter(
         player.play()
 
         if (isEditing) {
-            Log.d(TAG, "is Editing")
             holder.itemVideosBinding.itemVideoDelete.visibility = View.VISIBLE
-
             holder.itemVideosBinding.itemVideoDelete.setOnClickListener {
                 removeData(position)
             }
-
         } else {
-            Log.d(TAG, "is NOT Editing")
             holder.itemVideosBinding.itemVideoDelete.visibility = View.GONE
         }
-
-
-
     }
 
     override fun getItemCount(): Int {
         return videoList.size
     }
 
-    private fun buildMediaSource(uri: String, context: Context): MediaSource {
-        return ProgressiveMediaSource.Factory(
-            DefaultDataSourceFactory(context, "Exoplayer-local")
-        ).createMediaSource(MediaItem.fromUri(uri))
-    }
-
-
-
-    public fun updateData(newList: MutableList<Media>) {
-        Log.d(TAG, "old list : " + videoList.size)
+    fun updateData(newList: MutableList<Media>) {
         this.videoList = newList
         notifyDataSetChanged()
         onDataUpdate()
-
-        Log.d(TAG, "new list : " + newList.size)
-
     }
 
-    public fun addData(media: Media) {
-        Log.d(TAG, "addData")
+    fun addData(media: Media) {
         this.videoList.add(media)
         notifyItemInserted(videoList.size)
-        Log.d(TAG, videoList.toString())
         onDataUpdate()
-
     }
 
     public fun removeData(position: Int) {
         this.videoList.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount)
-        Log.d(TAG, videoList.toString())
         onDataUpdate()
-
     }
 
     class VideoViewHolder(val itemVideosBinding: ItemVideosBinding) :

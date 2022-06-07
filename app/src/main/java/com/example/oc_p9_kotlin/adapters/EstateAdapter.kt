@@ -23,12 +23,10 @@ class EstateAdapter(
         const val TAG = "EstateAdapter"
     }
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): EstateViewHolder {
-
 
         return EstateViewHolder(
             ItemEstateLayoutBinding.inflate(
@@ -39,12 +37,10 @@ class EstateAdapter(
         )
     }
 
-
     override fun onBindViewHolder(
         holder: EstateViewHolder,
         position: Int
     ) {
-
         val estate = estateList[position]
 
         holder.itemView.setOnClickListener {
@@ -59,13 +55,8 @@ class EstateAdapter(
         holder.itemEstateLayoutBinding.itemEstatePrice.text =
             Utils.getPrice(estate)
 
-
-
         if (!estate.medias.isNullOrEmpty()) {
-            Log.d(TAG, "MEDIA FOR " + estate.toString())
-
             val mediaUrl = estate.medias!![0].uri
-            Log.d(TAG, "mediaURL " +  mediaUrl)
 
             Glide
                 .with(holder.itemView.context)
@@ -82,9 +73,7 @@ class EstateAdapter(
                     R.drawable.ic_house
                 )
             )
-
         }
-
         if (!estate.isAvailable) {
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.VISIBLE
             holder.itemEstateLayoutBinding.itemEstatePic.alpha = 0.5f
@@ -92,21 +81,15 @@ class EstateAdapter(
             holder.itemEstateLayoutBinding.itemEstatePic.alpha = 1f
             holder.itemEstateLayoutBinding.itemEstateSold.visibility = View.INVISIBLE
         }
-
-
     }
-
 
     override fun getItemCount(): Int {
         return estateList.size
     }
 
-
     public fun updateData(newList: MutableList<Estate>) {
-        Log.d(TAG, "old list : " + estateList.toString())
         this.estateList = newList
         notifyDataSetChanged()
-        Log.d(TAG, "new list : " + newList.toString())
     }
 
     class EstateViewHolder(val itemEstateLayoutBinding: ItemEstateLayoutBinding) :

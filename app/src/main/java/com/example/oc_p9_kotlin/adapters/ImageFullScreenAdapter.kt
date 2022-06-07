@@ -39,43 +39,11 @@ class ImageFullScreenAdapter(
 
         holder.itemPicFullscreenLayoutBinding.itemPicFullscreenTitle.text = media.name
 
-            Log.d(TAG, media.toString())
-
             Glide.with(holder.itemView.context)
                 .load(media.uri)
                 .error(R.drawable.ic_house)
                 .placeholder(R.drawable.ic_house)
                 .into(holder.itemPicFullscreenLayoutBinding.itemPicFullscreen)
-
-        /*
-        else {
-
-            val defaultDataSourceFactory = DefaultDataSource.Factory(holder.itemView.context)
-
-            var mediaSource = ProgressiveMediaSource.Factory(
-                defaultDataSourceFactory,
-                DefaultExtractorsFactory()
-            )
-
-            val player =
-                ExoPlayer.Builder(holder.itemPicFullscreenLayoutBinding.root.context)
-                .setMediaSourceFactory(mediaSource)
-                .build()
-
-            holder.itemPicFullscreenLayoutBinding.fullscreenPlayerView.player = player
-
-            val mediaItem = MediaItem.fromUri(media.uri)
-
-            player.addMediaItem(mediaItem)
-            player.prepare()
-            player.play()
-
-            holder.itemPicFullscreenLayoutBinding.itemPicFullscreenTitle.text = media.name
-
-        }
-
-
- */
 
     }
 
