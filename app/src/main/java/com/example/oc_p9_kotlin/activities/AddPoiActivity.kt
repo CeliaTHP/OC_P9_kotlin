@@ -16,7 +16,6 @@ class AddPoiActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "AddPoiActivity"
-
     }
 
     var poi: FakePOI =
@@ -29,42 +28,38 @@ class AddPoiActivity : AppCompatActivity() {
             0.0
         )
 
-
     private lateinit var binding: ActivityAddPoiBinding
-
     private var poiType = POIType.STATION
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding  = ActivityAddPoiBinding.inflate(layoutInflater)
+        binding = ActivityAddPoiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //Default type
         binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)
 
         initListeners()
-        setContentView(binding.root)
 
     }
 
     private fun initListeners() {
 
         binding.addPoiDialogTypeButton.setOnClickListener {
+            //Change poi Type on button click
             onPoiTypeButtonClick()
         }
 
 
         binding.addPoiLocationEditText.setOnClickListener {
-            Log.d(TAG, "onLocationInputClick")
             val intent =
                 Intent(this, FullScreenMapActivity::class.java)
             startActivity(intent)
         }
+
         binding.addPoiConfirm.setOnClickListener {
             verifyPoiCreation()
-
-
         }
     }
 
@@ -72,7 +67,7 @@ class AddPoiActivity : AppCompatActivity() {
 
         var canCreate = true
 
-        var requiredEditTexts = listOf(
+        val requiredEditTexts = listOf(
             binding.addPoiDialogNameInput,
             binding.addPoiDialogDescriptionInput,
             binding.addPoiLocationInput,
@@ -94,16 +89,8 @@ class AddPoiActivity : AppCompatActivity() {
         poi.description = binding.addPoiDialogDescriptionInput.editText?.text.toString()
         poi.poiType = poiType
 
-
-        Log.d(TAG, "canCreate $poi")
-
         EditEstateActivity.poiAdapter.addData(poi)
         finish()
-
-
-
-        Log.d(TAG, "can create : $poi")
-
 
     }
 
@@ -112,15 +99,12 @@ class AddPoiActivity : AppCompatActivity() {
 
         if (FullScreenMapActivity.marker != null) {
 
-            Log.d(TAG, FullScreenMapActivity.marker.toString())
-
             FullScreenMapActivity.marker?.position?.latitude?.let {
                 poi.latitude = it
             }
             FullScreenMapActivity.marker?.position?.longitude?.let {
                 poi.longitude = it
             }
-
             binding.addPoiLocationEditText.setText(
                 getString(
                     com.example.oc_p9_kotlin.R.string.add_estate_location,
@@ -128,7 +112,6 @@ class AddPoiActivity : AppCompatActivity() {
                     poi.longitude.toString()
                 )
             )
-
             FullScreenMapActivity.marker = null
         }
     }
@@ -158,9 +141,6 @@ class AddPoiActivity : AppCompatActivity() {
 
         listPopupWindow.setOnItemClickListener { _, _, position: Int, _ ->
 
-
-            Log.d(TAG, "was : " + poiType.name)
-
             poiType = when (position) {
 
                 0 -> POIType.STATION
@@ -174,13 +154,7 @@ class AddPoiActivity : AppCompatActivity() {
                 else -> POIType.OTHER
 
             }
-
-
-            Log.d(TAG, "is now : " + poiType.name)
-
             binding.addPoiDialogTypeButton.text = getString(poiType.stringValue)
-            //setType
-
             listPopupWindow.dismiss()
         }
 
