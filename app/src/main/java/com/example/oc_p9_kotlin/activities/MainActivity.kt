@@ -38,17 +38,14 @@ class MainActivity : CompositeDisposableActivity() {
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
         private const val TAG: String = "MainActivity"
-
     }
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
     private lateinit var adapter: EstateAdapter
     private var listBag = CompositeDisposable()
 
     private var estateList = mutableListOf<Estate>()
-    //private var filteredList = mutableListOf<Estate>()
-
     private var isOverflowIconEnabled = false
 
     private lateinit var viewModel: MainViewModel
@@ -65,57 +62,35 @@ class MainActivity : CompositeDisposableActivity() {
 
         initRecyclerView(estateList)
 
-
-        //default estate
-
-
         initViewModels()
+
         generateDataIfEmptyDb()
 
         getEstateList()
-        //initRecyclerView(estateList)
-        //TODO : uncomment to display map
+
         requestMapPermissions()
 
-
-/*        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
- */
         initListeners()
-
-
-        Log.d(TAG, "onCreate")
 
     }
 
     @Subscribe(sticky = true)
     fun onUpdateListEvent(onUpdateListEvent: OnUpdateListEvent) {
-        //     filteredList.clear()
-
-        var filteredList = onUpdateListEvent.getFilteredEstateList()
-        Log.d(TAG, "onUpdateList Event $filteredList")
-
+        val filteredList = onUpdateListEvent.getFilteredEstateList()
         updateEstateList(filteredList, true)
-
     }
 
     private fun generateDataIfEmptyDb() {
         //Generating data on our database
-
         viewModel.getAll().firstOrError()
             .subscribe(
                 {
                     if (it.isNullOrEmpty()) {
-                        Log.d(TAG, "generateData")
                         viewModel.generateData()
                             .subscribe()
                             .addTo(bag)
                     }
-                }, {
-                    Log.d(TAG, "error getEstateList generation" + it.message)
-                })
+                }, {})
             .addTo(bag)
     }
 
@@ -123,20 +98,14 @@ class MainActivity : CompositeDisposableActivity() {
 
         binding.slidingPaneLayout.addPanelSlideListener(object :
             SlidingPaneLayout.PanelSlideListener {
-            override fun onPanelSlide(panel: View, slideOffset: Float) {
-            }
-
+            override fun onPanelSlide(panel: View, slideOffset: Float) {}
             override fun onPanelOpened(panel: View) {
                 initToolbar()
-
             }
 
             override fun onPanelClosed(panel: View) {
-                Log.d(TAG, "onPanelClose")
-
                 initToolbar()
                 stopPlayer()
-
             }
 
         })
@@ -145,25 +114,17 @@ class MainActivity : CompositeDisposableActivity() {
             this.startActivity(Intent(this, EditEstateActivity::class.java))
         }
         binding.mapViewFab.setOnClickListener {
-
             this.startActivity(Intent(this, MapViewActivity::class.java))
-
         }
-
-
     }
 
     private fun stopPlayer() {
-        Log.d(TAG, "stopPlayer")
         DetailsFragment.getPlayer()?.playWhenReady = false
         DetailsFragment.getPlayer()?.stop()
-
     }
 
 
     private fun getEstateList(estateType: EstateType? = null) {
-
-        Log.d(TAG, "getEstateList")
         listBag.clear()
 
         if (estateType == null) {
@@ -175,9 +136,6 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
     private fun fetchAllEstateAndUpdateList() {
-        Log.d(TAG, "fetchAllEstate")
-
-
         Observable.merge(
             viewModel.getAll().take(1).map { Pair(it, true) },
             viewModel.getAll().skip(1).map { Pair(it, false) }
@@ -186,21 +144,18 @@ class MainActivity : CompositeDisposableActivity() {
                 val estateList = it.first
                 val isFirst = it.second
                 if (!it.first.isNullOrEmpty()) {
-                    Log.d(TAG, "list received getAll : " + it.toString())
                     updateEstateList(estateList, isFirst)
                 } else {
                     updateEstateList(mutableListOf(), isFirst)
                 }
             }, {
-                Log.d(TAG, "error getEstateList getAll" + it.toString())
                 Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
-
             }).addTo(listBag)
     }
 
 
     private fun fetchEstateOfTypeAndUpdateList(estateType: EstateType) {
-        Log.d(TAG, "fetchWithTypeEstate")
+
         Observable.merge(
             viewModel.getByType(estateType).take(1).map { Pair(it, true) },
             viewModel.getByType(estateType).skip(1).map { Pair(it, false) }
@@ -208,17 +163,14 @@ class MainActivity : CompositeDisposableActivity() {
             val estateList = it.first
             val isFirst = it.second
             if (!estateList.isNullOrEmpty()) {
-                Log.d(TAG, "list received getByType : " + it.toString())
                 updateEstateList(estateList, isFirst)
             } else {
                 updateEstateList(mutableListOf(), isFirst)
             }
         }, {
-            Log.d(TAG, "error getEstateList getByType" + it.message)
             Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
 
         }).addTo(listBag)
-
 
     }
 
@@ -235,34 +187,23 @@ class MainActivity : CompositeDisposableActivity() {
 
     private fun updateDefaultEstate(estateList: MutableList<Estate>) {
         //Setting our first item as default selected estate
-
         if (estateList.isNullOrEmpty())
             return
 
-        Log.d(TAG, "set default estate " + estateList[0])
         onEstateEvent.setSelectedEstate(estateList[0])
         EventBus.getDefault().postSticky(onEstateEvent)
     }
 
 
     private fun initViewModels() {
-
         viewModel =
             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
-
     }
-
 
     override fun onStop() {
         super.onStop()
         stopPlayer()
-
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
 
     private fun requestMapPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -286,35 +227,18 @@ class MainActivity : CompositeDisposableActivity() {
         for (i in grantResults.indices) {
             permissionsToRequest.add(permissions[i])
         }
-
-        /*
-        if (permissionsToRequest.size > 0) {
-
-            ActivityCompat.requestPermissions(
-                this,
-                permissionsToRequest.toArray(arrayOfNulls(0)),
-                REQUEST_PERMISSIONS_REQUEST_CODE
-            )
-
     }
-         */
-    }
-
 
     private fun initRecyclerView(estateList: MutableList<Estate>) {
-
         adapter = EstateAdapter(
             estateList
         ) {
             onEstateClick(it)
         }
         binding.listRecyclerView.adapter = adapter
-
     }
 
     private fun onEstateClick(estate: Estate) {
-        Log.d(TAG, estate.type.toString())
-        Log.d(TAG, binding.slidingPaneLayout.isOpen.toString() + " ")
 
         onEstateEvent.setSelectedEstate(estate)
         EventBus.getDefault().postSticky(onEstateEvent)
@@ -328,13 +252,10 @@ class MainActivity : CompositeDisposableActivity() {
         // A method on the Fragment that owns the SlidingPaneLayout,
         // called by the adapter when an item is selected.
         supportFragmentManager.commit {
-
             replace(
                 R.id.detail_container,
                 DetailsFragment()
             )
-            // If we're already open and the detail pane is visible,
-            // crossfade between the fragments.
             if (binding.slidingPaneLayout.isOpen) {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
@@ -344,13 +265,12 @@ class MainActivity : CompositeDisposableActivity() {
 
 
     override fun onBackPressed() {
+
         with(binding.slidingPaneLayout) {
             if (!isOpen && isSlideable || !isSlideable) {
                 finish()
-
             } else {
                 closePane()
-                Log.d(TAG, "shouldClose")
             }
         }
     }
@@ -360,27 +280,19 @@ class MainActivity : CompositeDisposableActivity() {
 
         with(binding.slidingPaneLayout) {
             if (isOpen && isSlideable) {
-
-                Log.d(TAG, "shouldHideIcon")
                 isOverflowIconEnabled = false
                 binding.toolbar.overflowIcon =
                     null
 
             } else {
-                Log.d(TAG, "shouldNotHideIcon")
                 isOverflowIconEnabled = true
                 binding.toolbar.overflowIcon =
                     ResourcesCompat.getDrawable(resources, R.drawable.ic_filter, null)
                 setSupportActionBar(binding.toolbar)
 
-
             }
         }
-
         setSupportActionBar(binding.toolbar)
-
-
-
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -417,21 +329,10 @@ class MainActivity : CompositeDisposableActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
         if (item.itemId == R.id.action_criteria) {
-            Log.d(TAG, "criterias")
-
             val intent =
                 Intent(binding.root.context, FiltersActivity::class.java)
             startActivity(intent)
-
-            /*
-            FiltersDialog.showDialog(this){
-
-            }.show()
-        */
-
-
         } else {
             when (item.itemId) {
                 R.id.action_filter_all -> getEstateList()
@@ -448,27 +349,17 @@ class MainActivity : CompositeDisposableActivity() {
                 else -> getEstateList()
 
             }
-
-            //estateAdapter.updateData(filteredList)
-            //updateDefaultEstate(filteredList)
         }
 
-
-
         return true
-
-
     }
-
 
     override fun onResume() {
         super.onResume()
 
         if (!EventBus.getDefault().isRegistered(this)) {
-            Log.d(TAG, "register EventBus")
             EventBus.getDefault().register(this)
         }
-
     }
 
     override fun onPause() {
@@ -476,17 +367,7 @@ class MainActivity : CompositeDisposableActivity() {
 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
-            Log.d(TAG, "onPause unregister EventBus")
         }
     }
 
-
-/*
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
-
- */
 }
