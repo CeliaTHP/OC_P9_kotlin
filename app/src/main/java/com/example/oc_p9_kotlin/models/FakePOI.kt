@@ -1,6 +1,5 @@
 package com.example.oc_p9_kotlin.models
 
-import android.location.Location
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey

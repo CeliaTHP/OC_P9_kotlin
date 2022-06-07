@@ -36,10 +36,4 @@ class MainViewModel(
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
-    fun getById(id: String): Single<Estate> =
-        estateDao.getById(id)
-            .subscribeOn(mySchedulers.io)
-            .observeOn(mySchedulers.main)
-
-
 }

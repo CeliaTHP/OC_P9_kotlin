@@ -3,7 +3,6 @@ package com.example.oc_p9_kotlin.utils
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.util.Log
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -76,16 +75,7 @@ object FileUtils {
     }
 
     private fun rename(file: File, newName: String?): File {
-        val newFile = File(file.parent, newName)
-        if (newFile != file) {
-            if (newFile.exists() && newFile.delete()) {
-                Log.d("FileUtil", "Delete old $newName file")
-            }
-            if (file.renameTo(newFile)) {
-                Log.d("FileUtil", "Rename file to $newName")
-            }
-        }
-        return newFile
+        return File(file.parent, newName)
     }
 
     @Throws(IOException::class)

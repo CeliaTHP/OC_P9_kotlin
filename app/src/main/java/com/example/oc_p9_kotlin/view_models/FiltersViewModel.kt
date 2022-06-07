@@ -99,24 +99,4 @@ class FiltersViewModel(
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
-    /*
-    fun generateData() {
-        executor.execute {
-            estateDao.insertAllEstates(FakeEstateApi.getFakeEstateList())
-        }
-
-
-    }
-
-    fun getAll(): Observable<MutableList<Estate>> =
-        estateDao.getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-    fun getByType(estateType: EstateType): Observable<MutableList<Estate>> =
-        estateDao.getByType(estateType)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-     */
-
 }

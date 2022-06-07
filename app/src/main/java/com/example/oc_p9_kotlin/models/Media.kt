@@ -7,6 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class Media(
     var name: String,
     var uri: String,
-) : Parcelable {
-
-}
+) : Parcelable

@@ -72,13 +72,10 @@ object Utils {
         if (language != Locale.FRENCH.language) {
             currency = "$"
             price = convertEuroToDollars(price)
-            Log.d(TAG, "was " + estate.priceInEuros + " is in Dollars : " + price)
         }
         val formattedNumber: String = formatter.format(price)
-
         return "$formattedNumber $currency"
     }
-
 
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
