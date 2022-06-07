@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.util.Util
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.activities.AddEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
@@ -562,9 +563,8 @@ class DetailsFragment : Fragment() {
             detailsEntryDate.text =
                 root.context.getString(
                     R.string.item_estate_entry_date,
-                    DateFormat.getDateInstance(DateFormat.SHORT).format(estate.entryDate)
+                    Utils.getTodayDate(estate.entryDate)
                 )
-
 
 
             if (estate.assignedAgentName != null) {
@@ -582,8 +582,7 @@ class DetailsFragment : Fragment() {
                     detailsSaleDate.visibility = View.VISIBLE
                     detailsSaleDate.text = root.context.getString(
                         R.string.item_estate_sale_date,
-                        DateFormat.getDateInstance(DateFormat.SHORT)
-                            .format(it)
+                        Utils.getTodayDate(estate.saleDate)
                     )
                 }
 

@@ -50,19 +50,18 @@ object Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    fun getTodayDate(customFormat: CustomFormat): String? {
-        val dateFormat: DateFormat = if (customFormat == CustomFormat.DAY_MONTH_YEAR) {
-            SimpleDateFormat("dd/MM/yyyy")
-        } else {
-            SimpleDateFormat("yyyy/MM/dd")
-        }
-        return dateFormat.format(Date())
+    fun getTodayDate(date: Date?): String? {
+        if (date == null)
+            return null
+        val dateFormat: DateFormat =
+            if (Locale.getDefault().language == Locale.FRENCH.language) {
+                SimpleDateFormat("dd/MM/yyyy")
+            } else {
+                SimpleDateFormat("yyyy/MM/dd")
+            }
+        return dateFormat.format(date)
     }
 
-    enum class CustomFormat {
-        YEAR_MONTH_DAY,
-        DAY_MONTH_YEAR
-    }
 
     /**
      * Vérification de la connexion réseau
@@ -99,8 +98,6 @@ object Utils {
         return "$formattedNumber $currency"
 
     }
-
-
 
 
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
@@ -170,18 +167,42 @@ object Utils {
         return bitmap
     }
 
-    fun getIconForPoi(poiType: POIType, context: Context?): Drawable?{
-        if(context == null)
+    fun getIconForPoi(poiType: POIType, context: Context?): Drawable? {
+        if (context == null)
             return null
-        return when (poiType){
-            POIType.STATION -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_train, null)
+        return when (poiType) {
+            POIType.STATION -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_train,
+                null
+            )
             POIType.PUB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_bar, null)
-            POIType.HOSTEL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hostel, null)
-            POIType.HOSPITAL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_hospital, null)
-            POIType.SCHOOL -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_school, null)
+            POIType.HOSTEL -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_hostel,
+                null
+            )
+            POIType.HOSPITAL -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_hospital,
+                null
+            )
+            POIType.SCHOOL -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_school,
+                null
+            )
             POIType.PARK -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_park, null)
-            POIType.RESTAURANT -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_restaurant, null)
-            POIType.OTHER -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_question_mark, null)
+            POIType.RESTAURANT -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_restaurant,
+                null
+            )
+            POIType.OTHER -> ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_question_mark,
+                null
+            )
 
         }
     }

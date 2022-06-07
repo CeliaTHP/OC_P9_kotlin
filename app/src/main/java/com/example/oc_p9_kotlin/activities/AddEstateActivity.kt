@@ -145,7 +145,6 @@ class AddEstateActivity : CompositeDisposableActivity() {
         val saleDateCalendar: Calendar = GregorianCalendar()
 
         if (estate.saleDate != null) {
-            Log.d(TAG, "sale date : " + estate.entryDate)
             Log.d(TAG, "sale date : " + estate.saleDate)
             saleDate = estate.saleDate
             saleDateCalendar.time = saleDate
