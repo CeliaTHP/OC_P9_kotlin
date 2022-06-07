@@ -25,11 +25,9 @@ import com.example.oc_p9_kotlin.events.OnUpdateListEvent
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate
 import com.example.oc_p9_kotlin.models.EstateType
-import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.internal.util.MergerBiFunction
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -144,7 +142,7 @@ class MainActivity : CompositeDisposableActivity() {
         })
 
         binding.newEstateFab.setOnClickListener {
-            this.startActivity(Intent(this, AddEstateActivity::class.java))
+            this.startActivity(Intent(this, EditEstateActivity::class.java))
         }
         binding.mapViewFab.setOnClickListener {
 

@@ -12,14 +12,14 @@ import java.util.concurrent.Executors
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class AddEstateViewModel(
+class EditEstateViewModel(
     val estateDao: EstateDao,
     private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
 
     companion object {
-        private const val TAG = "AddEstateViewModel"
+        private const val TAG = "EditEstateViewModel"
     }
 
     fun insertEstate(estate: Estate): Completable {

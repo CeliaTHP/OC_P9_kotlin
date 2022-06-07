@@ -3,6 +3,8 @@
     <!-- App-->
     <string name="app_name">Real Estate Manager</string>
 
+    <string name="default_error_msg">Échec de l\'opération</string>
+
     <!-- Actions-->
     <string name="action_map">Vue carte</string>
     <string name="action_filter_all">Voir tout</string>

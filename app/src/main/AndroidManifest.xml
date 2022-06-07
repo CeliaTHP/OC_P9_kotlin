@@ -51,7 +51,7 @@
             android:exported="false"
             android:label="@string/details_videos" />
         <activity
-            android:name=".activities.AddEstateActivity"
+            android:name=".activities.EditEstateActivity"
             android:exported="false"
             android:label="@string/add_estate_title"
             android:theme="@style/Theme.OC_P9_kotlin.NoActionBar" />

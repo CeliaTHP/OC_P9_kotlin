@@ -9,7 +9,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.ImageFullScreenAdapter
-import com.example.oc_p9_kotlin.databinding.ActivityAddEstateBinding
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenPictureBinding
 import com.example.oc_p9_kotlin.fragments.DetailsFragment
 import com.example.oc_p9_kotlin.models.Estate

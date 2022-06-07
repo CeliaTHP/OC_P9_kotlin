@@ -1,7 +1,6 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.content.Intent
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -98,8 +97,7 @@ class AddPoiActivity : AppCompatActivity() {
 
         Log.d(TAG, "canCreate $poi")
 
-        //AddEstateActivity.addPoi(poi)
-        AddEstateActivity.poiAdapter.addData(poi)
+        EditEstateActivity.poiAdapter.addData(poi)
         finish()
 
 

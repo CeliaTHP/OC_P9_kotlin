@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.util.Util
 import com.example.oc_p9_kotlin.R
-import com.example.oc_p9_kotlin.activities.AddEstateActivity
+import com.example.oc_p9_kotlin.activities.EditEstateActivity
 import com.example.oc_p9_kotlin.activities.FullScreenMapActivity
 import com.example.oc_p9_kotlin.activities.FullScreenPictureActivity
 import com.example.oc_p9_kotlin.activities.FullScreenVideoActivity
@@ -35,7 +34,6 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Marker
 import java.io.Serializable
-import java.text.DateFormat
 
 
 /**
@@ -326,7 +324,7 @@ class DetailsFragment : Fragment() {
 
             estate?.let { estate ->
                 val intent =
-                    Intent(binding.root.context, AddEstateActivity::class.java)
+                    Intent(binding.root.context, EditEstateActivity::class.java)
                 intent.putExtra("estate", estate as Serializable)
                 this.startActivity(intent)
             }
