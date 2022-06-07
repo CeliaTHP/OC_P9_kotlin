@@ -25,12 +25,10 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
     private lateinit var imageAdapter: ImageFullScreenAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityFullScreenPictureBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         val medias = intent?.getSerializableExtra("medias") as List<Media>
@@ -51,15 +49,12 @@ class FullScreenPictureActivity : AppCompatActivity() {
 
     private fun initPics(medias: List<Media>) {
 
-        Log.d(TAG, "initPics")
         if (!medias.isNullOrEmpty()) {
 
             binding.fullScreenDefaultPic.visibility = View.GONE
             binding.fullScreenRecyclerView.visibility = View.VISIBLE
 
-            imageAdapter = ImageFullScreenAdapter(
-                medias
-            )
+            imageAdapter = ImageFullScreenAdapter(medias)
             binding.fullScreenRecyclerView.adapter = imageAdapter
 
         }
