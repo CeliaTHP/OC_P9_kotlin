@@ -31,15 +31,14 @@ class FiltersActivity : CompositeDisposableActivity() {
         private const val TAG = "FiltersActivity"
     }
 
-
     private var onUpdateListEvent = OnUpdateListEvent()
+
     private lateinit var binding: FiltersDialogCheckboxBinding
 
     private lateinit var viewModel: FiltersViewModel
 
     private lateinit var filterType: String
     private var currency: Currency? = null
-
 
     private var filterPriceMin: Int = 0
     private var filterPriceMax: Int = 0
@@ -73,7 +72,6 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersTypeHouse.isChecked = true
         filterType = binding.filtersTypeHouse.tag.toString()
 
-
         initViewModels()
         initRangeSliders()
         initListeners()
@@ -82,10 +80,8 @@ class FiltersActivity : CompositeDisposableActivity() {
     }
 
     private fun initViewModels() {
-
         viewModel =
             ViewModelProvider(this, FiltersViewModelFactory(this)).get(FiltersViewModel::class.java)
-
     }
 
     private fun initCurrency(currency: Currency? = null) {
@@ -97,39 +93,30 @@ class FiltersActivity : CompositeDisposableActivity() {
     }
 
     private fun setCurrencyFromLocale() {
-        Log.d(TAG, "no option, default currency used")
+        //Handle currency according to user selection or default language
         if (Locale.getDefault().language == Locale.FRENCH.language) {
             setCurrencyInEuros()
         } else {
             setCurrencyInDollars()
         }
-
     }
 
     private fun setCurrencyInDollars() {
-        Log.d(TAG, "should be Dollars")
         binding.filtersPriceSymbol.setImageDrawable(
             AppCompatResources
                 .getDrawable(this, R.drawable.ic_dollar)
         )
-
         Utils.initSlider(binding.filtersSliderPrice, "$")
-
         this.currency = Currency.DOLLAR
-
     }
 
     private fun setCurrencyInEuros() {
-        Log.d(TAG, "should be Euros")
         binding.filtersPriceSymbol.setImageDrawable(
             AppCompatResources
                 .getDrawable(this, R.drawable.ic_euro)
         )
-
         Utils.initSlider(binding.filtersSliderPrice, "€")
-
         this.currency = Currency.EURO
-
     }
 
     private fun getFilteredList(
@@ -149,9 +136,7 @@ class FiltersActivity : CompositeDisposableActivity() {
         entryDate: Date,
         saleDate: Date?
     ) {
-
         bag.clear()
-
         viewModel.getWithFilters(
             estateType,
             priceMin,
@@ -182,30 +167,21 @@ class FiltersActivity : CompositeDisposableActivity() {
                 {
                     if (it.isNullOrEmpty()) {
                         Toast.makeText(this, R.string.filters_empty, Toast.LENGTH_LONG).show()
-                        Log.d(TAG, "emptyList")
                     }
-
-                    Log.d(TAG, "list received getWithFilters: " + it.toString())
-
-                    //Send eventBus with our new list
-
+                    //Send our new list to event bus
                     onUpdateListEvent.setFilteredEstateList(it)
                     EventBus.getDefault().postSticky(onUpdateListEvent)
 
                 }, {
-                    Log.d(TAG, "error getWithFilters " + it.message)
                     Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
-
                 }).addTo(bag)
     }
-
 
     private fun updateCurrency() {
 
         val formatter: NumberFormat = DecimalFormat("#,###")
 
         if (currency == Currency.DOLLAR) {
-
             binding.filtersPriceMin.text = getString(
                 R.string.filters_price_dollars,
                 formatter.format(binding.filtersSliderPrice.values[0])
@@ -250,39 +226,21 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersPhotosMin.text = binding.filtersSliderPhotos.values[0].toInt().toString()
         binding.filtersPhotosMax.text = binding.filtersSliderPhotos.values[1].toInt().toString()
 
-        /*
-        binding.filtersEntryDateMin.text =
-            binding.filtersSliderEntryDate.values[0].toInt().toString()
-        binding.filtersEntryDateMax.text =
-            binding.filtersSliderEntryDate.values[1].toInt().toString()
-
-        binding.filtersSaleDateMin.text = binding.filtersSliderSaleDate.values[0].toInt().toString()
-        binding.filtersSaleDateMax.text = binding.filtersSliderSaleDate.values[1].toInt().toString()
-
-         */
-
-
     }
 
     private fun initRangeSliders() {
 
-
         binding.filtersSliderPrice.setValues(0f, 500000f)
         initCurrency()
-        //Utils.initSlider(binding.filtersSliderPrice, "$")
-
 
         binding.filtersSliderSurface.setValues(20f, 50f)
         Utils.initSlider(binding.filtersSliderSurface, "m²")
 
-
         binding.filtersSliderRooms.setValues(2f, 4f)
         Utils.initSlider(binding.filtersSliderRooms)
 
-
         binding.filtersSliderBathrooms.setValues(0f, 1f)
         Utils.initSlider(binding.filtersSliderBathrooms)
-
 
         binding.filtersSliderBedrooms.setValues(1f, 2f)
         Utils.initSlider(binding.filtersSliderBedrooms)
@@ -290,23 +248,13 @@ class FiltersActivity : CompositeDisposableActivity() {
         binding.filtersSliderPhotos.setValues(3f, 5f)
         Utils.initSlider(binding.filtersSliderPhotos)
 
-/*
-        binding.filtersSliderEntryDate.setValues(0f, 10f)
-        Utils.initSlider(binding.filtersSliderEntryDate)
-
-        binding.filtersSliderSaleDate.setValues(0f, 10f)
-        Utils.initSlider(binding.filtersSliderSaleDate)
-
- */
-
         updateSliderValues()
-
     }
 
 
     private fun initListeners() {
 
-        var radioButtons = arrayListOf(
+        val radioButtons = arrayListOf(
             binding.filtersTypeHouse,
             binding.filtersTypeApartment,
             binding.filtersTypeBuilding,
@@ -318,25 +266,18 @@ class FiltersActivity : CompositeDisposableActivity() {
             binding.filtersTypeOther
         )
 
-        var rangeSliders = arrayListOf(
+        val rangeSliders = arrayListOf(
             binding.filtersSliderPrice,
             binding.filtersSliderSurface,
             binding.filtersSliderRooms,
             binding.filtersSliderBathrooms,
             binding.filtersSliderBedrooms,
             binding.filtersSliderPhotos,
-            /*
-            binding.filtersSliderEntryDate,
-            binding.filtersSliderSaleDate
-
-             */
         )
-
 
         for (radioButton in radioButtons) {
             radioButton.setOnClickListener {
                 onRadioButtonClick(radioButton, radioButtons)
-
             }
         }
 
@@ -355,64 +296,56 @@ class FiltersActivity : CompositeDisposableActivity() {
             } else {
                 binding.filtersDateSaleTitle.visibility = View.VISIBLE
                 binding.filtersDateSalePicker.visibility = View.VISIBLE
-
             }
-
         }
 
         binding.filtersConfirmButton.setOnClickListener {
+            //Launch a filter request with criteria
             verifyFields()
-            Log.d(TAG, "onConfirm")
             finish()
         }
 
         binding.filtersPriceSymbol.setOnClickListener {
             if (currency == Currency.DOLLAR) {
-                Log.d(TAG, "wasDollars")
                 initCurrency(Currency.EURO)
 
             } else {
-                Log.d(TAG, "wasEuro")
                 initCurrency(Currency.DOLLAR)
-
             }
             updateCurrency()
-
         }
-
-
     }
 
     private fun initDatePickers() {
 
         val entryDateCalendar: Calendar = GregorianCalendar()
-        binding.filtersDateEntryPicker.init(entryDateCalendar.get(Calendar.YEAR),
+        binding.filtersDateEntryPicker.init(
+            entryDateCalendar.get(Calendar.YEAR),
             entryDateCalendar.get(Calendar.MONTH),
-            entryDateCalendar.get(Calendar.DAY_OF_MONTH),
-            DatePicker.OnDateChangedListener { datePicker, year, month, day ->
-                entryDateCalendar.set(
-                    datePicker.year,
-                    datePicker.month,
-                    datePicker.dayOfMonth
-                )
-                filterEntryDateMin = entryDateCalendar.time
-                Log.d(TAG, "onDateChangedListener entry date = $filterEntryDateMin")
-            })
+            entryDateCalendar.get(Calendar.DAY_OF_MONTH)
+        ) { datePicker, year, month, day ->
+            entryDateCalendar.set(
+                datePicker.year,
+                datePicker.month,
+                datePicker.dayOfMonth
+            )
+            filterEntryDateMin = entryDateCalendar.time
+        }
 
         val saleDateCalendar: Calendar = GregorianCalendar()
 
-        binding.filtersDateSalePicker.init(saleDateCalendar.get(Calendar.YEAR),
+        binding.filtersDateSalePicker.init(
+            saleDateCalendar.get(Calendar.YEAR),
             saleDateCalendar.get(Calendar.MONTH),
-            saleDateCalendar.get(Calendar.DAY_OF_MONTH),
-            DatePicker.OnDateChangedListener { datePicker, year, month, day ->
-                saleDateCalendar.set(
-                    datePicker.year,
-                    datePicker.month,
-                    datePicker.dayOfMonth
-                )
-                filterSaleDateMin = saleDateCalendar.time
-                Log.d(TAG, "onDateChangedListener sale date = $filterSaleDateMin")
-            })
+            saleDateCalendar.get(Calendar.DAY_OF_MONTH)
+        ) { datePicker, year, month, day ->
+            saleDateCalendar.set(
+                datePicker.year,
+                datePicker.month,
+                datePicker.dayOfMonth
+            )
+            filterSaleDateMin = saleDateCalendar.time
+        }
 
     }
 
@@ -423,18 +356,11 @@ class FiltersActivity : CompositeDisposableActivity() {
                 Utils.convertDollarToEuro(binding.filtersSliderPrice.values[0].toInt())
             filterPriceMax =
                 Utils.convertDollarToEuro(binding.filtersSliderPrice.values[1].toInt())
-            Log.d(TAG, "verifyFields is InDollars : $filterPriceMin - $filterPriceMax")
-
 
         } else {
-
             filterPriceMin = binding.filtersSliderPrice.values[0].toInt()
             filterPriceMax = binding.filtersSliderPrice.values[1].toInt()
-            Log.d(TAG, "verifyFields is InEuros : $filterPriceMin - $filterPriceMax")
-
-
         }
-
         filterSurfaceMin = binding.filtersSliderSurface.values[0].toInt()
         filterSurfaceMax = binding.filtersSliderSurface.values[1].toInt()
 
@@ -451,18 +377,8 @@ class FiltersActivity : CompositeDisposableActivity() {
         filterPhotosMax = binding.filtersSliderPhotos.values[1].toInt()
 
         if (binding.filtersAvailableCheckbox.isChecked) {
-            Log.d(TAG, "AVAILABLE ")
             filterSaleDateMin = null
         }
-        Log.d(
-            TAG,
-            "filter request with $filterType $filterPriceMin $filterPriceMax $filterSurfaceMin" +
-                    " $filterSurfaceMax $filterRoomsMin $filterRoomsMax $filterBathroomsMin " +
-                    "$filterBathroomsMax $filterBedroomsMin $filterBedroomsMax $filterPhotosMin $filterPhotosMax $filterEntryDateMin $filterSaleDateMin "
-        )
-
-
-
 
         getFilteredList(
             filterType,
@@ -482,26 +398,18 @@ class FiltersActivity : CompositeDisposableActivity() {
             filterSaleDateMin
         )
 
-
     }
 
     private fun onRadioButtonClick(
         selectedButton: RadioButton,
         radioButtons: ArrayList<RadioButton>
     ) {
-
         for (radioButton in radioButtons) {
             radioButton.isChecked = false
         }
 
-
         selectedButton.isChecked = true
-
         filterType = selectedButton.tag.toString()
-
-        Log.d(TAG, "onRadioClick filter : $filterType")
-
     }
-
 
 }
