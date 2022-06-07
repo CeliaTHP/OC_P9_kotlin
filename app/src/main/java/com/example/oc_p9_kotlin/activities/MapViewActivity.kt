@@ -33,21 +33,16 @@ import org.savecode.eiver.pages.account.parameters.view.dialog.AuthDialog
 
 class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 
-    private lateinit var binding: ActivityMapViewBinding
-    private var mapView: MapView? = null
-
-    private lateinit var viewModel: MainViewModel
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    private lateinit var authDialog: AlertDialog
-
-
-
     companion object {
         private const val LOCATION_REQUEST_CODE = 0
         private const val TAG = "MapViewActivity"
     }
+
+    private lateinit var binding: ActivityMapViewBinding
+
+    private var mapView: MapView? = null
+    private lateinit var viewModel: MainViewModel
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,20 +50,14 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         binding = ActivityMapViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-        //verifyAuth()
         initViewModels()
         initListeners()
 
-
         initMap()
 
-        setContentView(binding.root)
-
     }
-
-
 
     private fun initLocationInfo() {
         checkAndRequestPermissions()
@@ -92,7 +81,6 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.d(TAG, " shouldRequestPerm")
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 LOCATION_REQUEST_CODE
@@ -103,10 +91,8 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             .addOnSuccessListener { location: Location? ->
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
-                    Log.d(TAG, "location $location")
                     initCurrentLocationMarker(location)
                 }
-
             }
     }
 
@@ -122,8 +108,6 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                 val grantResult = grantResults[i]
                 if (permission == Manifest.permission.ACCESS_COARSE_LOCATION) {
                     if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                        Log.d(TAG, "perm granted")
-
                         if (ActivityCompat.checkSelfPermission(
                                 this,
                                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -132,8 +116,6 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                                 Manifest.permission.ACCESS_COARSE_LOCATION
                             ) != PackageManager.PERMISSION_GRANTED
                         ) {
-                            Log.d(TAG, "should request Perm")
-
                             // here to request the missing permissions, and then overriding
                             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                             //                                          int[] grantResults)
@@ -145,24 +127,20 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
                     } else {
                         Toast.makeText(this, R.string.map_user_location_error, Toast.LENGTH_LONG)
                             .show()
-                        Log.d(TAG, "Refused Perm")
                     }
                 }
             }
         }
     }
 
-
     private fun initViewModels() {
-
         viewModel =
             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
-
-
     }
 
 
-    fun initListeners() {
+    private fun initListeners() {
+
         binding.mapViewBackButton.setOnClickListener {
             finish()
         }
@@ -172,14 +150,13 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         }
     }
 
-    fun initMap() {
+    private fun initMap() {
 
         initLocationInfo()
 
         mapView = binding.mapViewMap
 
         if (InternetUtils.isNetworkAvailable(this)) {
-            Log.d(TAG, "internet is Available")
             binding.mapViewMap.visibility = View.VISIBLE
             binding.mapViewErrorText.visibility = View.GONE
             binding.mapViewErrorRefresh.visibility = View.GONE
@@ -188,10 +165,6 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             binding.mapViewMap.visibility = View.GONE
             binding.mapViewErrorRefresh.visibility = View.VISIBLE
             binding.mapViewErrorText.visibility = View.VISIBLE
-
-
-            Log.d(TAG, "internet is not Available")
-
         }
 
         mapView?.setTileSource(TileSourceFactory.MAPNIK)
@@ -204,28 +177,14 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         bag.clear()
 
         viewModel.getAll().subscribe({
-            if (it.isNullOrEmpty()) {
-
-            } else {
+            if (!it.isNullOrEmpty()) {
                 Log.d(TAG, "estateList " + it.size)
                 initMarkers(it)
-
             }
-
         }, {
-
+            Toast.makeText(this, R.string.data_error, Toast.LENGTH_LONG).show()
         }).addTo(bag)
 
-    }
-
-    private fun initChosenEstate(id: String) {
-        bag.clear()
-        viewModel.getById(id).subscribe({
-            Log.d(TAG, "chosenEstate = " + it.toString())
-        }, {
-            Log.d(TAG, "Error while searching for estate")
-        })
-            .addTo(bag)
     }
 
     private fun initMarkers(estateList: MutableList<Estate>) {
@@ -235,23 +194,11 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 
         for (estate in estateList) {
             val estateMarker = Marker(mapView)
-
             estateMarker.title = getString(estate.type.stringValue)
             estateMarker.id = estate.id
-            // if (poi.mDescription != null)
-            //   poiMarker.snippet = poi.mDescription
             estateMarker.snippet = estate.description
             estateMarker.position =
                 GeoPoint(estate.location.latitude, estate.location.longitude)
-
-
-            estate.medias?.let {
-                Glide.with(this)
-                    .load(it[0].uri)
-                    .error(R.drawable.ic_house)
-                    .placeholder(R.drawable.ic_house)
-                //  .into()
-            }
 
             estateMarker.icon =
                 ResourcesCompat.getDrawable(resources, R.drawable.ic_location_green, null)
@@ -260,28 +207,20 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
             image?.setTint(ResourcesCompat.getColor(resources, R.color.black, null))
             estateMarker.image = image
 
-            /*
-            estateMarker.setOnMarkerClickListener { marker, mapView ->
-                initChosenEstate(marker.id)
-                true
-            }
-             */
             estateMarkers.add(estateMarker)
-
             mapView?.controller?.setCenter(estateMarker.position)
 
         }
         mapView?.invalidate()
-
-
     }
 
     private fun initCurrentLocationMarker(location: Location?) {
+
         if (location == null)
             return
 
         val userMarker = Marker(mapView)
-        var userGeoPoint = GeoPoint(location.latitude, location.longitude)
+        val userGeoPoint = GeoPoint(location.latitude, location.longitude)
         userMarker.title = getString(R.string.map_user_location)
         userMarker.position = userGeoPoint
         userMarker.icon =
@@ -293,9 +232,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         mapView?.controller?.setCenter(userGeoPoint)
         mapView?.controller?.setZoom(10.0)
 
-
         mapView?.invalidate()
-
 
     }
 
