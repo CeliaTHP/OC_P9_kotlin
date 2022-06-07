@@ -24,15 +24,12 @@ class FullScreenVideoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullScreenVideoBinding
 
-
     private var player: ExoPlayer? = null
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-         binding = ActivityFullScreenVideoBinding.inflate(layoutInflater)
+        binding = ActivityFullScreenVideoBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
@@ -40,7 +37,6 @@ class FullScreenVideoActivity : AppCompatActivity() {
 
         initListeners()
         initExoPlayer(medias)
-        //initVideos(medias)
 
     }
 
@@ -51,38 +47,24 @@ class FullScreenVideoActivity : AppCompatActivity() {
         player?.playbackState
 
     }
+
     override fun onPause() {
         super.onPause()
+
         player?.playWhenReady = false
         player?.stop()
 
     }
 
-
-
     private fun initListeners() {
-
-        binding.fullScreenBack.setOnClickListener {
-            finish()
-        }
-
+        binding.fullScreenBack.setOnClickListener { finish() }
     }
-
-
-
 
     private fun initExoPlayer(medias: List<Media>) {
 
         player = ExoPlayer.Builder(binding.root.context).build()
         binding.fullscreenPlayerView.player = player
 
-
-        player?.addListener(object: Player.Listener{
-            override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
-                super.onMediaMetadataChanged(mediaMetadata)
-                Log.d(TAG, "onMediaMetaDataChanged")
-            }
-        })
         if (medias.isNullOrEmpty())
             return
 
@@ -96,7 +78,6 @@ class FullScreenVideoActivity : AppCompatActivity() {
         }
 
         player?.prepare()
-
         player?.play()
 
     }
