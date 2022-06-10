@@ -156,7 +156,7 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
+        if (InternetUtils.createInstance(connectivityManager).isNetworkAvailable()) {
             binding.mapViewMap.visibility = View.VISIBLE
             binding.mapViewErrorText.visibility = View.GONE
             binding.mapViewErrorRefresh.visibility = View.GONE

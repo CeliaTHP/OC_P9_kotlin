@@ -11,27 +11,13 @@ class InternetUtils(
 
     companion object {
         private const val TAG = "InternetUtils"
-        private var instance: InternetUtils? = null
 
-        fun getInstance(
+        fun createInstance(
             connectivityManager: ConnectivityManager,
             operatingSystem: OperatingSystem = OperatingSystem()
         ): InternetUtils {
-            //classe ici ???
-            return instance ?: synchronized(this) {
-                createInstance(connectivityManager, operatingSystem)
-            }
+            return InternetUtils(connectivityManager, operatingSystem)
         }
-
-        private fun createInstance(
-            connectivityManager: ConnectivityManager,
-            sdkUtils: OperatingSystem
-        ): InternetUtils {
-            val newInstance = InternetUtils(connectivityManager, sdkUtils)
-            this.instance = newInstance
-            return newInstance
-        }
-
 
     }
 

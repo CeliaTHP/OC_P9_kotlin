@@ -171,7 +171,7 @@ class DetailsFragment : Fragment() {
         mapView = binding.detailsMapView
         val connectivityManager =
             context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
+        if (InternetUtils.createInstance(connectivityManager).isNetworkAvailable()) {
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsMapFullscreen.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE

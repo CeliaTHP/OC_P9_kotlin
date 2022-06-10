@@ -134,7 +134,7 @@ class FullScreenMapActivity : AppCompatActivity() {
         mapView = binding.detailsMapView
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
+        if (InternetUtils.createInstance(connectivityManager).isNetworkAvailable()) {
             hasInternet = true
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
