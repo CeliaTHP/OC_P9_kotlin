@@ -37,12 +37,12 @@ object Utils {
      */
     fun convertDollarToEuro(dollars: Int): Int {
         //was 0.812
-        return Math.round(dollars * 0.96).toInt()
+        return Math.round(dollars * 0.94).toInt()
     }
 
     fun convertEuroToDollars(euros: Int): Int {
         //was 0.812
-        return Math.round(euros / 0.96).toInt()
+        return Math.round(euros * 1.06).toInt()
     }
 
     /**
@@ -50,17 +50,27 @@ object Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    fun getTodayDate(date: Date?): String? {
+    fun getTodayDate(date: Date?, isDayMonthYear: Boolean? = null): String? {
         if (date == null)
             return null
+        if (isDayMonthYear != null) {
+            val dateFormat: DateFormat =
+                if (isDayMonthYear) {
+                    SimpleDateFormat("dd/MM/yyyy")
+                } else {
+                    SimpleDateFormat("yyyy/MM/dd")
+                }
+            return dateFormat.format(date)
 
-        val dateFormat: DateFormat =
-            if (Locale.getDefault().language == Locale.FRENCH.language) {
-                SimpleDateFormat("dd/MM/yyyy")
-            } else {
-                SimpleDateFormat("yyyy/MM/dd")
-            }
-        return dateFormat.format(date)
+        } else {
+            val dateFormat: DateFormat =
+                if (Locale.getDefault().language == Locale.FRENCH.language) {
+                    SimpleDateFormat("dd/MM/yyyy")
+                } else {
+                    SimpleDateFormat("yyyy/MM/dd")
+                }
+            return dateFormat.format(date)
+        }
     }
 
     fun getPrice(estate: Estate): String {

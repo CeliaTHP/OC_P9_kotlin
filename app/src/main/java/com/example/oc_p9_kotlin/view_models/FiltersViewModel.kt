@@ -10,7 +10,7 @@ import java.util.Date
 
 class FiltersViewModel(
     val estateDao: EstateDao,
-    val mySchedulers: MySchedulers
+    private val mySchedulers: MySchedulers
 ) : ViewModel() {
 
     companion object {
