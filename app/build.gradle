@@ -43,6 +43,10 @@ android {
             google()
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 
 }
 

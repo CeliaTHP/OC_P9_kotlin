@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
@@ -337,9 +339,49 @@ class EditEstateActivity : CompositeDisposableActivity() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-
     }
 
+
+    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+    /*
+    var someActivityResultLauncher = registerForActivityResult(
+        StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // There are no request codes
+            val data = result.data
+                val imageBitmap = data?.extras?.get("data") as Bitmap?
+                val uri = Utils.getImageUri(this, imageBitmap).toString()
+                val newMedia = Media(
+                    (imageAdapter.itemCount + 1).toString(),
+                    uri
+                )
+                verifyAndAddMedia(newMedia)
+
+
+        }
+    }
+
+
+
+     */
+
+
+    /*
+
+
+    fun registerForSelectPictureActivity() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+
+        someActivityResultLauncher.launch(intent)
+    }
+
+
+*/
+
+     */
     private fun selectVideoIntent() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "video/*"
@@ -443,6 +485,7 @@ class EditEstateActivity : CompositeDisposableActivity() {
         binding.addEstateAddPic.setOnClickListener {
             //Select a picture from the device gallery
             selectPictureIntent()
+            //registerForSelectPictureActivity()
         }
 
         binding.addEstateTakePic.setOnClickListener {
