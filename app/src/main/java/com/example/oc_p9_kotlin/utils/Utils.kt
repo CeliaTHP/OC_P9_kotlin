@@ -50,7 +50,7 @@ object Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
      */
-    fun getTodayDate(date: Date?, isDayMonthYear: Boolean? = null): String? {
+    fun getFormattedDate(date: Date?, isDayMonthYear: Boolean? = null): String? {
         if (date == null)
             return null
         if (isDayMonthYear != null) {

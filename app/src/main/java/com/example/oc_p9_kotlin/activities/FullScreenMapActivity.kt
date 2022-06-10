@@ -1,13 +1,13 @@
 package com.example.oc_p9_kotlin.activities
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isEmpty
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityFullScreenMapBinding
 import com.example.oc_p9_kotlin.models.Estate
@@ -132,8 +132,9 @@ class FullScreenMapActivity : AppCompatActivity() {
     private fun initMap() {
 
         mapView = binding.detailsMapView
-
-        if (InternetUtils.isNetworkAvailable(this)) {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
             hasInternet = true
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
@@ -217,7 +218,7 @@ class FullScreenMapActivity : AppCompatActivity() {
         if (geoPoint == null)
             return
 
-        mapView?.overlays?.remove(tempMarker);
+        mapView?.overlays?.remove(tempMarker)
         tempMarker = Marker(mapView)
         tempMarker?.setInfoWindow(null)
         tempMarker?.id = "0"

@@ -1,9 +1,10 @@
 package com.example.oc_p9_kotlin.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -168,8 +169,9 @@ class DetailsFragment : Fragment() {
     private fun initMap(estate: Estate) {
 
         mapView = binding.detailsMapView
-
-        if (InternetUtils.isNetworkAvailable(activity)) {
+        val connectivityManager =
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
             binding.detailsMapView.visibility = View.VISIBLE
             binding.detailsMapFullscreen.visibility = View.VISIBLE
             binding.detailsConnectionErrorText.visibility = View.GONE
@@ -310,7 +312,7 @@ class DetailsFragment : Fragment() {
             detailsEntryDate.text =
                 root.context.getString(
                     R.string.item_estate_entry_date,
-                    Utils.getTodayDate(estate.entryDate)
+                    Utils.getFormattedDate(estate.entryDate)
                 )
 
             if (estate.assignedAgentName != null) {
@@ -328,7 +330,7 @@ class DetailsFragment : Fragment() {
                     detailsSaleDate.visibility = View.VISIBLE
                     detailsSaleDate.text = root.context.getString(
                         R.string.item_estate_sale_date,
-                        Utils.getTodayDate(estate.saleDate)
+                        Utils.getFormattedDate(estate.saleDate)
                     )
                 }
 

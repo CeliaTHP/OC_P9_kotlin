@@ -1,10 +1,11 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.Manifest
-import android.app.AlertDialog
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,7 +13,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.oc_p9_kotlin.MainViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityMapViewBinding
@@ -21,7 +21,6 @@ import com.example.oc_p9_kotlin.utils.InternetUtils
 import com.example.oc_p9_kotlin.view_models.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.OnCompleteListener
 import io.reactivex.rxjava3.kotlin.addTo
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -154,7 +153,10 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 
         mapView = binding.mapViewMap
 
-        if (InternetUtils.isNetworkAvailable(this)) {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (InternetUtils.getInstance(connectivityManager).isNetworkAvailable()) {
             binding.mapViewMap.visibility = View.VISIBLE
             binding.mapViewErrorText.visibility = View.GONE
             binding.mapViewErrorRefresh.visibility = View.GONE
