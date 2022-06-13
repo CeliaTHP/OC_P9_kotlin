@@ -1,15 +1,10 @@
 package com.example.oc_p9_kotlin.utils
 
 import android.content.Context
-import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.net.wifi.WifiManager
 import android.provider.MediaStore.Images
-import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.models.Estate
@@ -87,7 +82,9 @@ object Utils {
         return "$formattedNumber $currency"
     }
 
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+    fun getImageUri(inContext: Context, inImage: Bitmap?): Uri? {
+        if (inImage == null)
+            return null
         val bytes = ByteArrayOutputStream()
 
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)

@@ -13,9 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
@@ -335,59 +333,50 @@ class EditEstateActivity : CompositeDisposableActivity() {
 
     }
 
-    private fun selectPictureIntent() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-    }
-
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-    /*
-    var someActivityResultLauncher = registerForActivityResult(
-        StartActivityForResult()
+
+    var selectPictureLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
     ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            // There are no request codes
-            val data = result.data
-                val imageBitmap = data?.extras?.get("data") as Bitmap?
-                val uri = Utils.getImageUri(this, imageBitmap).toString()
-                val newMedia = Media(
-                    (imageAdapter.itemCount + 1).toString(),
-                    uri
-                )
-                verifyAndAddMedia(newMedia)
-
-
+        result?.let {
+            val newMedia = Media(
+                (imageAdapter.itemCount + 1).toString(),
+                result.toString()
+            )
+            verifyAndAddMedia(newMedia)
         }
     }
 
+    var selectVideoLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { result ->
+        result?.let {
+            val uri: Uri = it
+            val file: File = FileUtils.from(this, uri)
+            val finalUri = file.toURI()
+            val newMedia = Media(
+                (imageAdapter.itemCount + 1).toString(),
+                finalUri.toString()
+            )
+            verifyAndAddMedia(newMedia, true)
+        }
 
-
-     */
-
-
-    /*
-
-
-    fun registerForSelectPictureActivity() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-
-        someActivityResultLauncher.launch(intent)
     }
 
+    var takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        result?.let {
+            val imageBitmap = result.data?.extras?.get("data") as? Bitmap ?: return@let
+            val uri = Utils.getImageUri(this, imageBitmap).toString()
+            val newMedia = Media(
+                (imageAdapter.itemCount + 1).toString(),
+                uri
+            )
+            verifyAndAddMedia(newMedia)
+        }
 
-*/
-
-     */
-    private fun selectVideoIntent() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "video/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO)
     }
 
     private fun takePictureIntent() {
@@ -484,18 +473,24 @@ class EditEstateActivity : CompositeDisposableActivity() {
 
         binding.addEstateAddPic.setOnClickListener {
             //Select a picture from the device gallery
-            selectPictureIntent()
-            //registerForSelectPictureActivity()
+            selectPictureLauncher.launch("image/*")
         }
 
         binding.addEstateTakePic.setOnClickListener {
             //Take a picture from camera
-            takePictureIntent()
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if(intent.resolveActivity(packageManager) != null ){
+                takePictureLauncher.launch(intent)
+                //takePictureIntent()
+            }
+
         }
 
         binding.addEstateAddVideo.setOnClickListener {
             //Select a video from the device gallery
-            selectVideoIntent()
+            //selectVideoIntent()
+            selectVideoLauncher.launch("video/*")
+
         }
 
         binding.addEstateConfirm.setOnClickListener {
@@ -577,63 +572,6 @@ class EditEstateActivity : CompositeDisposableActivity() {
             FullScreenMapActivity.marker = null
         }
 
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        //Handle the selected picture or video
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                val imageBitmap = data?.extras?.get("data") as Bitmap
-                val uri = Utils.getImageUri(this, imageBitmap).toString()
-                val newMedia = Media(
-                    (imageAdapter.itemCount + 1).toString(),
-                    uri
-                )
-                verifyAndAddMedia(newMedia)
-            }
-            if (requestCode == PICK_IMAGE) {
-                if (data == null) {
-                    return
-                }
-                try {
-                    data.data?.let {
-                        val uri: Uri = it
-                        val file: File = FileUtils.from(this, uri)
-                        val finalUri = file.toURI()
-                        val newMedia = Media(
-                            (imageAdapter.itemCount + 1).toString(),
-                            finalUri.toString()
-                        )
-                        verifyAndAddMedia(newMedia)
-                    }
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-            if (requestCode == PICK_VIDEO) {
-                if (data == null) {
-                    return
-                }
-                try {
-                    data.data?.let {
-                        val uri: Uri = it
-                        val file: File = FileUtils.from(this, uri)
-                        val finalUri = file.toURI()
-                        val newMedia = Media(
-                            (videoAdapter.itemCount + 1).toString(),
-                            finalUri.toString()
-                        )
-                        verifyAndAddMedia(newMedia, true)
-                    }
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        }
     }
 
     private fun verifyAndAddMedia(newMedia: Media, isVideo: Boolean = false) {
