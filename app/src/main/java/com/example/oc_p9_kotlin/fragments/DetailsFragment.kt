@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,13 +43,23 @@ import java.io.Serializable
  */
 class DetailsFragment : Fragment() {
 
+
     companion object {
         private const val TAG: String = "DetailsFragment"
-        private var player: ExoPlayer? = null
 
-        fun getPlayer(): ExoPlayer? {
-            return player
-        }
+    }
+
+    fun stopPlayer() {
+        Log.d(TAG,"stopPlayer")
+
+        binding.detailsPlayerView.player?.playWhenReady = false
+        binding.detailsPlayerView.player?.stop()
+    }
+
+
+    fun resumePlayer() {
+        Log.d(TAG,"resumePlayer")
+        binding.detailsPlayerView.player?.playWhenReady = true
 
     }
 
@@ -86,36 +97,34 @@ class DetailsFragment : Fragment() {
 
     private fun initExoPlayer(estate: Estate) {
 
-        if (!estate.videos.isNullOrEmpty()) {
-            estate.videos.let {
-                binding.detailsVideosFullscreen.visibility = View.VISIBLE
-                binding.detailsPlayerView.visibility = View.VISIBLE
-            }
+        if (estate.videos.isNullOrEmpty()) {
+            Log.d(TAG,"no videos")
 
-        } else {
             binding.detailsPlayerView.visibility = View.GONE
             binding.detailsVideosFullscreen.visibility = View.GONE
-            player = ExoPlayer.Builder(binding.root.context).build()
-            binding.detailsPlayerView.player = player
         }
 
-        player = ExoPlayer.Builder(binding.root.context).build()
-        binding.detailsPlayerView.player = player
+
 
         if (estate.videos.isNullOrEmpty())
             return
 
+        Log.d(TAG,"has videos")
+
+        binding.detailsPlayerView.player = ExoPlayer.Builder(binding.root.context).build()
+
+        binding.detailsVideosFullscreen.visibility = View.VISIBLE
         binding.detailsVideoTitle.visibility = View.VISIBLE
         binding.detailsPlayerView.visibility = View.VISIBLE
 
         for (video in estate.videos!!) {
             val mediaItem = MediaItem.fromUri(video.uri)
-            player?.addMediaItem(mediaItem)
+            binding.detailsPlayerView.player?.addMediaItem(mediaItem)
         }
 
-        player?.prepare()
+        binding.detailsPlayerView.player?.prepare()
 
-        player?.play()
+        binding.detailsPlayerView.player?.play()
 
     }
 
@@ -158,9 +167,6 @@ class DetailsFragment : Fragment() {
         onEstateEvent.getSelectedEstate().let {
             estate = it
             updateUI(it)
-            initMedias(it)
-            initExoPlayer(it)
-            initMap(it)
             initPois()
         }
     }
@@ -249,9 +255,7 @@ class DetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
-
-        player?.playWhenReady = true
-        player?.playbackState
+        resumePlayer()
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
@@ -260,11 +264,10 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onPause() {
+        stopPlayer()
+
         super.onPause()
         mapView?.onPause()
-
-        player?.playWhenReady = false
-        player?.stop()
 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
@@ -286,9 +289,6 @@ class DetailsFragment : Fragment() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
-
-        player?.playWhenReady = false
-        player?.stop()
 
     }
 

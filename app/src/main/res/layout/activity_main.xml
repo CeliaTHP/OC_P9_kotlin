@@ -53,6 +53,7 @@
             android:id="@+id/detail_container"
             android:name="com.example.oc_p9_kotlin.fragments.DetailsFragment"
             android:layout_width="300dp"
+            android:tag="@string/details_fragment_label"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"

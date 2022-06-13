@@ -15,9 +15,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
-import com.example.oc_p9_kotlin.*
+import com.example.oc_p9_kotlin.MainViewModelFactory
+import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.EstateAdapter
 import com.example.oc_p9_kotlin.databinding.ActivityMainBinding
 import com.example.oc_p9_kotlin.events.OnEstateEvent
@@ -119,8 +119,7 @@ class MainActivity : CompositeDisposableActivity() {
     }
 
     private fun stopPlayer() {
-        DetailsFragment.getPlayer()?.playWhenReady = false
-        DetailsFragment.getPlayer()?.stop()
+        binding.detailContainer.getFragment<DetailsFragment>().stopPlayer()
     }
 
 
@@ -200,10 +199,7 @@ class MainActivity : CompositeDisposableActivity() {
             ViewModelProvider(this, MainViewModelFactory(this)).get(MainViewModel::class.java)
     }
 
-    override fun onStop() {
-        super.onStop()
-        stopPlayer()
-    }
+
 
     private fun requestMapPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
