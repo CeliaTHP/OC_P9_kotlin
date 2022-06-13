@@ -379,15 +379,6 @@ class EditEstateActivity : CompositeDisposableActivity() {
 
     }
 
-    private fun takePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.default_error_msg, Toast.LENGTH_LONG).show()
-        }
-    }
-
     private fun initPoiRecyclerView() {
 
         poiAdapter = PoiAdapter(
