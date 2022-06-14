@@ -3,10 +3,10 @@ package com.example.oc_p9_kotlin.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.oc_p9_kotlin.FiltersViewModelFactory
 import com.example.oc_p9_kotlin.R
@@ -58,8 +58,9 @@ class FiltersActivity : CompositeDisposableActivity() {
     private var filterPhotosMin: Int = 0
     private var filterPhotosMax: Int = 0
 
-    private var filterEntryDateMin: Date = Date()
+    private var filterCity: String = ""
 
+    private var filterEntryDateMin: Date = Date()
     private var filterSaleDateMin: Date? = Date()
 
 
@@ -136,6 +137,7 @@ class FiltersActivity : CompositeDisposableActivity() {
         entryDate: Date,
         saleDate: Date?
     ) {
+        Log.d(TAG, "city : " + filterCity)
         bag.clear()
         viewModel.getWithFilters(
             estateType,
@@ -151,6 +153,7 @@ class FiltersActivity : CompositeDisposableActivity() {
             bedroomsMax,
             photosMin,
             photosMax,
+            filterCity,
             entryDate,
             saleDate,
             binding.filtersNearStationCheckbox.isChecked,
@@ -296,6 +299,14 @@ class FiltersActivity : CompositeDisposableActivity() {
             } else {
                 binding.filtersDateSaleTitle.visibility = View.VISIBLE
                 binding.filtersDateSalePicker.visibility = View.VISIBLE
+            }
+        }
+
+        binding.filtersCityInputLayout.editText?.addTextChangedListener {
+            filterCity = if (it.isNullOrBlank()) {
+                ""
+            } else {
+                it.toString()
             }
         }
 

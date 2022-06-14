@@ -45,6 +45,7 @@ interface EstateDao {
                 "AND bathrooms BETWEEN :bathroomsMin AND :bathroomsMax " +
                 "AND bedrooms BETWEEN :bedroomsMin AND :bedroomsMax " +
                 "AND media_count BETWEEN :photosMin AND :photosMax " +
+                "AND (city LIKE '%' || :city || '%')" +
                 "AND entry_date >= :entryDate AND (sale_date IS NULL OR sale_date >= :saleDate) " +
                 "AND is_near_station LIKE :isNearStation AND is_near_pub LIKE :isNearPub " +
                 "AND is_near_hostel LIKE :isNearHostel AND is_near_hospital LIKE :isNearHospital " +
@@ -65,6 +66,7 @@ interface EstateDao {
         bedroomsMax: Int,
         photosMin: Int,
         photosMax: Int,
+        city: String,
         entryDate: Date,
         saleDate: Date?,
         isNearStation: Boolean,

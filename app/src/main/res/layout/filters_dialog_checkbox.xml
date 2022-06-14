@@ -141,23 +141,7 @@
 
         </RadioGroup>
 
-        <!--
-                <com.google.android.material.slider.RangeSlider
-                    android:id="@+id/filters_slider_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:stepSize="100000"
-                    android:value="20000"
-                    android:valueFrom="10000"
-                    android:valueTo="1000000"
-                    app:haloColor="@color/main_purple"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@ id/filters_price_title"
 
-                    />
-
-                    -->
 
         <LinearLayout
             android:id="@+id/filters_price_title_layout"
@@ -510,6 +494,24 @@
             app:tickColor="@color/dark_purple"
             app:trackColor="@color/light_purple" />
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filters_city_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/add_estate_city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_slider_photos">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/filters_near_title"
             android:layout_width="wrap_content"
@@ -524,7 +526,7 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filters_slider_photos" />
+            app:layout_constraintTop_toBottomOf="@id/filters_city_input_layout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/filters_near_layout"
@@ -584,7 +586,8 @@
                     android:id="@+id/filters_near_hospital_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp" android:tag="@string/poi_type_hospital"
+                    android:layout_margin="10dp"
+                    android:tag="@string/poi_type_hospital"
                     android:text="@string/poi_type_hospital"
                     app:layout_constrainedWidth="true" />
 

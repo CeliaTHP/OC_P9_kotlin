@@ -31,6 +31,7 @@ class FiltersViewModel(
         bedroomsMax: Int,
         photosMin: Int,
         photosMax: Int,
+        city: String,
         entryDate: Date,
         saleDate: Date?,
         isNearStation: Boolean,
@@ -42,32 +43,33 @@ class FiltersViewModel(
         isNearRestaurant: Boolean,
         isNearOther: Boolean
     ): Observable<MutableList<Estate>> =
-            estateDao.getWithFilters(
-                estateType,
-                priceMin,
-                priceMax,
-                surfaceMin,
-                surfaceMax,
-                roomsMin,
-                roomsMax,
-                bathroomsMin,
-                bathroomsMax,
-                bedroomsMin,
-                bedroomsMax,
-                photosMin,
-                photosMax,
-                entryDate,
-                saleDate,
-                isNearStation,
-                isNearPub,
-                isNearHostel,
-                isNearHospital,
-                isNearSchool,
-                isNearPark,
-                isNearRestaurant,
-                isNearOther
+        estateDao.getWithFilters(
+            estateType,
+            priceMin,
+            priceMax,
+            surfaceMin,
+            surfaceMax,
+            roomsMin,
+            roomsMax,
+            bathroomsMin,
+            bathroomsMax,
+            bedroomsMin,
+            bedroomsMax,
+            photosMin,
+            photosMax,
+            city,
+            entryDate,
+            saleDate,
+            isNearStation,
+            isNearPub,
+            isNearHostel,
+            isNearHospital,
+            isNearSchool,
+            isNearPark,
+            isNearRestaurant,
+            isNearOther
 
-            )
+        )
             .subscribeOn(mySchedulers.io)
             .observeOn(mySchedulers.main)
 
