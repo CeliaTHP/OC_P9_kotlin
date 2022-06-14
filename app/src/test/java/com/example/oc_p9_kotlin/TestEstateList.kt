@@ -10,11 +10,11 @@ import java.util.Date
 
 class TestEstateList {
 
-    fun getList(): List<Estate> {
+    fun getList(estateType: EstateType = EstateType.BOAT): List<Estate> {
         return listOf(
             Estate(
                 "testId",
-                EstateType.BOAT,
+                estateType,
                 "testCity",
                 420000,
                 42,

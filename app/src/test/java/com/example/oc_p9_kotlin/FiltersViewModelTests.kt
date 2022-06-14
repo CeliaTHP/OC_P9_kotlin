@@ -22,8 +22,6 @@ class FiltersViewModelTests {
     private val estateDaoMock = Mockito.mock(EstateDao::class.java)
     private val viewModel = FiltersViewModel(estateDaoMock, testNetworkSchedulers)
 
-    private val dateMock = Mockito.mock(Date::class.java)
-
     @After
     fun tearDown() {
         Mockito.verifyNoMoreInteractions(estateDaoMock)
@@ -31,13 +29,16 @@ class FiltersViewModelTests {
 
     @Test
     fun getByFiltersSuccess() {
-        val expectedType = EstateType.BOAT
 
-        val expectedEstateList = TestEstateList().getList().toMutableList()
+        val expectedType = EstateType.BOAT
+        val expectedEstateList = TestEstateList().getList(expectedType).toMutableList()
+        val date = Date()
+        val expectedMin = 0
+        val expectedMax = 10000
 
         whenever(
             estateDaoMock.getWithFilters(
-               any(), any(), any(), any(), any(), any(),
+                any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any()
@@ -45,20 +46,60 @@ class FiltersViewModelTests {
         ).thenReturn(Observable.just(expectedEstateList))
 
         viewModel.getWithFilters(
-        any(), any(), any(), any(), any(), any(),
-            any(), any(), any(), any(), any(), any(),
-            any(), dateMock, any(), any(), any(), any(),
-            any(), any(), any(), any(), any()
+            expectedType.name, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
+            expectedMax, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
+            expectedMax, date, date, false, false, false,
+            false, false, false, false, false
         )
             .test()
             .assertComplete()
-         .assertValue { estateList -> estateList.all { it.type == expectedType } }
+            .assertValue { estateList -> estateList.all { it.type == expectedType } }
 
         verify(estateDaoMock).getWithFilters(
-          any(), any(), any(), any(), any(), any(), any(),
-            any(), any(), any(), any(), any(), any(),
-            dateMock, any(), any(), any(), any(), any(),
-            any(), any(), any(), any()
+            eq(expectedType.name), eq(expectedMin), eq(expectedMax),  eq(expectedMin), eq(expectedMax),
+            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
+            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
+            eq(date), eq(date), eq(false), eq(false), eq(false), eq(false),
+            eq(false),eq(false),eq(false),eq(false)
+
+        )
+
+    }
+
+    @Test
+    fun getByFiltersError() {
+
+        val expectedType = EstateType.BOAT
+        val date = Date()
+        val expectedMin = 0
+        val expectedMax = 10000
+        val expectedException = Exception("testError")
+
+        whenever(
+            estateDaoMock.getWithFilters(
+                any(), any(), any(), any(), any(), any(),
+                any(), any(), any(), any(), any(), any(),
+                any(), any(), any(), any(), any(), any(),
+                any(), any(), any(), any(), any()
+            )
+        ).thenReturn(Observable.error(expectedException))
+
+        viewModel.getWithFilters(
+            expectedType.name, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
+            expectedMax, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
+            expectedMax, date, date, false, false, false,
+            false, false, false, false, false
+        )
+            .test()
+            .assertError(expectedException)
+
+        verify(estateDaoMock).getWithFilters(
+            eq(expectedType.name), eq(expectedMin), eq(expectedMax),  eq(expectedMin), eq(expectedMax),
+            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
+            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
+            eq(date), eq(date), eq(false), eq(false), eq(false), eq(false),
+            eq(false),eq(false),eq(false),eq(false)
+
         )
 
     }
