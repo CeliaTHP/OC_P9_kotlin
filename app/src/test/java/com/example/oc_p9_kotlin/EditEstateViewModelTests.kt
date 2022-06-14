@@ -12,7 +12,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import java.lang.Exception
-import kotlin.math.exp
 
 @RunWith(MockitoJUnitRunner::class)
 class EditEstateViewModelTests {
@@ -61,7 +60,7 @@ class EditEstateViewModelTests {
             .test()
             .assertComplete()
 
-        verify(estateDaoMock).insertEstate(any())
+        verify(estateDaoMock).updateEstate(any())
     }
 
     @Test

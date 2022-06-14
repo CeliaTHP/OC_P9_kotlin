@@ -60,7 +60,7 @@ class MainViewModelTests {
         val expectedEstateList = TestEstateList().getList().toMutableList()
         whenever(estateDaoMock.getAll()).thenReturn(Observable.just(expectedEstateList))
 
-        estateDaoMock.getAll()
+        viewModel.getAll()
             .test()
             .assertComplete()
             .assertValueCount(1)
@@ -75,7 +75,7 @@ class MainViewModelTests {
         val expectedException = Exception("testError")
         whenever(estateDaoMock.getAll()).thenReturn(Observable.error(expectedException))
 
-        estateDaoMock.getAll()
+        viewModel.getAll()
             .test()
             .assertError(expectedException)
 
@@ -89,7 +89,7 @@ class MainViewModelTests {
         val expectedEstateList = TestEstateList().getList().toMutableList()
         whenever(estateDaoMock.getByType(any())).thenReturn(Observable.just(expectedEstateList))
 
-        estateDaoMock.getByType(expectedType)
+        viewModel.getByType(expectedType)
             .test()
             .assertComplete()
             .assertValue { estateList -> estateList.all { it.type == expectedType } }
@@ -105,7 +105,7 @@ class MainViewModelTests {
         val expectedException = Exception("testError")
         whenever(estateDaoMock.getByType(any())).thenReturn(Observable.error(expectedException))
 
-        estateDaoMock.getByType(expectedType)
+        viewModel.getByType(expectedType)
             .test()
             .assertError(expectedException)
 

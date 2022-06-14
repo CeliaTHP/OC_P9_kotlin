@@ -20,7 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class InternetUtilsTests {
 
-    @Before
     @Test
     fun isInternetAvailableTestSdk23Success() {
 
