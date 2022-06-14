@@ -33,6 +33,7 @@ class FiltersViewModelTests {
         val expectedType = EstateType.BOAT
         val expectedEstateList = TestEstateList().getList(expectedType).toMutableList()
         val date = Date()
+        val expectedCity = "testCity"
         val expectedMin = 0
         val expectedMax = 10000
 
@@ -41,27 +42,28 @@ class FiltersViewModelTests {
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
-                any(), any(), any(), any(), any()
+                any(), any(), any(), any(), any(), any()
             )
         ).thenReturn(Observable.just(expectedEstateList))
 
         viewModel.getWithFilters(
             expectedType.name, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
             expectedMax, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
-            expectedMax, date, date, false, false, false,
+            expectedMax, expectedCity,date, date, false, false, false,
             false, false, false, false, false
         )
             .test()
             .assertComplete()
             .assertValue { estateList -> estateList.all { it.type == expectedType } }
+            .assertValue { estateList -> estateList.all { it.city == expectedCity } }
+
 
         verify(estateDaoMock).getWithFilters(
             eq(expectedType.name), eq(expectedMin), eq(expectedMax),  eq(expectedMin), eq(expectedMax),
             eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
-            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
+            eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax), eq(expectedCity),
             eq(date), eq(date), eq(false), eq(false), eq(false), eq(false),
             eq(false),eq(false),eq(false),eq(false)
-
         )
 
     }
@@ -71,6 +73,7 @@ class FiltersViewModelTests {
 
         val expectedType = EstateType.BOAT
         val date = Date()
+        val expectedCity = "testCity"
         val expectedMin = 0
         val expectedMax = 10000
         val expectedException = Exception("testError")
@@ -80,14 +83,14 @@ class FiltersViewModelTests {
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
                 any(), any(), any(), any(), any(), any(),
-                any(), any(), any(), any(), any()
+                any(), any(), any(), any(), any(), any()
             )
         ).thenReturn(Observable.error(expectedException))
 
         viewModel.getWithFilters(
             expectedType.name, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
             expectedMax, expectedMin, expectedMax, expectedMin, expectedMax, expectedMin,
-            expectedMax, date, date, false, false, false,
+            expectedMax,expectedCity, date, date, false, false, false,
             false, false, false, false, false
         )
             .test()
@@ -97,7 +100,7 @@ class FiltersViewModelTests {
             eq(expectedType.name), eq(expectedMin), eq(expectedMax),  eq(expectedMin), eq(expectedMax),
             eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
             eq(expectedMin), eq(expectedMax), eq(expectedMin), eq(expectedMax),
-            eq(date), eq(date), eq(false), eq(false), eq(false), eq(false),
+            eq(expectedCity), eq(date), eq(date), eq(false), eq(false), eq(false), eq(false),
             eq(false),eq(false),eq(false),eq(false)
 
         )
