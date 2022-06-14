@@ -73,7 +73,6 @@ class ImageAdapter(
      fun addData(media: Media) {
         this.imageList.add(media)
         notifyItemInserted(imageList.size)
-        Log.d(TAG, imageList.toString())
         onDataUpdate()
 
     }
@@ -82,7 +81,6 @@ class ImageAdapter(
         this.imageList.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount)
-        Log.d(TAG, imageList.toString())
         onDataUpdate()
 
     }

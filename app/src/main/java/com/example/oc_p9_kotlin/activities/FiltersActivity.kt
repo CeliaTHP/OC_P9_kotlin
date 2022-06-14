@@ -137,7 +137,6 @@ class FiltersActivity : CompositeDisposableActivity() {
         entryDate: Date,
         saleDate: Date?
     ) {
-        Log.d(TAG, "city : " + filterCity)
         bag.clear()
         viewModel.getWithFilters(
             estateType,

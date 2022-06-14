@@ -114,7 +114,6 @@ class EditEstateActivity : CompositeDisposableActivity() {
         val saleDateCalendar: Calendar = GregorianCalendar()
 
         if (estate.saleDate != null) {
-            Log.d(TAG, "sale date : " + estate.saleDate)
             saleDate = estate.saleDate
             saleDateCalendar.time = saleDate
         }
@@ -425,7 +424,6 @@ class EditEstateActivity : CompositeDisposableActivity() {
 
 
     private fun viewFullscreen(medias: List<Media>) {
-        Log.d(TAG, "start Full Screen Activity")
         val list: List<Media> = medias
         val intent =
             Intent(binding.root.context, FullScreenPictureActivity::class.java)

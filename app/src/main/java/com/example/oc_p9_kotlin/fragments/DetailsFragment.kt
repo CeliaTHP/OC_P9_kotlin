@@ -50,7 +50,6 @@ class DetailsFragment : Fragment() {
     }
 
     fun stopPlayer() {
-        Log.d(TAG,"stopPlayer")
 
         binding.detailsPlayerView.player?.playWhenReady = false
         binding.detailsPlayerView.player?.stop()
@@ -58,9 +57,7 @@ class DetailsFragment : Fragment() {
 
 
     fun resumePlayer() {
-        Log.d(TAG,"resumePlayer")
         binding.detailsPlayerView.player?.playWhenReady = true
-
     }
 
     private lateinit var imageAdapter: ImageAdapter
@@ -98,8 +95,6 @@ class DetailsFragment : Fragment() {
     private fun initExoPlayer(estate: Estate) {
 
         if (estate.videos.isNullOrEmpty()) {
-            Log.d(TAG,"no videos")
-
             binding.detailsPlayerView.visibility = View.GONE
             binding.detailsVideosFullscreen.visibility = View.GONE
         }
@@ -109,7 +104,6 @@ class DetailsFragment : Fragment() {
         if (estate.videos.isNullOrEmpty())
             return
 
-        Log.d(TAG,"has videos")
 
         binding.detailsPlayerView.player = ExoPlayer.Builder(binding.root.context).build()
 

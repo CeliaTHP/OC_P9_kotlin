@@ -178,7 +178,6 @@ class MapViewActivity : CompositeDisposableActivity(), LocationListener {
 
         viewModel.getAll().subscribe({
             if (!it.isNullOrEmpty()) {
-                Log.d(TAG, "estateList " + it.size)
                 initMarkers(it)
             }
         }, {
