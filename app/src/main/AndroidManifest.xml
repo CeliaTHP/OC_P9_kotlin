@@ -28,6 +28,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OC_P9_kotlin"
         android:usesCleartextTraffic="true">
+        <provider
+            android:name=".providers.EstateContentProvider"
+            android:authorities="com.example.oc_p9_kotlin.providers"
+            android:exported="true"
+            />
         <activity
             android:name=".activities.MapViewActivity"
             android:exported="false" />

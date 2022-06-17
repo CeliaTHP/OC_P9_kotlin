@@ -309,7 +309,7 @@ class DetailsFragment : Fragment() {
                     Utils.getFormattedDate(estate.entryDate)
                 )
 
-            if (estate.assignedAgentName != null) {
+            if (estate.assignedAgentName != null && estate.assignedAgentName!= "") {
                 detailsAgent.visibility = View.VISIBLE
                 detailsAgent.text = getString(R.string.item_estate_agent, estate.assignedAgentName)
 

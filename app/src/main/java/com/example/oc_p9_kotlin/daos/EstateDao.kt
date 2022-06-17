@@ -1,5 +1,6 @@
 package com.example.oc_p9_kotlin.daos
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -16,8 +17,12 @@ import java.util.Date
 @Dao
 interface EstateDao {
 
+
     @Query("SELECT * FROM estate")
     fun getAll(): Observable<MutableList<Estate>>
+
+    @Query("SELECT * FROM estate")
+    fun getAllWithCursor(): Cursor
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
     fun getById(estateId: String): Single<Estate>
@@ -29,13 +34,23 @@ interface EstateDao {
     fun insertEstate(estate: Estate): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertEstateForContentProvider(estate: Estate): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllEstates(estateList: List<Estate>): Completable
 
     @Update
     fun updateEstate(estate: Estate): Completable
 
+    @Update
+    fun updateEstateForContentProvider(estate: Estate): Int
+
     @Delete
     fun delete(estate: Estate): Completable
+
+    @Query("DELETE FROM estate WHERE id = :estateId")
+    fun deleteWithId(estateId: Long): Int
+
 
     @Query(
         " SELECT * FROM estate WHERE type LIKE :estateType " +
