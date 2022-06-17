@@ -7,13 +7,12 @@ import android.location.Location
 import android.location.LocationListener
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.oc_p9_kotlin.MainViewModelFactory
+import com.example.oc_p9_kotlin.view_models.MainViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.ActivityMapViewBinding
 import com.example.oc_p9_kotlin.models.Estate

@@ -1,12 +1,10 @@
-package com.example.oc_p9_kotlin
+package com.example.oc_p9_kotlin.view_models
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.oc_p9_kotlin.daos.EstateDao
 import com.example.oc_p9_kotlin.databases.EstateDatabase
 import com.example.oc_p9_kotlin.utils.MySchedulers
-import com.example.oc_p9_kotlin.view_models.MainViewModel
 import java.lang.IllegalArgumentException
 
 class MainViewModelFactory(context: Context): ViewModelProvider.Factory {

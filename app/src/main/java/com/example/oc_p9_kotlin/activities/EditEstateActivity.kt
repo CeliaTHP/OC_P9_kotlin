@@ -1,13 +1,11 @@
 package com.example.oc_p9_kotlin.activities
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -19,7 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.oc_p9_kotlin.EditEstateViewModelFactory
+import com.example.oc_p9_kotlin.view_models.EditEstateViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.adapters.ImageAdapter
 import com.example.oc_p9_kotlin.adapters.PoiAdapter
@@ -38,7 +36,6 @@ import com.example.oc_p9_kotlin.view_models.EditEstateViewModel
 import io.reactivex.rxjava3.kotlin.addTo
 import org.greenrobot.eventbus.EventBus
 import java.io.File
-import java.io.IOException
 import java.io.Serializable
 import java.util.Calendar
 import java.util.Date
@@ -314,6 +311,9 @@ class EditEstateActivity : CompositeDisposableActivity() {
                 viewModel.insertEstate(estate)
                     .subscribe()
                     .addTo(bag)
+
+                Toast.makeText(this@EditEstateActivity,R.string.add_estate_success,Toast.LENGTH_LONG)
+                    .show()
 
                 finish()
 

@@ -1,14 +1,13 @@
 package com.example.oc_p9_kotlin.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
-import com.example.oc_p9_kotlin.FiltersViewModelFactory
+import com.example.oc_p9_kotlin.view_models.FiltersViewModelFactory
 import com.example.oc_p9_kotlin.R
 import com.example.oc_p9_kotlin.databinding.FiltersDialogCheckboxBinding
 import com.example.oc_p9_kotlin.events.OnUpdateListEvent
